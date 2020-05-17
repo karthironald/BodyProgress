@@ -28,6 +28,7 @@ extension WorkoutHistory {
     @NSManaged public var notes: String?
     @NSManaged public var updatedAt: Date?
     @NSManaged public var duration: Int16
+    @NSManaged public var status: Bool
     @NSManaged public var exercises: NSSet?
 
     var wName: String { name ?? kDefaultValue }
@@ -47,6 +48,7 @@ extension WorkoutHistory {
         }
     }
     var wDuration: Int16 { duration }
+    var wStatus: Bool { status }
     
 }
 
