@@ -22,12 +22,12 @@ struct ContentView: View {
             WorkoutsList().tabItem {
                 Image(systemName: "w.circle.fill")
                     .imageScale(.large)
-                Text("Workouts")
+                Text("Workout")
             }.tag(1)
             Diets().tabItem {
                 Image(systemName: "d.circle.fill")
                     .imageScale(.large)
-                Text("Diets")
+                Text("Diet")
             }.tag(2)
         }
         .accentColor(kPrimaryColour)
