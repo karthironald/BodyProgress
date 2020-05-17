@@ -16,7 +16,7 @@ enum WorkoutHistoryStatusSort: String, CaseIterable {
 
 struct WokroutHistoryTabView: View {
     
-    @State var bodyPartsSort = [BodyParts.arms, BodyParts.chest, BodyParts.shoulders, BodyParts.legs, BodyParts.back] 
+    @State var bodyPartsSort = [BodyParts.arms, BodyParts.chest, BodyParts.shoulders] 
     @State var statusSort = WorkoutHistoryStatusSort.Both
     @State var shouldPresentBodyParts = false
     
