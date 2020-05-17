@@ -12,12 +12,6 @@ struct WokroutHistoryRow: View {
     
     @ObservedObject var workoutHistory: WorkoutHistory
     
-    var formatter: DateFormatter {
-        let df = DateFormatter()
-        df.dateStyle = .medium
-        return df
-    }
-    
     var body: some View {
         ZStack {
             Color.black.opacity(0.1)
@@ -32,20 +26,25 @@ struct WokroutHistoryRow: View {
                     Text(workoutHistory.wName)
                         .font(kPrimaryHeadlineFont)
                         .fontWeight(.bold)
-                    Text("Trained at: \(workoutHistory.wCreatedAt, formatter: formatter)")
+                    HStack {
+                        Text("\(workoutHistory.wCreatedAt, formatter: DateFormatter().appDormatter)")
                         .font(kPrimaryBodyFont)
                         .opacity(0.5)
-                    if !workoutHistory.wDuration.detailedDisplayDuration().isEmpty {
-                        Text("Duration: \(workoutHistory.wDuration.detailedDisplayDuration())")
-                            .font(kPrimaryBodyFont)
-                            .opacity(0.5)
+                        if !workoutHistory.wDuration.detailedDisplayDuration().isEmpty {
+                            Text("(\(workoutHistory.wDuration.detailedDisplayDuration()))")
+                                .font(kPrimaryBodyFont)
+                                .opacity(0.5)
+                        }
                     }
+                    Text("\(workoutHistory.wBodyPart.rawValue)")
+                        .font(kPrimaryBodyFont)
+                        .opacity(0.5)
                 }
                 .padding(5)
                 Spacer()
-                Image(systemName: isAllSetCompleted() ? "checkmark.seal.fill" : "xmark.seal.fill")
+                Image(systemName: workoutHistory.isAllSetCompleted() ? "checkmark.seal.fill" : "xmark.seal.fill")
                     .imageScale(.large)
-                    .foregroundColor(isAllSetCompleted() ? kPrimaryColour : .red)
+                    .foregroundColor(workoutHistory.isAllSetCompleted() ? kPrimaryColour : .orange)
                     .font(kPrimaryBodyFont)
                     .padding()
             }
@@ -54,22 +53,10 @@ struct WokroutHistoryRow: View {
         .cornerRadius(kCornerRadius)
     }
     
-    func isAllSetCompleted() -> Bool {
-        for exercise in workoutHistory.wExercises {
-            for sets in exercise.wExerciseSets {
-                if sets.wStatus == false {
-                    return false
-                }
-            }
-        }
-        return true
-    }
-    
 }
 
 struct WokroutHistoryRow_Previews: PreviewProvider {
     static var previews: some View {
         Text("Sample")
-        //        WokroutHistoryRow()
     }
 }

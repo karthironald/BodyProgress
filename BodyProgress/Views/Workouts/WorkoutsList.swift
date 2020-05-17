@@ -82,6 +82,7 @@ struct WorkoutsList: View {
         }
     }
     
+    /**Toggles favourite status of the workout*/
     func toggleFav(workout: Workout) {
         workout.isFavourite.toggle()
         if managedObjectContext.hasChanges {
@@ -93,6 +94,7 @@ struct WorkoutsList: View {
         }
     }
     
+    /**Deletes the workout*/
     func deleteWorkout(workout: Workout) {
         managedObjectContext.delete(workout)
         if managedObjectContext.hasChanges {

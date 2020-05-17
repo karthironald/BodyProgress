@@ -22,7 +22,7 @@ struct ExerciseRow: View {
                         .imageScale(.large)
                         .foregroundColor(.white)
                         .font(kPrimaryTitleFont)
-                        .padding([.leading], 25)
+                        .padding([.leading], 15)
                     VStack(alignment: .leading) {
                         HStack {
                             Text(exercise.wName)
@@ -36,14 +36,13 @@ struct ExerciseRow: View {
                                     .foregroundColor(Color.white)
                             }
                         }
-                        
                         if (!exercise.wNotes.isEmpty) && (exercise.wNotes != kDefaultValue) {
                             Text(exercise.wNotes)
                                 .font(kPrimarySubheadlineFont)
                                 .multilineTextAlignment(.leading)
                         }
                     }
-                    .padding([.leading, .top, .bottom])
+                    .padding(5)
                     Spacer()
                     if exercise.wExerciseSets.count > 0 {
                         Text("\(exercise.wExerciseSets.count)")

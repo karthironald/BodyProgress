@@ -25,19 +25,26 @@ extension Int16 {
         var secondsString = ""
         
         if hours > 0 {
-            hourString.append("\(hours)")
-            hourString.append(" \(hours == 1 ? "hr" : "hrs")")
+            hourString.append("\(hours) h")
         }
         if minutes > 0 {
-            minuteString.append("\(minutes)")
-            minuteString.append(" \(minutes == 1 ? "mnt" : "mnts")")
+            minuteString.append("\(minutes) m")
         }
         if seconds > 0 {
-            secondsString.append("\(seconds)")
-            secondsString.append(" \(seconds == 1 ? "sec" : "secs")")
+            secondsString.append("\(seconds) s")
         }
         let sample: [String] = [hourString, minuteString, secondsString]
         return sample.joined(separator: " ").trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+    
+}
+
+extension DateFormatter {
+    
+    var appDormatter: DateFormatter {
+        let df = DateFormatter()
+        df.dateStyle = .medium
+        return df
     }
     
 }

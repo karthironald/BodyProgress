@@ -19,7 +19,7 @@ struct ExerciseSetsList: View {
     var body: some View {
         ZStack {
             if selectedExercise.wExerciseSets.count == 0 {
-                EmptyStateInfoView(message: "No set added")
+                EmptyStateInfoView(message: "No sets added")
             }
             VStack {
                 List{
@@ -86,6 +86,7 @@ struct ExerciseSetsList: View {
         }
     }
     
+    /**Toggle the favourite status of the set*/
     func toggleFav(exerciseSet: ExerciseSet) {
         exerciseSet.isFavourite.toggle()
         if managedObjectContext.hasChanges {
@@ -97,6 +98,7 @@ struct ExerciseSetsList: View {
         }
     }
     
+    /**Deletes the given set*/
     func deleteExerciseSet(set: ExerciseSet) {
         managedObjectContext.delete(set)
         if managedObjectContext.hasChanges {
@@ -112,6 +114,6 @@ struct ExerciseSetsList: View {
 
 struct ExerciseSetsList_Previews: PreviewProvider {
     static var previews: some View {
-        Text("Yet to configure the preview")
+        Text("Yet to configured")
     }
 }

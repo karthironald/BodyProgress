@@ -43,7 +43,7 @@ struct AddExerciseSet: View {
             .onAppear(perform: {
                 kAppDelegate.addSeparatorLineAppearance()
             })
-                .navigationBarTitle(Text("New set"), displayMode: .inline)
+                .navigationBarTitle(Text("New Set"), displayMode: .inline)
                 .navigationBarItems(
                     trailing: Button(action: { self.saveWorkout() }) { CustomBarButton(title: "Save")
                 })
@@ -57,12 +57,12 @@ struct AddExerciseSet: View {
     
     /**Saves the new workout*/
     func saveWorkout() {
-        if selectedExerciseSet != nil {
+        if selectedExerciseSet != nil { // Update set flow
             selectedExerciseSet?.name = self.name
             selectedExerciseSet?.notes = self.notes
             selectedExerciseSet?.weight = Self.weights[weightIndex]
             selectedExerciseSet?.reputation = Int16(Self.reputations[reputationIndex])
-        } else {
+        } else { // New set flow
             let newExerciseSet = ExerciseSet(context: managedObjectContext)
             newExerciseSet.name = self.name
             newExerciseSet.notes = self.notes

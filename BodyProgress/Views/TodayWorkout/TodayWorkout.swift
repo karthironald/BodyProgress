@@ -9,9 +9,6 @@
 import SwiftUI
 import CoreData
 
-let kOneHour: Int16 = 3600
-let kOneMinute: Int16 = 60
-
 struct TodayWorkout: View {
     
     var startDate = Date()
@@ -35,7 +32,7 @@ struct TodayWorkout: View {
             .navigationBarItems(
                 leading:Text("\(displayDuration)").font(kPrimaryBodyFont).foregroundColor(.orange),
                 trailing: Button(action: {
-                    if !self.isAllSetCompleted() {
+                    if !self.selectedWorkout.isAllSetCompleted() {
                         self.showIncompleteAlert.toggle()
                     } else {
                         self.updateWorkout()
@@ -58,9 +55,10 @@ struct TodayWorkout: View {
         }
     }
     
+    /**Update and save the work in core data*/
     func updateWorkout() {
         selectedWorkout.duration = self.duration
-        selectedWorkout.status = isAllSetCompleted()
+        selectedWorkout.status = selectedWorkout.isAllSetCompleted()
         if managedObjectContext.hasChanges {
             do {
                 try managedObjectContext.save()
@@ -68,17 +66,6 @@ struct TodayWorkout: View {
                 print(error)
             }
         }
-    }
-    
-    func isAllSetCompleted() -> Bool {
-        for exercise in selectedWorkout.wExercises {
-            for sets in exercise.wExerciseSets {
-                if sets.wStatus == false {
-                    return false
-                }
-            }
-        }
-        return true
     }
     
 }

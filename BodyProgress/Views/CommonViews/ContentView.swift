@@ -9,7 +9,8 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var selectedTab = 1
+    
+    @State private var selectedTab = 1 // Sets workout tab as selected tab
     
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -32,6 +33,7 @@ struct ContentView: View {
         .accentColor(kPrimaryColour)
     }
 }
+
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
