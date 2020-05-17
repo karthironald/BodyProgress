@@ -18,11 +18,12 @@ let kPrimaryLargeTitleFont = Font.system(.largeTitle, design: .rounded)
 let kPrimaryBodyFont = Font.system(.body, design: .rounded)
 let kPrimaryHeadlineFont = Font.system(.headline, design: .rounded)
 let kPrimarySubheadlineFont = Font.system(.subheadline, design: .rounded)
-let kPrimaryColour = Color.green
-let kPrimaryUIColour = UIColor.systemGreen
+let kPrimaryColour = Color.green.opacity(kOpacity)
+let kPrimaryUIColour = UIColor.systemGreen.withAlphaComponent(CGFloat(kOpacity))
 let kCommonListIndex = 9999
 let kOneHour: Int16 = 3600
 let kOneMinute: Int16 = 60
+let kOpacity = 1.0
 
 enum BodyParts: String, CaseIterable {
     case arms = "Arms"
@@ -38,14 +39,14 @@ enum BodyParts: String, CaseIterable {
     
     func color() -> Color {
         switch self {
-        case .core, .cardio, .others: return Color(.systemGray2)
-        case .arms: return Color(.systemRed)
-        case .back: return Color(.systemGreen)
-        case .chest: return Color(.systemBlue)
-        case .legs: return Color(.systemPurple)
-        case .shoulders: return Color(.systemYellow)
-        case .abs: return Color(.systemOrange)
-        case .fullBody: return Color(.systemPink)
+        case .core, .cardio, .others: return Color(.systemGray2).opacity(kOpacity)
+        case .arms: return Color(.systemRed).opacity(kOpacity)
+        case .back: return Color(.systemGreen).opacity(kOpacity)
+        case .chest: return Color(.systemBlue).opacity(kOpacity)
+        case .legs: return Color(.systemPurple).opacity(kOpacity)
+        case .shoulders: return Color(.systemYellow).opacity(kOpacity)
+        case .abs: return Color(.systemOrange).opacity(kOpacity)
+        case .fullBody: return Color(.systemPink).opacity(kOpacity)
         }
     }
 }

@@ -29,7 +29,8 @@ struct ExercisesList: View {
                             ExerciseRow(exercise: self.selectedWorkout.wExercises[exerciseIndex])
                                 .contextMenu {
                                     Button(action: {
-                                        self.shouldPresentEditExercise.toggle()
+                                        self.editExerciseIndex = exerciseIndex
+                                        self.shouldPresentEditExercise = true
                                     }) {
                                         Image(systemName: "square.and.pencil")
                                         Text("Edit")

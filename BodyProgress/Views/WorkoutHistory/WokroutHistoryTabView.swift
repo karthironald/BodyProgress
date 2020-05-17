@@ -31,7 +31,7 @@ struct WokroutHistoryTabView: View {
                                     .font(kPrimaryBodyFont)
                                     .foregroundColor(Color.white)
                                     .padding()
-                                    .background(self.bodyPartsSort.contains(part) ? Color.green : Color.gray)
+                                    .background(self.bodyPartsSort.contains(part) ? kPrimaryColour : Color.gray)
                                     .frame(height: 30)
                                     .cornerRadius(10)
                                     .onTapGesture {
