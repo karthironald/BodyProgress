@@ -76,6 +76,7 @@ struct WokroutHistoryTabView: View {
         }
     }
     
+    /**Creates predicate based on filter values*/
     func predicate() -> NSPredicate? {
         var predicates: [NSPredicate] = []
         predicates.append(NSPredicate(format: "bodyPart IN %@", bodyPartsSort.map { $0.rawValue }))

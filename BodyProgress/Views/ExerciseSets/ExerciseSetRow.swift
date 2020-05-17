@@ -15,14 +15,15 @@ struct ExerciseSetRow: View {
     
     var body: some View {
         ZStack {
-            BodyParts.others.color() // Need to change this
+            Color.black.opacity(0.1)
             VStack {
                 HStack(alignment: .center) {
                     Image(systemName: "bolt.circle.fill")
                         .imageScale(.large)
-                        .foregroundColor(.white)
+                        .foregroundColor(Color.gray)
                         .font(kPrimaryTitleFont)
-                        .padding([.leading], 25)
+                        .padding([.leading], 15)
+                        .opacity(0.5)
                     VStack(alignment: .leading) {
                         HStack {
                             Text(exerciseSet.wName)
@@ -43,16 +44,15 @@ struct ExerciseSetRow: View {
                         }
                         Text("\(exerciseSet.wWeight, specifier: "%.2f") kgs X \(exerciseSet.wReputation) rps")
                             .font(kPrimarySubheadlineFont)
+                            .opacity(0.5)
                     }
-                    .padding()
+                    .padding(5)
                     Spacer()
                 }
             }
         }
-        .foregroundColor(.white)
         .frame(height: 80)
         .cornerRadius(kCornerRadius)
-        .shadow(radius: kShadowRadius)
     }
 }
 

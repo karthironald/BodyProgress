@@ -50,6 +50,18 @@ extension WorkoutHistory {
     var wDuration: Int16 { duration }
     var wStatus: Bool { status }
     
+    /**Check whether all sets are completed*/
+    func isAllSetCompleted() -> Bool {
+        for exercise in wExercises {
+            for sets in exercise.wExerciseSets {
+                if sets.wStatus == false {
+                    return false
+                }
+            }
+        }
+        return true
+    }
+    
 }
 
 // MARK: Generated accessors for exercises

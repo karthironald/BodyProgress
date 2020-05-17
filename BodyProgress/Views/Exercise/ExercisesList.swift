@@ -95,6 +95,7 @@ struct ExercisesList: View {
             .navigationBarTitle(Text(selectedWorkout.wName), displayMode: .inline)
     }
     
+    /**Toggles the favourite status of the exercise*/
     func toggleFav(exercise: Exercise) {
         exercise.isFavourite.toggle()
         if managedObjectContext.hasChanges {
@@ -106,6 +107,7 @@ struct ExercisesList: View {
         }
     }
     
+    /**Deletes the given exercise*/
     func deleteExercise(exercise: Exercise) {
         managedObjectContext.delete(exercise)
         if managedObjectContext.hasChanges {
@@ -117,7 +119,7 @@ struct ExercisesList: View {
         }
     }
     
-    /**Created workout history entry*/
+    /**Creates workout history entry for start today workout*/
     func createWorkoutHistory() -> WorkoutHistory {
         let workoutHistory = WorkoutHistory(context: managedObjectContext)
         workoutHistory.name = selectedWorkout.name

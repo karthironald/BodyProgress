@@ -17,11 +17,11 @@ struct WorkoutRow: View {
         ZStack {
             workout.wBodyPart.color()
             HStack(alignment: .center) {
-                Image(systemName: "flame.fill")
+                Image(systemName: "bolt.circle.fill")
                     .imageScale(.large)
                     .foregroundColor(.white)
                     .font(kPrimaryTitleFont)
-                    .padding([.leading], 25)
+                    .padding([.leading], 15)
                 VStack(alignment: .leading) {
                     HStack {
                         Text(workout.wName)
@@ -41,7 +41,7 @@ struct WorkoutRow: View {
                             .multilineTextAlignment(.leading)
                     }
                 }
-                .padding([.leading, .top, .bottom])
+                .padding(5)
                 Spacer()
                 if workout.wExercises.count > 0 {
                     Text("\(workout.wExercises.count)")
@@ -76,13 +76,5 @@ struct WorkoutRow_Previews: PreviewProvider {
         pWorkout.isFavourite = true
         return WorkoutRow(workout: pWorkout)
             .previewLayout(.fixed(width: 400, height: 80))
-    }
-}
-
-struct GradientView: View {
-    var colours: [Color]
-    
-    var body: some View {
-        LinearGradient(gradient: Gradient(colors: colours), startPoint: .topLeading, endPoint: .bottomTrailing)
     }
 }

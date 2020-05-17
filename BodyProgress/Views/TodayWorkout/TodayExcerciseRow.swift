@@ -15,7 +15,7 @@ struct TodayExcerciseRow: View {
     
     var body: some View {
         ZStack {
-            Color.secondary.opacity(0.2)
+            Color.black.opacity(0.1)
             VStack {
                 HStack() {
                     Text(exercise.wName)
@@ -41,6 +41,5 @@ struct TodayExcerciseRow: View {
 struct TodayExcerciseRow_Previews: PreviewProvider {
     static var previews: some View {
         Text("Yet to be configured")
-        //        TodayExcerciseRow()
     }
 }

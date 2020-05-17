@@ -9,10 +9,6 @@
 import SwiftUI
 
 let kAppDelegate = UIApplication.shared.delegate as! AppDelegate
-let kGradientStyle1 = [Color(UIColor.systemPink), Color(UIColor.systemRed)]
-let kGradientStyle2 = [Color(UIColor.systemOrange), Color(UIColor.systemYellow)]
-let kGradientStyle3 = [Color(UIColor.systemPurple), Color(UIColor.systemBlue)]
-let kGradientStyle4 = [Color(UIColor.magenta), Color(UIColor.red)]
 
 let kShadowRadius: CGFloat = 3.0
 let kCornerRadius: CGFloat = 15.0
@@ -25,6 +21,8 @@ let kPrimarySubheadlineFont = Font.system(.subheadline, design: .rounded)
 let kPrimaryColour = Color.green
 let kPrimaryUIColour = UIColor.systemGreen
 let kCommonListIndex = 9999
+let kOneHour: Int16 = 3600
+let kOneMinute: Int16 = 60
 
 enum BodyParts: String, CaseIterable {
     case arms = "Arms"

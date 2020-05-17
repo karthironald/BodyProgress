@@ -17,7 +17,6 @@ struct TodayExerciseSet: View {
     }
     @Environment(\.managedObjectContext) var managedObjectContext
     
-    // Sample comment has been added  
     var body: some View {
         GeometryReader { geo in
             HStack() {
@@ -63,6 +62,7 @@ struct TodayExerciseSet: View {
         }
     }
     
+    /**Update the completion status of the exercise set*/
     func updateExerciseSet() {
         exerciseSet.status = status
     }
