@@ -1,4 +1,4 @@
-# BodyProgress using SwiftUI#
+# BodyProgress using SwiftUI #
 
 ## What is this app for? ##
 
