@@ -60,6 +60,7 @@ struct TodayWorkout: View {
     
     func updateWorkout() {
         selectedWorkout.duration = self.duration
+        selectedWorkout.status = isAllSetCompleted()
         if managedObjectContext.hasChanges {
             do {
                 try managedObjectContext.save()

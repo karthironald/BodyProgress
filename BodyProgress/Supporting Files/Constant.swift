@@ -27,13 +27,13 @@ let kPrimaryUIColour = UIColor.systemGreen
 let kCommonListIndex = 9999
 
 enum BodyParts: String, CaseIterable {
-    case core = "Core"
     case arms = "Arms"
-    case back = "Back"
     case chest = "Chest"
-    case legs = "Legs"
     case shoulders = "Shoulders"
     case abs = "Abs"
+    case back = "Back"
+    case legs = "Leg"
+    case core = "Core"
     case fullBody = "Full Body"
     case cardio = "Cardio"
     case others = "Others"

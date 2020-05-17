@@ -13,7 +13,7 @@ struct ContentView: View {
     
     var body: some View {
         TabView(selection: $selectedTab) {
-            WorkoutHistoryView().tabItem {
+            WokroutHistoryTabView().tabItem {
                 Image(systemName: "h.circle.fill")
                     .imageScale(.large)
                 Text("History")
