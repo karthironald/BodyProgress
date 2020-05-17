@@ -1,29 +1,42 @@
-# README #
+# BodyProgress using SwiftUI#
 
-This README would normally document whatever steps are necessary to get your application up and running.
+## What is this app for? ##
 
-### What is this repository for? ###
+* Simple workout and progress tracking app for fitness freaks
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+## Features: ##
 
-### How do I get set up? ###
+### Workout: ###
+* Creating unlimited new workouts
+* Updating existing workout
+* Marking workout as favourite and unfavourite
+* Deleting a workout 
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+### Exercise: ###
+* Creating unlimited new exercises in a workout 
+* Updating existing exercises
+* Marking exercise as favourite and unfavourite
+* Deleting an exercise
 
-### Contribution guidelines ###
+### Set: ###
+* Creating unlimited new sets in an exercise with predefined weights and reputations 
+* Updating existing sets
+* Marking set as favourite and unfavourite
+* Deleting a set
 
-* Writing tests
-* Code review
-* Other guidelines
+### Today: ###
+* Starting today workout 
+* Marking exercise sets as completed as you complete the set
+* Workout duration tracker
 
-### Who do I talk to? ###
+### History: ###
+* Can check your workout histories 
+* Filters to narrow down your results
 
-* Repo owner or admin
-* Other community or team contact
+## Roadmap: ##
+* Diets
+* Local Notifications
+* Body Measurements
+* Exercise reference images and videos attachments
+* Workout Charts 
+
