@@ -18,12 +18,15 @@ let kPrimaryLargeTitleFont = Font.system(.largeTitle, design: .rounded)
 let kPrimaryBodyFont = Font.system(.body, design: .rounded)
 let kPrimaryHeadlineFont = Font.system(.headline, design: .rounded)
 let kPrimarySubheadlineFont = Font.system(.subheadline, design: .rounded)
-let kPrimaryColour = Color.green.opacity(kOpacity)
-let kPrimaryUIColour = UIColor.systemGreen.withAlphaComponent(CGFloat(kOpacity))
+let kPrimaryColour = Color.green.opacity(kPrimaryColourOpacity)
+let kPrimaryUIColour = UIColor.systemGreen.withAlphaComponent(CGFloat(kPrimaryColourOpacity))
 let kCommonListIndex = 9999
 let kOneHour: Int16 = 3600
 let kOneMinute: Int16 = 60
-let kOpacity = 1.0
+let kPrimaryColourOpacity = 1.0
+let kPrimaryListCellOpacity = 0.3
+let kPrimaryBackgroundColour = Color.secondary.opacity(kPrimaryListCellOpacity)
+let kFavStarColour = Color.yellow
 
 enum BodyParts: String, CaseIterable {
     case arms = "Arms"
@@ -37,16 +40,17 @@ enum BodyParts: String, CaseIterable {
     case cardio = "Cardio"
     case others = "Others"
     
+    // We need to use different colours in for each body type in future
     func color() -> Color {
         switch self {
-        case .core, .cardio, .others: return Color(.systemGray2).opacity(kOpacity)
-        case .arms: return Color(.systemRed).opacity(kOpacity)
-        case .back: return Color(.systemGreen).opacity(kOpacity)
-        case .chest: return Color(.systemBlue).opacity(kOpacity)
-        case .legs: return Color(.systemPurple).opacity(kOpacity)
-        case .shoulders: return Color(.systemYellow).opacity(kOpacity)
-        case .abs: return Color(.systemOrange).opacity(kOpacity)
-        case .fullBody: return Color(.systemPink).opacity(kOpacity)
+        case .core, .cardio, .others: return Color.secondary.opacity(kPrimaryListCellOpacity)
+        case .arms: return Color.secondary.opacity(kPrimaryListCellOpacity)
+        case .back: return Color.secondary.opacity(kPrimaryListCellOpacity)
+        case .chest: return Color.secondary.opacity(kPrimaryListCellOpacity)
+        case .legs: return Color.secondary.opacity(kPrimaryListCellOpacity)
+        case .shoulders: return Color.secondary.opacity(kPrimaryListCellOpacity)
+        case .abs: return Color.secondary.opacity(kPrimaryListCellOpacity)
+        case .fullBody: return Color.secondary.opacity(kPrimaryListCellOpacity)
         }
     }
 }

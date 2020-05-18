@@ -65,7 +65,6 @@ struct ExerciseSetsList: View {
                         reputationIndex: AddExerciseSet.reputations.firstIndex(of: Int(self.selectedExercise.wExerciseSets[self.editExerciseSetIndex].wReputation)) ?? 0,
                         selectedExerciseSet: self.selectedExercise.wExerciseSets[self.editExerciseSetIndex]
                     ).environment(\.managedObjectContext, self.managedObjectContext)
-                    
                 })
                     .navigationBarTitle(Text("Set"))
                     .navigationBarItems(trailing:

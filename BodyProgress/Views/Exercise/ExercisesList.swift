@@ -138,7 +138,7 @@ struct ExercisesList: View {
             exerciseHistory.id = UUID()
             exerciseHistory.createdAt = Date()
             exerciseHistory.updatedAt = Date()
-        
+            
             for exerciseSet in exercise.wExerciseSets {
                 let newExerciseSetHistory = ExerciseSetHistory(context: managedObjectContext)
                 newExerciseSetHistory.name = exerciseSet.name

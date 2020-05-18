@@ -14,7 +14,7 @@ struct WokroutHistoryRow: View {
     
     var body: some View {
         ZStack {
-            Color.black.opacity(0.1)
+            kPrimaryBackgroundColour
             HStack(alignment: .center) {
                 Image(systemName: "clock.fill")
                     .imageScale(.large)
@@ -28,16 +28,16 @@ struct WokroutHistoryRow: View {
                         .fontWeight(.bold)
                     HStack {
                         Text("\(workoutHistory.wCreatedAt, formatter: DateFormatter().appDormatter)")
-                        .font(kPrimaryBodyFont)
+                        .font(kPrimarySubheadlineFont)
                         .opacity(0.5)
                         if !workoutHistory.wDuration.detailedDisplayDuration().isEmpty {
                             Text("(\(workoutHistory.wDuration.detailedDisplayDuration()))")
-                                .font(kPrimaryBodyFont)
+                                .font(kPrimarySubheadlineFont)
                                 .opacity(0.5)
                         }
                     }
                     Text("\(workoutHistory.wBodyPart.rawValue)")
-                        .font(kPrimaryBodyFont)
+                        .font(kPrimarySubheadlineFont)
                         .opacity(0.5)
                 }
                 .padding(5)

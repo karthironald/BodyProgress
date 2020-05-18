@@ -20,9 +20,10 @@ struct ExerciseRow: View {
                 HStack(alignment: .center) {
                     Image(systemName: "bolt.circle.fill")
                         .imageScale(.large)
-                        .foregroundColor(.white)
                         .font(kPrimaryTitleFont)
                         .padding([.leading], 15)
+                        .foregroundColor(Color.gray)
+                        .opacity(0.5)
                     VStack(alignment: .leading) {
                         HStack {
                             Text(exercise.wName)
@@ -33,7 +34,7 @@ struct ExerciseRow: View {
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 15, height: 15)
-                                    .foregroundColor(Color.white)
+                                    .foregroundColor(kFavStarColour)
                             }
                         }
                         if (!exercise.wNotes.isEmpty) && (exercise.wNotes != kDefaultValue) {
@@ -49,21 +50,18 @@ struct ExerciseRow: View {
                             .font(kPrimaryBodyFont)
                             .bold()
                             .frame(width: 30, height: 30)
-                            .foregroundColor(.white)
                             .padding([.top, .bottom], 5)
                             .clipShape(Circle())
                     }
                     Image(systemName: "arrowtriangle.right.fill")
-                        .foregroundColor(.black)
-                        .opacity(0.1)
+                        .foregroundColor(.secondary)
+                        .opacity(0.2)
                         .padding([.top, .bottom, .trailing])
                 }
             }
         }
-        .foregroundColor(.white)
         .frame(height: 80)
         .cornerRadius(kCornerRadius)
-        .shadow(radius: kShadowRadius)
     }
 }
 

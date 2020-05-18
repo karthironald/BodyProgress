@@ -15,7 +15,7 @@ struct ExerciseSetRow: View {
     
     var body: some View {
         ZStack {
-            Color.black.opacity(0.1)
+            kPrimaryBackgroundColour
             VStack {
                 HStack(alignment: .center) {
                     Image(systemName: "bolt.circle.fill")
@@ -34,7 +34,7 @@ struct ExerciseSetRow: View {
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 15, height: 15)
-                                    .foregroundColor(Color.white)
+                                    .foregroundColor(kFavStarColour)
                             }
                         }
                         if (!exerciseSet.wNotes.isEmpty) && (exerciseSet.wNotes != kDefaultValue) {
