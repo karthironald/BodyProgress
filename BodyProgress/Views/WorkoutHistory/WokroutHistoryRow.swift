@@ -26,16 +26,9 @@ struct WokroutHistoryRow: View {
                     Text(workoutHistory.wName)
                         .font(kPrimaryHeadlineFont)
                         .fontWeight(.bold)
-                    HStack {
-                        Text("\(workoutHistory.wCreatedAt, formatter: DateFormatter().appDormatter)")
+                    Text("\(workoutHistory.wCreatedAt, formatter: DateFormatter().appDormatter)")
                         .font(kPrimarySubheadlineFont)
                         .opacity(0.5)
-                        if !workoutHistory.wDuration.detailedDisplayDuration().isEmpty {
-                            Text("(\(workoutHistory.wDuration.detailedDisplayDuration()))")
-                                .font(kPrimarySubheadlineFont)
-                                .opacity(0.5)
-                        }
-                    }
                     Text("\(workoutHistory.wBodyPart.rawValue)")
                         .font(kPrimarySubheadlineFont)
                         .opacity(0.5)
@@ -46,7 +39,11 @@ struct WokroutHistoryRow: View {
                     .imageScale(.large)
                     .foregroundColor(workoutHistory.isAllSetCompleted() ? kPrimaryColour : .orange)
                     .font(kPrimaryBodyFont)
-                    .padding()
+                    .padding(.trailing, 10)
+                Image(systemName: "arrowtriangle.right.fill")
+                    .foregroundColor(.secondary)
+                    .opacity(0.2)
+                    .padding([.top, .bottom, .trailing])
             }
         }
         .frame(height: 90)

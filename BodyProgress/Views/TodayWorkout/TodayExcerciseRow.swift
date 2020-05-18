@@ -11,7 +11,7 @@ import SwiftUI
 struct TodayExcerciseRow: View {
     
     @ObservedObject var exercise: ExerciseHistory
-    @Environment(\.managedObjectContext) var managedObjectContext
+    var isViewOnly = false
     
     var body: some View {
         ZStack {
@@ -26,7 +26,7 @@ struct TodayExcerciseRow: View {
                 Divider()
                 VStack(alignment: .leading) {
                     ForEach(exercise.wExerciseSets, id: \.self) { exSet in
-                        TodayExerciseSet(exerciseSet: exSet).environment(\.managedObjectContext, self.managedObjectContext)
+                        TodayExerciseSet(exerciseSet: exSet, isViewOnly: self.isViewOnly)
                     }
                 }
             }

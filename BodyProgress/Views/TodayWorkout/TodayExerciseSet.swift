@@ -15,7 +15,7 @@ struct TodayExerciseSet: View {
     @State var status: Bool = false {
         didSet { exerciseSet.status = status }
     }
-    @Environment(\.managedObjectContext) var managedObjectContext
+    var isViewOnly = false
     
     var body: some View {
         GeometryReader { geo in
@@ -42,24 +42,32 @@ struct TodayExerciseSet: View {
                 }
                 .frame(width: geo.size.width / 4, alignment: .trailing)
                 Spacer()
-                Image(systemName: self.status ? "burst.fill" : "burst")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .imageScale(.large)
-                    .frame(width: 25, height: 20)
-                    .foregroundColor(self.status ? .green : .secondary)
-                    .padding(.leading)
-                    .onTapGesture {
-                        let generator = UIImpactFeedbackGenerator(style: .heavy)
-                        generator.impactOccurred()
-                        withAnimation() {
-                            self.status.toggle()
-                        }
-                        self.updateExerciseSet()
+                if self.isViewOnly {
+                    self.statusImageView(status: self.exerciseSet.status)
+                } else {
+                    self.statusImageView(status: self.status)
+                        .onTapGesture {
+                            let generator = UIImpactFeedbackGenerator(style: .heavy)
+                            generator.impactOccurred()
+                            withAnimation() {
+                                self.status.toggle()
+                            }
+                            self.updateExerciseSet()
+                    }
                 }
             }
             .multilineTextAlignment(.leading)
         }
+    }
+    
+    func statusImageView(status: Bool) -> some View {
+        Image(systemName: status ? "burst.fill" : "burst")
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .imageScale(.large)
+            .frame(width: 25, height: 20)
+            .foregroundColor(status ? .green : .secondary)
+            .padding(.leading)
     }
     
     /**Update the completion status of the exercise set*/

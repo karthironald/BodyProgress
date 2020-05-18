@@ -23,7 +23,7 @@ struct ExercisesList: View {
                 EmptyStateInfoView(message: "No exercises added")
             }
             VStack {
-                List{
+                List {
                     ForEach(0..<selectedWorkout.wExercises.count, id: \.self) { exerciseIndex in
                         ZStack {
                             ExerciseRow(exercise: self.selectedWorkout.wExercises[exerciseIndex])
