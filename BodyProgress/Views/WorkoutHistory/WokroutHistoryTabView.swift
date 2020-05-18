@@ -28,10 +28,10 @@ struct WokroutHistoryTabView: View {
                         HStack {
                             ForEach(BodyParts.allCases, id: \.self) { part in
                                 Text(part.rawValue)
-                                    .font(kPrimaryBodyFont)
-                                    .foregroundColor(Color.white)
+                                    .font(kPrimaryFootnoteFont)
+                                    .opacity(1)
                                     .padding()
-                                    .background(self.bodyPartsSort.contains(part) ? kPrimaryColour : Color.gray)
+                                    .background(self.bodyPartsSort.contains(part) ? kPrimaryColour : kPrimaryBackgroundColour)
                                     .frame(height: 30)
                                     .cornerRadius(10)
                                     .onTapGesture {
@@ -64,7 +64,7 @@ struct WokroutHistoryTabView: View {
             }
             .navigationBarItems(trailing:
                 Button(action: {
-                    withAnimation() {
+                    withAnimation(.linear) {
                         self.shouldPresentBodyParts.toggle()
                     }
                 }) {

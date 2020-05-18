@@ -13,16 +13,21 @@ let kAppDelegate = UIApplication.shared.delegate as! AppDelegate
 let kShadowRadius: CGFloat = 3.0
 let kCornerRadius: CGFloat = 15.0
 let kDefaultValue = "-"
+let kCommonListIndex = 9999
+let kOneHour: Int16 = 3600
+let kOneMinute: Int16 = 60
+
 let kPrimaryTitleFont = Font.system(.title, design: .rounded)
 let kPrimaryLargeTitleFont = Font.system(.largeTitle, design: .rounded)
 let kPrimaryBodyFont = Font.system(.body, design: .rounded)
 let kPrimaryHeadlineFont = Font.system(.headline, design: .rounded)
 let kPrimarySubheadlineFont = Font.system(.subheadline, design: .rounded)
+let kPrimaryFootnoteFont = Font.system(.footnote, design: .rounded)
+let kPrimaryCalloutFont = Font.system(.callout, design: .rounded)
+let kPrimaryCaptionFont = Font.system(.caption, design: .rounded)
+
 let kPrimaryColour = Color.green.opacity(kPrimaryColourOpacity)
 let kPrimaryUIColour = UIColor.systemGreen.withAlphaComponent(CGFloat(kPrimaryColourOpacity))
-let kCommonListIndex = 9999
-let kOneHour: Int16 = 3600
-let kOneMinute: Int16 = 60
 let kPrimaryColourOpacity = 1.0
 let kPrimaryListCellOpacity = 0.3
 let kPrimaryBackgroundColour = Color.secondary.opacity(kPrimaryListCellOpacity)

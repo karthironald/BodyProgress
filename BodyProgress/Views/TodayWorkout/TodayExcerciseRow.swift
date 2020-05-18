@@ -15,7 +15,7 @@ struct TodayExcerciseRow: View {
     
     var body: some View {
         ZStack {
-            Color.black.opacity(0.1)
+            kPrimaryBackgroundColour
             VStack {
                 HStack() {
                     Text(exercise.wName)
