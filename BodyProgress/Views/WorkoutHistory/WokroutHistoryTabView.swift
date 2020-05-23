@@ -12,6 +12,17 @@ enum WorkoutHistoryStatusSort: String, CaseIterable {
     case Completed
     case Pending
     case Both
+    
+    func title() -> String {
+        switch self {
+        case .Completed:
+            return "Completed 😈"
+        case .Pending:
+            return "Gave up 🤕"
+        case .Both:
+            return "All"
+        }
+    }
 }
 
 struct WokroutHistoryTabView: View {
@@ -51,7 +62,7 @@ struct WokroutHistoryTabView: View {
                         .padding([.leading, .trailing], 15)
                     Picker(selection: $statusSort, label: Text("Status")) {
                         ForEach(WorkoutHistoryStatusSort.allCases, id: \.self) { status in
-                            Text(status.rawValue)
+                            Text(status.title())
                         }
                     }
                     .pickerStyle(SegmentedPickerStyle())
