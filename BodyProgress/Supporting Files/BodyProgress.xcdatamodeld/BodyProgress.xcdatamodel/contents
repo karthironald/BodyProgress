@@ -9,6 +9,7 @@
         <attribute name="expectedRestDuration" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="expectedTotalDuration" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="index" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="isFavourite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="notes" optional="YES" attributeType="String"/>
@@ -37,6 +38,7 @@
         <attribute name="deletedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="duration" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="index" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="isFavourite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="notes" optional="YES" attributeType="String"/>
@@ -75,6 +77,7 @@
         <attribute name="deletedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="imagePath" optional="YES" attributeType="String"/>
+        <attribute name="index" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="isFavourite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="lastTrainedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
@@ -98,12 +101,12 @@
         <relationship name="exercises" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ExerciseHistory" inverseName="workout" inverseEntity="ExerciseHistory"/>
     </entity>
     <elements>
-        <element name="Exercise" positionX="36" positionY="144" width="128" height="253"/>
+        <element name="Exercise" positionX="36" positionY="144" width="128" height="268"/>
         <element name="ExerciseHistory" positionX="18" positionY="189" width="128" height="253"/>
-        <element name="ExerciseSet" positionX="9" positionY="171" width="128" height="223"/>
+        <element name="ExerciseSet" positionX="9" positionY="171" width="128" height="238"/>
         <element name="ExerciseSetHistory" positionX="27" positionY="198" width="128" height="223"/>
         <element name="User" positionX="18" positionY="189" width="128" height="148"/>
-        <element name="Workout" positionX="-18" positionY="27" width="128" height="208"/>
+        <element name="Workout" positionX="-18" positionY="27" width="128" height="223"/>
         <element name="WorkoutHistory" positionX="9" positionY="180" width="128" height="238"/>
     </elements>
 </model>

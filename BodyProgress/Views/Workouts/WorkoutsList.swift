@@ -12,7 +12,7 @@ import Combine
 struct WorkoutsList: View {
     
     @Environment(\.managedObjectContext) var managedObjectContext
-    @FetchRequest(entity: Workout.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Workout.createdAt, ascending: true)]) var workouts: FetchedResults<Workout>
+    @FetchRequest(entity: Workout.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Workout.index, ascending: false)]) var workouts: FetchedResults<Workout>
     @State var shouldPresentAddNewWorkout: Bool = false
     @State var shouldPresentEditWorkout: Bool = false
     @State var editWorkoutIndex: Int = kCommonListIndex
@@ -58,12 +58,18 @@ struct WorkoutsList: View {
                                 }
                             }
                         }
+                        .onMove { (source, destination) in
+                            print(source)
+                            print(destination)
+                        }
                     }
                     .sheet(isPresented: $shouldPresentEditWorkout, content: {
                         AddWorkout(shouldPresentAddNewWorkout: self.$shouldPresentEditWorkout, name: self.workouts[self.editWorkoutIndex].wName, notes: self.workouts[self.editWorkoutIndex].wNotes, bodyPartIndex: BodyParts.allCases.firstIndex(of: self.workouts[self.editWorkoutIndex].wBodyPart) ?? 0, workoutToEdit: self.workouts[self.editWorkoutIndex]).environment(\.managedObjectContext, self.managedObjectContext)
                     })
                     .navigationBarTitle(Text("Workouts"))
-                    .navigationBarItems(trailing:
+                    .navigationBarItems(
+                        leading: EditButton(),
+                        trailing:
                         Button(action: {
                             self.shouldPresentAddNewWorkout.toggle()
                         }) {
@@ -71,7 +77,7 @@ struct WorkoutsList: View {
                                 .font(kPrimaryTitleFont)
                                 .foregroundColor(kPrimaryColour)
                         }.sheet(isPresented: $shouldPresentAddNewWorkout) {
-                            AddWorkout(shouldPresentAddNewWorkout: self.$shouldPresentAddNewWorkout).environment(\.managedObjectContext, self.managedObjectContext)
+                            AddWorkout(shouldPresentAddNewWorkout: self.$shouldPresentAddNewWorkout, index: Int16(self.workouts.count) ).environment(\.managedObjectContext, self.managedObjectContext)
                         }
                     )
                 }

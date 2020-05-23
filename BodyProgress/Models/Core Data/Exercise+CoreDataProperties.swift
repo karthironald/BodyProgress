@@ -24,6 +24,7 @@ extension Exercise {
     @NSManaged public var updatedAt: Date?
     @NSManaged public var deletedAt: Date?
     @NSManaged public var expectedTotalDuration: Int16
+    @NSManaged public var index: Int16
     @NSManaged public var actualTotalDuration: Int16
     @NSManaged public var expectedRestDuration: Int16
     @NSManaged public var actualRestDuration: Int16
@@ -51,6 +52,7 @@ extension Exercise {
             $0.createdAt ?? Date() < $1.createdAt ?? Date()
         }
     }
+    var wIndex: Int16 { index }
     
 }
 

@@ -29,7 +29,8 @@ extension ExerciseSet {
     @NSManaged public var duration: Int16
     @NSManaged public var isFavourite: Bool
     @NSManaged public var exercise: Exercise?
-
+    @NSManaged public var index: Int16
+    
     var wId: UUID { id ?? UUID() }
     var wName: String { name ?? kDefaultValue }
     var wNotes: String { notes ?? kDefaultValue }
@@ -42,5 +43,6 @@ extension ExerciseSet {
     var wDuration: Int16 { duration }
     var wIsFavourite: Bool { isFavourite }
     var wExercise: Exercise { exercise ?? Exercise() }
+    var wIndex: Int16 { index }
     
 }

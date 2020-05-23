@@ -28,7 +28,8 @@ extension Workout {
     @NSManaged public var isFavourite: Bool
     @NSManaged public var bodyPart: String?
     @NSManaged public var exercises: NSSet?
-
+    @NSManaged public var index: Int16
+    
     var wName: String { name ?? kDefaultValue }
     var wNotes: String { notes ?? kDefaultValue }
     var wCreatedAt: Date { createdAt ?? Date() }
@@ -45,6 +46,7 @@ extension Workout {
             $0.createdAt ?? Date() < $1.createdAt ?? Date()
         }
     }
+    var wIndex: Int16 { index }
     
 }
 

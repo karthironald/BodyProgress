@@ -18,6 +18,7 @@ struct AddWorkout: View {
     @State var notes: String = ""
     @State var bodyPartIndex = 0
     var workoutToEdit: Workout?
+    var index: Int16 = 0
     
     var body: some View {
         NavigationView {
@@ -62,6 +63,7 @@ struct AddWorkout: View {
             newWorkout.id = UUID()
             newWorkout.createdAt = Date()
             newWorkout.updatedAt = Date()
+            newWorkout.index = index
         }
         if managedObjectContext.hasChanges {
             do {
