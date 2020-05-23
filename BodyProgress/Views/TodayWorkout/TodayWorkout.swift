@@ -15,6 +15,7 @@ struct TodayWorkout: View {
     @State var displayDuration = ""
     @State var duration: Int16 = 0
     @State var showIncompleteAlert = false
+    @State var showCompleteInfoAlert = false
     
     @Environment(\.managedObjectContext) var managedObjectContext
     @Environment(\.presentationMode) var presentation
@@ -36,7 +37,6 @@ struct TodayWorkout: View {
                         self.showIncompleteAlert.toggle()
                     } else {
                         self.updateWorkout()
-                        self.presentation.wrappedValue.dismiss()
                     }
                 }, label: {
                     CustomBarButton(title: "Finish")
@@ -49,9 +49,15 @@ struct TodayWorkout: View {
                     }))
             }
         }
-        .onReceive(timer) { date in
-            self.duration = Int16(date.timeIntervalSince(self.startDate))
-            self.displayDuration = self.duration.displayDuration()
+        .alert(isPresented: $showCompleteInfoAlert, content: { () -> Alert in
+            Alert(title:
+                Text("🎉"), message: Text("Today workout has been saved successfully"), dismissButton: Alert.Button.cancel(Text("Okay"), action: {
+                self.presentation.wrappedValue.dismiss()
+            }))
+        })
+            .onReceive(timer) { date in
+                self.duration = Int16(date.timeIntervalSince(self.startDate))
+                self.displayDuration = self.duration.displayDuration()
         }
     }
     
@@ -62,6 +68,7 @@ struct TodayWorkout: View {
         if managedObjectContext.hasChanges {
             do {
                 try managedObjectContext.save()
+                self.showCompleteInfoAlert.toggle()
             } catch {
                 print(error)
             }
