@@ -12,9 +12,7 @@ import CoreData
 struct TodayExerciseSet: View {
     
     @ObservedObject var exerciseSet: ExerciseSetHistory
-    @State var status: Bool = false {
-        didSet { exerciseSet.status = status }
-    }
+    @State var status: Bool = false
     var isViewOnly = false
     
     var body: some View {
@@ -45,14 +43,14 @@ struct TodayExerciseSet: View {
                 if self.isViewOnly {
                     self.statusImageView(status: self.exerciseSet.status)
                 } else {
-                    self.statusImageView(status: self.status)
+                    self.statusImageView(status: self.exerciseSet.status)
                         .onTapGesture {
                             let generator = UIImpactFeedbackGenerator(style: .heavy)
                             generator.impactOccurred()
                             withAnimation() {
-                                self.status.toggle()
+                                self.exerciseSet.status.toggle()
+                                self.status = self.exerciseSet.status
                             }
-                            self.updateExerciseSet()
                     }
                 }
             }
@@ -68,11 +66,6 @@ struct TodayExerciseSet: View {
             .frame(width: 25, height: 20)
             .foregroundColor(status ? .green : .secondary)
             .padding(.leading)
-    }
-    
-    /**Update the completion status of the exercise set*/
-    func updateExerciseSet() {
-        exerciseSet.status = status
     }
     
 }
