@@ -45,7 +45,6 @@ struct TodayWorkout: View {
                 .alert(isPresented: $showIncompleteAlert) { () -> Alert in
                     Alert(title: Text("Few exercise sets are pending. Are you sure to finish?"), primaryButton: Alert.Button.cancel(), secondaryButton: Alert.Button.default(Text("Finish"), action: {
                         self.updateWorkout()
-                        self.presentation.wrappedValue.dismiss()
                     }))
             }
         }

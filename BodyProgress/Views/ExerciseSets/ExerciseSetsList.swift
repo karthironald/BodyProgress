@@ -53,6 +53,13 @@ struct ExerciseSetsList: View {
                             }
                         }
                     }
+                    .onDelete { (indexSet) in
+                        if let index = indexSet.first, index < self.selectedExercise.wExerciseSets.count {
+                            withAnimation {
+                                self.deleteExerciseSet(set: self.selectedExercise.wExerciseSets[index])
+                            }
+                        }
+                    }
                 }
                 .padding([.top, .bottom], 10)
                 .sheet(isPresented: $shouldPresentEditExerciseSet, content: {

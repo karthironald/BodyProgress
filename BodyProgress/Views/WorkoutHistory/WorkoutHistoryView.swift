@@ -8,7 +8,7 @@
 
 import SwiftUI
 import CoreData
-        
+
 struct WorkoutHistoryView: View {
     
     @Environment(\.managedObjectContext) var managedObjectContext
@@ -40,12 +40,31 @@ struct WorkoutHistoryView: View {
                             }
                         }
                     }
+                    .onDelete { (indexSet) in
+                        if let index = indexSet.first, index < self.workoutHistory.count {
+                            withAnimation {
+                                self.delete(workoutHistory: self.workoutHistory[index])
+                            }
+                        }
+                    }
                 }
             }
             .navigationBarTitle(Text("History"))
         }
         .onAppear {
             kAppDelegate.removeSeparatorLineAppearance()
+        }
+    }
+    
+    /**Deletes given workout history*/
+    func delete(workoutHistory: WorkoutHistory) {
+        managedObjectContext.delete(workoutHistory)
+        if managedObjectContext.hasChanges {
+            do {
+                try managedObjectContext.save()
+            } catch {
+                print(error)
+            }
         }
     }
 }

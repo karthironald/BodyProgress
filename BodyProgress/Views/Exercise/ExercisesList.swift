@@ -57,7 +57,13 @@ struct ExercisesList: View {
                             }
                         }
                     }
-                    
+                    .onDelete { (indexSet) in
+                        if let index = indexSet.first, index < self.selectedWorkout.wExercises.count {
+                            withAnimation {
+                                self.deleteExercise(exercise: self.selectedWorkout.wExercises[index])
+                            }
+                        }
+                    }
                 }
                 .padding([.top, .bottom], 10)
                 .sheet(isPresented: $shouldPresentEditExercise, content: {

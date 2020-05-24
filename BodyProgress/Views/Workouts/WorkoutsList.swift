@@ -58,6 +58,13 @@ struct WorkoutsList: View {
                                 }
                             }
                         }
+                        .onDelete { (indexSet) in
+                            if let index = indexSet.first, index < self.workouts.count {
+                                withAnimation {
+                                    self.deleteWorkout(workout: self.workouts[index])
+                                }
+                            }
+                        }
                     }
                     .sheet(isPresented: $shouldPresentEditWorkout, content: {
                         AddWorkout(shouldPresentAddNewWorkout: self.$shouldPresentEditWorkout, name: self.workouts[self.editWorkoutIndex].wName, notes: self.workouts[self.editWorkoutIndex].wNotes, bodyPartIndex: BodyParts.allCases.firstIndex(of: self.workouts[self.editWorkoutIndex].wBodyPart) ?? 0, workoutToEdit: self.workouts[self.editWorkoutIndex]).environment(\.managedObjectContext, self.managedObjectContext)
