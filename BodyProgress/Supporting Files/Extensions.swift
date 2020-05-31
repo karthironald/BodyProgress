@@ -25,13 +25,13 @@ extension Int16 {
         var secondsString = ""
         
         if hours > 0 {
-            hourString.append("\(hours) h")
+            hourString.append("\(hours)h")
         }
         if minutes > 0 {
-            minuteString.append("\(minutes) m")
+            minuteString.append("\(minutes)m")
         }
         if seconds > 0 {
-            secondsString.append("\(seconds) s")
+            secondsString.append("\(seconds)s")
         }
         let sample: [String] = [hourString, minuteString, secondsString]
         return sample.joined(separator: " ").trimmingCharacters(in: .whitespacesAndNewlines)
