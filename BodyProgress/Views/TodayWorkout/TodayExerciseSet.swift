@@ -45,8 +45,7 @@ struct TodayExerciseSet: View {
                 } else {
                     self.statusImageView(status: self.exerciseSet.status)
                         .onTapGesture {
-                            let generator = UIImpactFeedbackGenerator(style: .heavy)
-                            generator.impactOccurred()
+                            Helper.hapticFeedback()
                             withAnimation() {
                                 self.exerciseSet.status.toggle()
                                 self.status = self.exerciseSet.status

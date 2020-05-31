@@ -36,6 +36,7 @@
 		77929A0124536DFB00C28A39 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77929A0024536DFB00C28A39 /* Constant.swift */; };
 		779614F8245EE31C00E0216C /* EmptyStateInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779614F7245EE31C00E0216C /* EmptyStateInfoView.swift */; };
 		779BE97D245AF3DD006FDAE8 /* CustomBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779BE97C245AF3DD006FDAE8 /* CustomBarButton.swift */; };
+		77A3EC422483B314007A92B8 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A3EC412483B314007A92B8 /* Helper.swift */; };
 		77B6B51A24521A2D004B9F89 /* WorkoutsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B6B51724521A2D004B9F89 /* WorkoutsList.swift */; };
 		77B6B51C24521A2D004B9F89 /* WorkoutRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B6B51924521A2D004B9F89 /* WorkoutRow.swift */; };
 		77B6B51E24521A36004B9F89 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B6B51D24521A36004B9F89 /* ContentView.swift */; };
@@ -81,6 +82,7 @@
 		77929A0024536DFB00C28A39 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		779614F7245EE31C00E0216C /* EmptyStateInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateInfoView.swift; sourceTree = "<group>"; };
 		779BE97C245AF3DD006FDAE8 /* CustomBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBarButton.swift; sourceTree = "<group>"; };
+		77A3EC412483B314007A92B8 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		77B6B51724521A2D004B9F89 /* WorkoutsList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutsList.swift; sourceTree = "<group>"; };
 		77B6B51924521A2D004B9F89 /* WorkoutRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutRow.swift; sourceTree = "<group>"; };
 		77B6B51D24521A36004B9F89 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 				77B6B52524521A90004B9F89 /* SceneDelegate.swift */,
 				77929A0024536DFB00C28A39 /* Constant.swift */,
 				7766E53F24575361008627D9 /* Extensions.swift */,
+				77A3EC412483B314007A92B8 /* Helper.swift */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -397,6 +400,7 @@
 				770903A4245F280D003F7EDD /* AddExercise.swift in Sources */,
 				774958F3246C6C9F00CF99CF /* ExerciseSetHistory+CoreDataClass.swift in Sources */,
 				774958F2246C6C9F00CF99CF /* ExerciseHistory+CoreDataProperties.swift in Sources */,
+				77A3EC422483B314007A92B8 /* Helper.swift in Sources */,
 				770903A9245F3BEE003F7EDD /* ExerciseSetRow.swift in Sources */,
 				77B6B52D24521A90004B9F89 /* BodyProgress.xcdatamodeld in Sources */,
 				77181012245EBFF3005D6E9F /* User+CoreDataProperties.swift in Sources */,

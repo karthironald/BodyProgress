@@ -52,7 +52,8 @@ struct TodayWorkout: View {
                 })
             )
                 .alert(isPresented: $showIncompleteAlert) { () -> Alert in
-                    Alert(title: Text("Few exercise sets are pending. Are you sure to finish?"), primaryButton: Alert.Button.cancel({
+                    Helper.hapticFeedback()
+                    return Alert(title: Text("Few exercise sets are pending. Are you sure to finish?"), primaryButton: Alert.Button.cancel({
                         self.resumeTimer()
                     }), secondaryButton: Alert.Button.default(Text("Finish"), action: {
                         self.updateWorkout()
@@ -60,7 +61,8 @@ struct TodayWorkout: View {
             }
         }
         .alert(isPresented: $showCompleteInfoAlert, content: { () -> Alert in
-            Alert(title:
+            Helper.hapticFeedback()
+            return Alert(title:
                 Text("🎉"), message: Text("Today workout has been saved successfully"), dismissButton: Alert.Button.cancel(Text("Okay"), action: {
                 self.presentation.wrappedValue.dismiss()
             }))
@@ -89,6 +91,7 @@ struct TodayWorkout: View {
     func pauseTimer() {
         self.timer.upstream.connect().cancel()
         shouldPauseTimer = true
+        Helper.hapticFeedback()
     }
     
     /**Resumes the timer from previously stopped time*/
@@ -96,6 +99,7 @@ struct TodayWorkout: View {
         self.startDate = Date().advanced(by: TimeInterval(-self.duration)) // Consider already ran duration when resuming the timer.
         self.timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
         shouldPauseTimer = false
+        Helper.hapticFeedback()
     }
     
 }
