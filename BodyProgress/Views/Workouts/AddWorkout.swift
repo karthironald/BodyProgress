@@ -22,9 +22,9 @@ struct AddWorkout: View {
     var body: some View {
         NavigationView {
             Form {
-                Section { TextField("Name", text: $name) }
-                Section { TextField("Notes", text: $notes) }
-                Section {
+                Section(header: Text("Name")) { TextField("Enter here", text: $name) }
+                Section(header: Text("Notes")) { TextField("Enter here (optional)", text: $notes) }
+                Section(header: Text("Choose body part")) {
                     Picker("Body part", selection: $bodyPartIndex) {
                         ForEach(0..<BodyParts.allCases.count, id: \.self) { index in
                             Text(BodyParts.allCases[index].rawValue)

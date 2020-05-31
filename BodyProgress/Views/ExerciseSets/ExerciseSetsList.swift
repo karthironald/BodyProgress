@@ -68,8 +68,8 @@ struct ExerciseSetsList: View {
                         selectedExercise: self.selectedExercise,
                         name: self.selectedExercise.wExerciseSets[self.editExerciseSetIndex].wName,
                         notes: self.selectedExercise.wExerciseSets[self.editExerciseSetIndex].wNotes,
-                        weightIndex: AddExerciseSet.weights.firstIndex(of: self.selectedExercise.wExerciseSets[self.editExerciseSetIndex].wWeight) ?? 0,
-                        reputationIndex: AddExerciseSet.reputations.firstIndex(of: Int(self.selectedExercise.wExerciseSets[self.editExerciseSetIndex].wReputation)) ?? 0,
+                        weight: self.selectedExercise.wExerciseSets[self.editExerciseSetIndex].wWeight,
+                        reputation: Double(self.selectedExercise.wExerciseSets[self.editExerciseSetIndex].wReputation),
                         selectedExerciseSet: self.selectedExercise.wExerciseSets[self.editExerciseSetIndex]
                     ).environment(\.managedObjectContext, self.managedObjectContext)
                 })

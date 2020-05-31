@@ -7,37 +7,32 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct AddExerciseSet: View {
     
     @Binding var shouldPresentAddNewExerciseSet: Bool
     @Environment(\.managedObjectContext) var managedObjectContext
     
-    static let weights: [Double] = [2.0, 4.0, 6.0, 8.0, 10.0, 12.0, 14.0, 16.0, 18.0, 20.0]
-    static let reputations: [Int] = [8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30]
     var selectedExercise: Exercise
     @State var name: String = ""
     @State var notes: String = ""
     @State var weightIndex: Int = 0
     @State var reputationIndex: Int = 0
+    @State var weight: Double = 7
+    @State var reputation: Double = 10
     var selectedExerciseSet: ExerciseSet?
     
     var body: some View {
         NavigationView {
             Form {
-                Section { TextField("Name", text: $name) }
-                Section { TextField("Notes", text: $notes) }
-                Section {
-                    Picker("Weight (kgs)", selection: $weightIndex) {
-                        ForEach(0..<Self.weights.count, id: \.self) { index in
-                            Text(String(describing: Self.weights[index]))
-                        }
-                    }
-                    Picker("Reputations", selection: $reputationIndex) {
-                        ForEach(0..<Self.reputations.count, id: \.self) { index in
-                            Text(String(describing: Self.reputations[index]))
-                        }
-                    }
+                Section(header: Text("Name")) { TextField("Enter here", text: $name) }
+                Section(header: Text("Notes")) { TextField("Enter here (optional)", text: $notes) }
+                Section(header: Text("Weight (\(Int(weight)) kgs)"), footer: Text("Previous: \(previousSetWeight()) kgs")) {
+                    Slider(value: $weight, in: 1...100, step: 1)
+                }
+                Section(header: Text("Reputations (\(Int(reputation)) rps)"), footer: Text("Previous: \(previousSetRep()) rps")) {
+                    Slider(value: $reputation, in: 1...100, step: 1)
                 }
             }
             .onAppear(perform: {
@@ -50,6 +45,36 @@ struct AddExerciseSet: View {
         }
     }
     
+    func previousSetWeight() -> String {
+        if selectedExerciseSet == nil {
+            return "\(Int(selectedExercise.wExerciseSets.last?.wWeight ?? 0.0))"
+        } else {
+            let index = selectedExercise.wExerciseSets.firstIndex { (exSet) -> Bool in
+                exSet.wId == selectedExerciseSet?.wId
+            }
+            if let index = index, index > 0 {
+                let previousExset = selectedExercise.wExerciseSets[index - 1]
+                return "\(Int(previousExset.wWeight))"
+            }
+        }
+        return "0"
+    }
+    
+    func previousSetRep() -> String {
+        if selectedExerciseSet == nil {
+            return "\(selectedExercise.wExerciseSets.last?.wReputation ?? 0)"
+        } else {
+            let index = selectedExercise.wExerciseSets.firstIndex { (exSet) -> Bool in
+                exSet.wId == selectedExerciseSet?.wId
+            }
+            if let index = index, index > 0 {
+                let previousExset = selectedExercise.wExerciseSets[index - 1]
+                return "\(Int(previousExset.wReputation))"
+            }
+        }
+        return "0"
+    }
+    
     /**Dismisses the view*/
     func dismissView() {
         self.shouldPresentAddNewExerciseSet = false
@@ -60,8 +85,8 @@ struct AddExerciseSet: View {
         if selectedExerciseSet != nil { // Update set flow
             selectedExerciseSet?.name = self.name
             selectedExerciseSet?.notes = self.notes
-            selectedExerciseSet?.weight = Self.weights[weightIndex]
-            selectedExerciseSet?.reputation = Int16(Self.reputations[reputationIndex])
+            selectedExerciseSet?.weight = self.weight
+            selectedExerciseSet?.reputation = Int16(self.reputation)
         } else { // New set flow
             let newExerciseSet = ExerciseSet(context: managedObjectContext)
             newExerciseSet.name = self.name
@@ -69,8 +94,8 @@ struct AddExerciseSet: View {
             newExerciseSet.id = UUID()
             newExerciseSet.createdAt = Date()
             newExerciseSet.updatedAt = Date()
-            newExerciseSet.weight = Self.weights[weightIndex]
-            newExerciseSet.reputation = Int16(Self.reputations[reputationIndex])
+            newExerciseSet.weight = self.weight
+            newExerciseSet.reputation = Int16(self.reputation)
             selectedExercise.addToExerciseSets(newExerciseSet)
         }
         

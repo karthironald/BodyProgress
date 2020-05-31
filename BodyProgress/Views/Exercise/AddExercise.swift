@@ -21,8 +21,8 @@ struct AddExercise: View {
     var body: some View {
         NavigationView {
             Form {
-                Section { TextField("Name", text: $name) }
-                Section { TextField("Notes", text: $notes) }
+                Section(header: Text("Name")) { TextField("Enter here", text: $name) }
+                Section(header: Text("Notes")) { TextField("Enter here (optional)", text: $notes) }
             }
                 .onAppear(perform: {
                     kAppDelegate.addSeparatorLineAppearance()
