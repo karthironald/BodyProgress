@@ -17,7 +17,7 @@ struct WorkoutHistroyDetails: View {
             TodayExcerciseRow(exercise: exercise, isViewOnly: true)
         }
         .padding([.top, .bottom], 10)
-        .navigationBarTitle(Text("\(selectedWorkout.wName)").font(kPrimaryBodyFont), displayMode: .inline)
+        .navigationBarTitle(Text("\(selectedWorkout.wName)").font(kPrimaryBodyFont))
         .navigationBarItems(trailing:
             Group {
                 if !selectedWorkout.wDuration.detailedDisplayDuration().isEmpty {

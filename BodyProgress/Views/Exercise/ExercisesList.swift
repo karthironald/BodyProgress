@@ -99,7 +99,7 @@ struct ExercisesList: View {
         .sheet(isPresented: $startButtonSelected, content: {
             TodayWorkout(selectedWorkout: self.createWorkoutHistory()).environment(\.managedObjectContext, self.managedObjectContext)
         })
-            .navigationBarTitle(Text(selectedWorkout.wName), displayMode: .inline)
+            .navigationBarTitle(Text(selectedWorkout.wName))
     }
     
     /**Toggles the favourite status of the exercise*/
