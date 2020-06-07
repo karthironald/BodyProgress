@@ -97,7 +97,7 @@ struct ExercisesList: View {
             kAppDelegate.removeSeparatorLineAppearance()
         }
         .sheet(isPresented: $startButtonSelected, content: {
-            TodayWorkout(selectedWorkout: self.createWorkoutHistory()).environment(\.managedObjectContext, self.managedObjectContext)
+            TodayWorkout(selectedWorkout: self.createWorkoutHistory(), workout: self.selectedWorkout).environment(\.managedObjectContext, self.managedObjectContext)
         })
             .navigationBarTitle(Text(selectedWorkout.wName))
     }

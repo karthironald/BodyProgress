@@ -23,6 +23,7 @@ struct TodayWorkout: View {
     
     @State var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     var selectedWorkout: WorkoutHistory
+    var workout: Workout
     
     var body: some View {
         NavigationView {
@@ -77,6 +78,8 @@ struct TodayWorkout: View {
     func updateWorkout() {
         selectedWorkout.duration = self.duration
         selectedWorkout.status = selectedWorkout.isAllSetCompleted()
+        selectedWorkout.workout = self.workout
+        workout.lastTrainedAt = Date()
         if managedObjectContext.hasChanges {
             do {
                 try managedObjectContext.save()
@@ -106,6 +109,6 @@ struct TodayWorkout: View {
 
 struct TodayWorkout_Previews: PreviewProvider {
     static var previews: some View {
-        TodayWorkout(selectedWorkout: WorkoutHistory())
+        Text("Yet to configure preview")
     }
 }

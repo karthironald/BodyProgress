@@ -36,12 +36,17 @@ struct WorkoutRow: View {
                                 .foregroundColor(kFavStarColour)
                         }
                     }
+                    if workout.lastTrainedAt != nil {
+                        Text("Last trained: \(workout.wLastTrainedAt, formatter: DateFormatter().appDormatter)")
+                            .font(kPrimarySubheadlineFont)
+                        .opacity(0.5)
+                    }
                     if (!workout.wNotes.isEmpty) && (workout.wNotes != kDefaultValue) {
                         Text(workout.wNotes)
                             .font(kPrimarySubheadlineFont)
                             .multilineTextAlignment(.leading)
                     }
-                }
+                    }
                 .padding(5)
                 Spacer()
                 if workout.wExercises.count > 0 {
@@ -58,7 +63,7 @@ struct WorkoutRow: View {
                     .padding([.top, .bottom, .trailing])
             }
         }
-        .frame(height: 80)
+        .frame(height: 90)
         .cornerRadius(kCornerRadius)
     }
     
