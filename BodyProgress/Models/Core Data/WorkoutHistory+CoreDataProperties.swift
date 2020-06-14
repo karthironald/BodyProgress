@@ -30,6 +30,7 @@ extension WorkoutHistory {
     @NSManaged public var duration: Int16
     @NSManaged public var status: Bool
     @NSManaged public var exercises: NSSet?
+    @NSManaged public var workout: Workout?
 
     var wName: String { name ?? kDefaultValue }
     var wNotes: String { notes ?? kDefaultValue }
@@ -49,6 +50,7 @@ extension WorkoutHistory {
     }
     var wDuration: Int16 { duration }
     var wStatus: Bool { status }
+    var wWorkout: Workout { workout ?? Workout() }
     
     /**Check whether all sets are completed*/
     func isAllSetCompleted() -> Bool {
