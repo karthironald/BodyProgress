@@ -78,8 +78,10 @@ struct TodayWorkout: View {
     func updateWorkout() {
         selectedWorkout.duration = self.duration
         selectedWorkout.status = selectedWorkout.isAllSetCompleted()
-        selectedWorkout.workout = self.workout
-        workout.lastTrainedAt = Date()
+        
+        #warning("Need to fix uncompleted today workout creation issue and enable it")
+//        workout.lastTrainedAt = Date()
+//        selectedWorkout.workout = self.workout
         if managedObjectContext.hasChanges {
             do {
                 try managedObjectContext.save()
