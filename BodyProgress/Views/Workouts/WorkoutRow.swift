@@ -17,12 +17,6 @@ struct WorkoutRow: View {
         ZStack {
             workout.wBodyPart.color()
             HStack(alignment: .center) {
-                Image(systemName: "bolt.circle.fill")
-                    .imageScale(.large)
-                    .font(kPrimaryTitleFont)
-                    .padding([.leading], 15)
-                    .foregroundColor(Color.gray)
-                    .opacity(0.5)
                 VStack(alignment: .leading) {
                     HStack {
                         Text(workout.wName)
@@ -47,7 +41,7 @@ struct WorkoutRow: View {
                             .multilineTextAlignment(.leading)
                     }
                     }
-                .padding(5)
+                .padding()
                 Spacer()
                 if workout.wExercises.count > 0 {
                     Text("\(workout.wExercises.count)")
@@ -63,7 +57,7 @@ struct WorkoutRow: View {
                     .padding([.top, .bottom, .trailing])
             }
         }
-        .frame(height: 90)
+        .frame(height: 100)
         .cornerRadius(kCornerRadius)
     }
     
@@ -77,7 +71,13 @@ struct WorkoutRow_Previews: PreviewProvider {
         pWorkout.name = "Arms"
         pWorkout.notes = "Sample notes"
         pWorkout.isFavourite = true
+        
+        let exer1 = Exercise(context: moc)
+        let exer2 = Exercise(context: moc)
+        
+        pWorkout.exercises = [exer1, exer2]
+        
         return WorkoutRow(workout: pWorkout)
-            .previewLayout(.fixed(width: 400, height: 80))
+            .previewLayout(.fixed(width: 400, height: 100))
     }
 }

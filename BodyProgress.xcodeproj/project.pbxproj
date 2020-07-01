@@ -97,7 +97,7 @@
 		77BE022C246AFDC000197D06 /* WorkoutHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryView.swift; sourceTree = "<group>"; };
 		77CB41EE24647F2000052601 /* TodayWorkout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWorkout.swift; sourceTree = "<group>"; };
 		77CB41F02464864C00052601 /* TodayExcerciseRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayExcerciseRow.swift; sourceTree = "<group>"; };
-		77F4C4EB244A21B40048E3CB /* Workout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Workout.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		77F4C4EB244A21B40048E3CB /* BodyProgres.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BodyProgres.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77F4C4FA244A21B70048E3CB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		77F4C4FF244A21B70048E3CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -289,7 +289,7 @@
 		77F4C4EC244A21B40048E3CB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				77F4C4EB244A21B40048E3CB /* Workout.app */,
+				77F4C4EB244A21B40048E3CB /* BodyProgres.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -342,7 +342,7 @@
 			);
 			name = BodyProgress;
 			productName = BodyProgress;
-			productReference = 77F4C4EB244A21B40048E3CB /* Workout.app */;
+			productReference = 77F4C4EB244A21B40048E3CB /* BodyProgres.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -583,7 +583,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mallow-tech.BodyProgress";
-				PRODUCT_NAME = Workout;
+				PRODUCT_NAME = BodyProgres;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -604,7 +604,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mallow-tech.BodyProgress";
-				PRODUCT_NAME = Workout;
+				PRODUCT_NAME = BodyProgres;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
