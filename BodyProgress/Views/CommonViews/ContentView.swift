@@ -10,25 +10,20 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State private var selectedTab = 1 // Sets workout tab as selected tab
+    @State private var selectedTab = 0 // Sets workout tab as selected tab
     
     var body: some View {
         TabView(selection: $selectedTab) {
-            WokroutHistoryTabView().tabItem {
-                Image(systemName: "h.circle.fill")
-                    .imageScale(.large)
-                Text("History")
-            }.tag(0)
             WorkoutsList().tabItem {
                 Image(systemName: "w.circle.fill")
                     .imageScale(.large)
                 Text("Workout")
-            }.tag(1)
-            Diets().tabItem {
-                Image(systemName: "d.circle.fill")
+            }.tag(0)
+            WokroutHistoryTabView().tabItem {
+                Image(systemName: "h.circle.fill")
                     .imageScale(.large)
-                Text("Diet")
-            }.tag(2)
+                Text("History")
+            }.tag(1)
         }
         .accentColor(kPrimaryColour)
     }
