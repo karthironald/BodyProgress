@@ -18,18 +18,24 @@ struct AddExercise: View {
     @State var notes: String = ""
     var selectedExercise: Exercise?
     
+    @State private var errorMessage = ""
+    @State private var shouldShowValidationAlert = false
+    
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Name")) { TextField("Enter here", text: $name) }
-                Section(header: Text("Notes")) { TextField("Enter here (optional)", text: $notes) }
+                Section(header: Text("kHeaderName")) { TextField("kPlaceholderEnterHere", text: $name) }
+                Section(header: Text("kHeaderNotes")) { TextField("kPlaceholderEnterHereOptional", text: $notes) }
             }
                 .onAppear(perform: {
                     kAppDelegate.addSeparatorLineAppearance()
                 })
-            .navigationBarTitle(Text("New Exercise"), displayMode: .inline)
+                .alert(isPresented: $shouldShowValidationAlert, content: { () -> Alert in
+                    Alert(title: Text("kAlertTitleError"), message: Text(errorMessage), dismissButton: .default(Text("kButtonTitleOkay")))
+                })
+            .navigationBarTitle(Text("kScreenTitleNewExercise"), displayMode: .inline)
             .navigationBarItems(
-                trailing: Button(action: { self.saveWorkout() }) { CustomBarButton(title: "Save")
+                trailing: Button(action: { self.validateData() }) { CustomBarButton(title: NSLocalizedString("kButtonTitleSave", comment: "Button title"))
             })
         }
     }
@@ -39,8 +45,19 @@ struct AddExercise: View {
         self.shouldPresentAddNewExercise = false
     }
     
+    func validateData() {
+        name = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        notes = notes.trimmingCharacters(in: .whitespacesAndNewlines)
+        if name.isEmpty {
+            errorMessage = NSLocalizedString("kAlertMsgExerciseNameRequired", comment: "Alert message")
+            shouldShowValidationAlert.toggle()
+        } else {
+            saveExercise()
+        }
+    }
+    
     /**Saves the new workout*/
-    func saveWorkout() {
+    func saveExercise() {
         if selectedExercise != nil { // Update exercise flow
             selectedExercise?.name = self.name
             selectedExercise?.notes = self.notes
@@ -70,6 +87,6 @@ struct AddExercise: View {
 
 struct AddExercise_Previews: PreviewProvider {
     static var previews: some View {
-        Text("Yet to configure preview")
+        Text("kPreviewYtb")
     }
 }

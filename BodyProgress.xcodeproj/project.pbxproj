@@ -28,6 +28,7 @@
 		774958F2246C6C9F00CF99CF /* ExerciseHistory+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774958EC246C6C9F00CF99CF /* ExerciseHistory+CoreDataProperties.swift */; };
 		774958F3246C6C9F00CF99CF /* ExerciseSetHistory+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774958ED246C6C9F00CF99CF /* ExerciseSetHistory+CoreDataClass.swift */; };
 		774958F4246C6C9F00CF99CF /* ExerciseSetHistory+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774958EE246C6C9F00CF99CF /* ExerciseSetHistory+CoreDataProperties.swift */; };
+		774E09A824ACFE9C005D39AB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 774E09A724ACFE9C005D39AB /* Localizable.strings */; };
 		77585E242470F57900F4FF69 /* WokroutHistoryTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77585E232470F57900F4FF69 /* WokroutHistoryTabView.swift */; };
 		7766E54024575361008627D9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7766E53F24575361008627D9 /* Extensions.swift */; };
 		7766E54224575BDF008627D9 /* AddWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7766E54124575BDF008627D9 /* AddWorkout.swift */; };
@@ -74,6 +75,7 @@
 		774958EC246C6C9F00CF99CF /* ExerciseHistory+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExerciseHistory+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		774958ED246C6C9F00CF99CF /* ExerciseSetHistory+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExerciseSetHistory+CoreDataClass.swift"; sourceTree = "<group>"; };
 		774958EE246C6C9F00CF99CF /* ExerciseSetHistory+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExerciseSetHistory+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		774E09A724ACFE9C005D39AB /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		77585E232470F57900F4FF69 /* WokroutHistoryTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WokroutHistoryTabView.swift; sourceTree = "<group>"; };
 		7766E53F24575361008627D9 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		7766E54124575BDF008627D9 /* AddWorkout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWorkout.swift; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 				77929A0024536DFB00C28A39 /* Constant.swift */,
 				7766E53F24575361008627D9 /* Extensions.swift */,
 				77A3EC412483B314007A92B8 /* Helper.swift */,
+				774E09A724ACFE9C005D39AB /* Localizable.strings */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -381,6 +384,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				77F4C4FB244A21B70048E3CB /* Preview Assets.xcassets in Resources */,
+				774E09A824ACFE9C005D39AB /* Localizable.strings in Resources */,
 				77B6B52C24521A90004B9F89 /* Assets.xcassets in Resources */,
 				77B6B52A24521A90004B9F89 /* LaunchScreen.storyboard in Resources */,
 			);

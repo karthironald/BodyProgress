@@ -16,10 +16,13 @@ struct ExerciseSetsList: View {
     @State var shouldPresentEditExerciseSet: Bool = false
     @State var editExerciseSetIndex: Int = kCommonListIndex
     
+    @State var shouldShowDeleteConfirmation = false
+    @State var deleteIndex = kCommonListIndex
+    
     var body: some View {
         ZStack {
             if selectedExercise.wExerciseSets.count == 0 {
-                EmptyStateInfoView(message: "No sets added")
+                EmptyStateInfoView(message: NSLocalizedString("kInfoMsgNoExercisesSetsAdded", comment: "Info message"))
             }
             VStack {
                 List{
@@ -32,7 +35,7 @@ struct ExerciseSetsList: View {
                                         self.shouldPresentEditExerciseSet.toggle()
                                     }) {
                                         Image(systemName: "square.and.pencil")
-                                        Text("Edit")
+                                        Text("kButtonTitleEdit")
                                     }
                                     Button(action: {
                                         withAnimation {
@@ -40,24 +43,22 @@ struct ExerciseSetsList: View {
                                         }
                                     }) {
                                         Image(systemName: self.selectedExercise.wExerciseSets[exerciseSetIndex].wIsFavourite  ? "star.fill" : "star")
-                                        Text(self.selectedExercise.wExerciseSets[exerciseSetIndex].wIsFavourite  ? "Unfavourite" : "Favourite")
+                                        Text(self.selectedExercise.wExerciseSets[exerciseSetIndex].wIsFavourite  ? "kButtonTitleUnfavourite" : "kButtonTitleFavourite")
                                     }
                                     Button(action: {
-                                        withAnimation {
-                                            self.deleteExerciseSet(set: self.selectedExercise.wExerciseSets[exerciseSetIndex])
-                                        }
+                                        self.deleteIndex = exerciseSetIndex
+                                        self.shouldShowDeleteConfirmation.toggle()
                                     }) {
                                         Image(systemName: "trash")
-                                        Text("Delete")
+                                        Text("kButtonTitleDelete")
                                     }
                             }
                         }
                     }
                     .onDelete { (indexSet) in
                         if let index = indexSet.first, index < self.selectedExercise.wExerciseSets.count {
-                            withAnimation {
-                                self.deleteExerciseSet(set: self.selectedExercise.wExerciseSets[index])
-                            }
+                            self.deleteIndex = index
+                            self.shouldShowDeleteConfirmation.toggle()
                         }
                     }
                 }
@@ -73,7 +74,7 @@ struct ExerciseSetsList: View {
                         selectedExerciseSet: self.selectedExercise.wExerciseSets[self.editExerciseSetIndex]
                     ).environment(\.managedObjectContext, self.managedObjectContext)
                 })
-                    .navigationBarTitle(Text("Set"))
+                    .navigationBarTitle(selectedExercise.wName)
                     .navigationBarItems(trailing:
                         Button(action: {
                             self.shouldPresentAddNewExerciseSet.toggle()
@@ -90,6 +91,15 @@ struct ExerciseSetsList: View {
         .onAppear {
             kAppDelegate.removeSeparatorLineAppearance()
         }
+        .alert(isPresented: $shouldShowDeleteConfirmation, content: { () -> Alert in
+            Alert(title: Text("kAlertTitleConfirm"), message: Text("kAlertMsgDeleteExerciseSet"), primaryButton: .cancel(), secondaryButton: .destructive(Text("kButtonTitleDelete"), action: {
+                withAnimation {
+                    if self.deleteIndex != kCommonListIndex {
+                        self.deleteExerciseSet(set: self.selectedExercise.wExerciseSets[self.deleteIndex])
+                    }
+                }
+            }))
+        })
     }
     
     /**Toggle the favourite status of the set*/
@@ -120,6 +130,6 @@ struct ExerciseSetsList: View {
 
 struct ExerciseSetsList_Previews: PreviewProvider {
     static var previews: some View {
-        Text("Yet to configured")
+        Text("kPreviewYtb")
     }
 }

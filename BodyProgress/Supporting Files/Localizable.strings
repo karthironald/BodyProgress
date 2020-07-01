@@ -1,0 +1,54 @@
+/* 
+  Localizable.strings
+  BodyProgress
+
+  Created by Karthick Selvaraj on 01/07/20.
+  Copyright © 2020 Mallow Technologies Private Limited. All rights reserved.
+*/
+
+// Screen titles
+"kScreenTitleNewWorkout" = "New Workout";
+"kScreenTitleNewExercise" = "New Exercise";
+"kScreenTitleNewSet" = "New Set";
+"kScreenTitleWorkouts" = "Workouts";
+"kScreenTitleExercises" = "Exercises";
+"kScreenTitleExerciseSets" = "Sets";
+
+// Alert titles
+"kAlertTitleError" = "Error";
+"kAlertTitleConfirm" = "Confirm";
+
+// Alert messages
+"kAlertMsgWorkoutNameRequired" = "Workout name is required";
+"kAlertMsgExerciseNameRequired" = "Exercise name is required";
+"kAlertMsgExerciseSetNameRequired" = "Set name is required";
+"kAlertMsgDeleteWorkout" = "Are you sure to delete the workout?\n\nNote: All exercises and sets will be deleted with the workout";
+"kAlertMsgDeleteExercise" = "Are you sure to delete the exercise?\n\nNote: All sets will be deleted with the exercise";
+"kAlertMsgDeleteExerciseSet" = "Are you sure to delete the exercise set?";
+
+// Buttons
+"kButtonTitleOkay" = "Okay";
+"kButtonTitleSave" = "Save";
+"kButtonTitleEdit" = "Edit";
+"kButtonTitleDelete" = "Delete";
+"kButtonTitleUnfavourite" = "Unfavourite";
+"kButtonTitleFavourite" = "Favourite";
+
+// Header titles
+"kHeaderName" = "Name";
+"kHeaderNotes" = "Notes";
+"kHeaderChooseBodyPart" = "Choose body part";
+
+// Placeholders
+"kPlaceholderEnterHere" = "Enter here";
+"kPlaceholderEnterHereOptional" = "Enter here (optional)";
+"kPlaceholderBodyPart" = "Body Part";
+
+// Info messages
+"kInfoMsgNoWorkoutsAdded" = "No workouts added";
+"kInfoMsgNoExercisesAdded" = "No exercises added";
+"kInfoMsgNoExercisesSetsAdded" = "No exercise sets added";
+
+// Preview messages
+"kPreviewYtb" = "The preview yet to be configured";
+

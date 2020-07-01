@@ -17,17 +17,18 @@ struct AddExerciseSet: View {
     var selectedExercise: Exercise
     @State var name: String = ""
     @State var notes: String = ""
-    @State var weightIndex: Int = 0
-    @State var reputationIndex: Int = 0
     @State var weight: Double = 7
     @State var reputation: Double = 10
     var selectedExerciseSet: ExerciseSet?
     
+    @State private var errorMessage = ""
+    @State private var shouldShowValidationAlert = false
+    
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Name")) { TextField("Enter here", text: $name) }
-                Section(header: Text("Notes")) { TextField("Enter here (optional)", text: $notes) }
+                Section(header: Text("kHeaderName")) { TextField("kPlaceholderEnterHere", text: $name) }
+                Section(header: Text("kHeaderNotes")) { TextField("kPlaceholderEnterHereOptional", text: $notes) }
                 Section(header: Text("Weight (\(Int(weight)) kgs)"), footer: Text("Previous: \(previousSetWeight()) kgs")) {
                     Slider(value: $weight, in: 1...100, step: 1)
                 }
@@ -38,9 +39,12 @@ struct AddExerciseSet: View {
             .onAppear(perform: {
                 kAppDelegate.addSeparatorLineAppearance()
             })
-                .navigationBarTitle(Text("New Set"), displayMode: .inline)
+                .alert(isPresented: $shouldShowValidationAlert, content: { () -> Alert in
+                    Alert(title: Text("kAlertTitleError"), message: Text(errorMessage), dismissButton: .default(Text("kButtonTitleOkay")))
+                })
+                .navigationBarTitle(Text("kScreenTitleNewSet"), displayMode: .inline)
                 .navigationBarItems(
-                    trailing: Button(action: { self.saveWorkout() }) { CustomBarButton(title: "Save")
+                    trailing: Button(action: { self.validateData() }) { CustomBarButton(title: NSLocalizedString("kButtonTitleSave", comment: "Button title"))
                 })
         }
     }
@@ -80,8 +84,19 @@ struct AddExerciseSet: View {
         self.shouldPresentAddNewExerciseSet = false
     }
     
+    func validateData() {
+        name = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        notes = notes.trimmingCharacters(in: .whitespacesAndNewlines)
+        if name.isEmpty {
+            errorMessage = NSLocalizedString("kAlertMsgExerciseSetNameRequired", comment: "Alert message")
+            shouldShowValidationAlert.toggle()
+        } else {
+            saveExerciseSet()
+        }
+    }
+    
     /**Saves the new workout*/
-    func saveWorkout() {
+    func saveExerciseSet() {
         if selectedExerciseSet != nil { // Update set flow
             selectedExerciseSet?.name = self.name
             selectedExerciseSet?.notes = self.notes

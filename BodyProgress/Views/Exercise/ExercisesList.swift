@@ -17,10 +17,13 @@ struct ExercisesList: View {
     @State var editExerciseIndex: Int = kCommonListIndex
     @State var startButtonSelected: Bool = false
     
+    @State var shouldShowDeleteConfirmation = false
+    @State var deleteIndex = kCommonListIndex
+    
     var body: some View {
         ZStack {
             if selectedWorkout.wExercises.count == 0 {
-                EmptyStateInfoView(message: "No exercises added")
+                EmptyStateInfoView(message: NSLocalizedString("kInfoMsgNoExercisesAdded", comment: "Info messages"))
             }
             VStack {
                 List {
@@ -33,7 +36,7 @@ struct ExercisesList: View {
                                         self.shouldPresentEditExercise = true
                                     }) {
                                         Image(systemName: "square.and.pencil")
-                                        Text("Edit")
+                                        Text("kButtonTitleEdit")
                                     }
                                     Button(action: {
                                         withAnimation {
@@ -41,15 +44,14 @@ struct ExercisesList: View {
                                         }
                                     }) {
                                         Image(systemName: self.selectedWorkout.wExercises[exerciseIndex].wIsFavourite  ? "star.fill" : "star")
-                                        Text(self.selectedWorkout.wExercises[exerciseIndex].wIsFavourite  ? "Unfavourite" : "Favourite")
+                                        Text(self.selectedWorkout.wExercises[exerciseIndex].wIsFavourite  ? "kButtonTitleUnfavourite" : "kButtonTitleFavourite")
                                     }
                                     Button(action: {
-                                        withAnimation {
-                                            self.deleteExercise(exercise: self.selectedWorkout.wExercises[exerciseIndex])
-                                        }
+                                        self.deleteIndex = exerciseIndex
+                                        self.shouldShowDeleteConfirmation.toggle()
                                     }) {
                                         Image(systemName: "trash")
-                                        Text("Delete")
+                                        Text("kButtonTitleDelete")
                                     }
                             }
                             NavigationLink(destination: ExerciseSetsList(selectedExercise: self.selectedWorkout.wExercises[exerciseIndex])) {
@@ -59,9 +61,8 @@ struct ExercisesList: View {
                     }
                     .onDelete { (indexSet) in
                         if let index = indexSet.first, index < self.selectedWorkout.wExercises.count {
-                            withAnimation {
-                                self.deleteExercise(exercise: self.selectedWorkout.wExercises[index])
-                            }
+                            self.deleteIndex = index
+                            self.shouldShowDeleteConfirmation.toggle()
                         }
                     }
                 }
@@ -69,7 +70,6 @@ struct ExercisesList: View {
                 .sheet(isPresented: $shouldPresentEditExercise, content: {
                     AddExercise(shouldPresentAddNewExercise: self.$shouldPresentEditExercise, selectedWorkout: self.selectedWorkout, name: self.selectedWorkout.wExercises[self.editExerciseIndex].wName, notes: self.selectedWorkout.wExercises[self.editExerciseIndex].wNotes, selectedExercise: self.selectedWorkout.wExercises[self.editExerciseIndex]).environment(\.managedObjectContext, self.managedObjectContext)
                 })
-                    .navigationBarTitle(Text("Exercise"))
                     .navigationBarItems(trailing:
                         HStack {
                             Button(action: {
@@ -96,6 +96,15 @@ struct ExercisesList: View {
         .onAppear {
             kAppDelegate.removeSeparatorLineAppearance()
         }
+        .alert(isPresented: $shouldShowDeleteConfirmation, content: { () -> Alert in
+            Alert(title: Text("kAlertTitleConfirm"), message: Text("kAlertMsgDeleteExercise"), primaryButton: .cancel(), secondaryButton: .destructive(Text("kButtonTitleDelete"), action: {
+                withAnimation {
+                    if self.deleteIndex != kCommonListIndex {
+                        self.deleteExercise(exercise: self.selectedWorkout.wExercises[self.deleteIndex])
+                    }
+                }
+            }))
+        })
         .sheet(isPresented: $startButtonSelected, content: {
             TodayWorkout(selectedWorkout: self.createWorkoutHistory(), workout: self.selectedWorkout).environment(\.managedObjectContext, self.managedObjectContext)
         })
@@ -168,6 +177,6 @@ struct ExercisesList: View {
 
 struct WorkoutDetail_Previews: PreviewProvider {
     static var previews: some View {
-        Text("Yet to configure the preview")
+        Text("kPreviewYtb")
     }
 }
