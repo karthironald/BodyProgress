@@ -15,7 +15,6 @@ struct ExercisesList: View {
     @Environment(\.managedObjectContext) var managedObjectContext
     @State var shouldPresentEditExercise: Bool = false
     @State var editExerciseIndex: Int = kCommonListIndex
-    @State var startButtonSelected: Bool = false
     
     @State var shouldShowDeleteConfirmation = false
     @State var deleteIndex = kCommonListIndex
@@ -71,24 +70,14 @@ struct ExercisesList: View {
                     AddExercise(shouldPresentAddNewExercise: self.$shouldPresentEditExercise, selectedWorkout: self.selectedWorkout, name: self.selectedWorkout.wExercises[self.editExerciseIndex].wName, notes: self.selectedWorkout.wExercises[self.editExerciseIndex].wNotes, selectedExercise: self.selectedWorkout.wExercises[self.editExerciseIndex]).environment(\.managedObjectContext, self.managedObjectContext)
                 })
                     .navigationBarItems(trailing:
-                        HStack {
-                            Button(action: {
-                                self.startButtonSelected.toggle()
-                            }) {
-                                Image(systemName: "play.circle.fill")
-                                    .font(kPrimaryTitleFont)
-                            }
-                            .padding()
-                            
-                            Button(action: {
-                                self.shouldPresentAddNewExercise.toggle()
-                            }) {
-                                Image(systemName: "plus.circle.fill")
-                                    .font(kPrimaryTitleFont)
-                                    .foregroundColor(kPrimaryColour)
-                            }.sheet(isPresented: $shouldPresentAddNewExercise) {
-                                AddExercise(shouldPresentAddNewExercise: self.$shouldPresentAddNewExercise, selectedWorkout: self.selectedWorkout).environment(\.managedObjectContext, self.managedObjectContext)
-                            }
+                        Button(action: {
+                            self.shouldPresentAddNewExercise.toggle()
+                        }) {
+                            Image(systemName: "plus.circle.fill")
+                                .font(kPrimaryTitleFont)
+                                .foregroundColor(kPrimaryColour)
+                        }.sheet(isPresented: $shouldPresentAddNewExercise) {
+                            AddExercise(shouldPresentAddNewExercise: self.$shouldPresentAddNewExercise, selectedWorkout: self.selectedWorkout).environment(\.managedObjectContext, self.managedObjectContext)
                         }
                 )
             }
@@ -104,9 +93,6 @@ struct ExercisesList: View {
                     }
                 }
             }))
-        })
-        .sheet(isPresented: $startButtonSelected, content: {
-            TodayWorkout(selectedWorkout: self.createWorkoutHistory(), workout: self.selectedWorkout).environment(\.managedObjectContext, self.managedObjectContext)
         })
             .navigationBarTitle(Text(selectedWorkout.wName))
     }
@@ -133,44 +119,6 @@ struct ExercisesList: View {
                 print(error)
             }
         }
-    }
-    
-    /**Creates workout history entry for start today workout*/
-    func createWorkoutHistory() -> WorkoutHistory {
-        let workoutHistory = WorkoutHistory(context: managedObjectContext)
-        workoutHistory.name = selectedWorkout.name
-        workoutHistory.notes = selectedWorkout.notes
-        workoutHistory.bodyPart = selectedWorkout.bodyPart
-        workoutHistory.id = UUID()
-        workoutHistory.createdAt = Date()
-        workoutHistory.updatedAt = Date()
-        
-        for exercise in selectedWorkout.wExercises {
-            let exerciseHistory = ExerciseHistory(context: managedObjectContext)
-            exerciseHistory.name = exercise.name
-            exerciseHistory.notes = exercise.notes
-            exerciseHistory.bodyPart = selectedWorkout.bodyPart
-            exerciseHistory.id = UUID()
-            exerciseHistory.createdAt = Date()
-            exerciseHistory.updatedAt = Date()
-            
-            for exerciseSet in exercise.wExerciseSets {
-                let newExerciseSetHistory = ExerciseSetHistory(context: managedObjectContext)
-                newExerciseSetHistory.name = exerciseSet.name
-                newExerciseSetHistory.notes = exerciseSet.notes
-                newExerciseSetHistory.id = UUID()
-                newExerciseSetHistory.createdAt = Date()
-                newExerciseSetHistory.updatedAt = Date()
-                newExerciseSetHistory.weight = exerciseSet.wWeight
-                newExerciseSetHistory.reputation = exerciseSet.wReputation
-                
-                exerciseHistory.addToExerciseSets(newExerciseSetHistory)
-            }
-            
-            workoutHistory.addToExercises(exerciseHistory)
-        }
-        
-        return workoutHistory
     }
     
 }

@@ -29,6 +29,8 @@
 // Buttons
 "kButtonTitleOkay" = "Okay";
 "kButtonTitleSave" = "Save";
+"kButtonTitleStart" = "Start";
+"kButtonTitleCancel" = "Cancel";
 "kButtonTitleEdit" = "Edit";
 "kButtonTitleDelete" = "Delete";
 "kButtonTitleUnfavourite" = "Unfavourite";
