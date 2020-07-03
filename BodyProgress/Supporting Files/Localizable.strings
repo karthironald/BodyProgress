@@ -25,6 +25,7 @@
 "kAlertMsgDeleteWorkout" = "Are you sure to delete the workout?\n\nNote: All exercises and sets will be deleted with the workout";
 "kAlertMsgDeleteExercise" = "Are you sure to delete the exercise?\n\nNote: All sets will be deleted with the exercise";
 "kAlertMsgDeleteExerciseSet" = "Are you sure to delete the exercise set?";
+"kAlertMsgDeleteWorkoutHistory" = "Are you sure to delete the workout history?";
 
 // Buttons
 "kButtonTitleOkay" = "Okay";

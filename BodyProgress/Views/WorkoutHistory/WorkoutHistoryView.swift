@@ -14,6 +14,9 @@ struct WorkoutHistoryView: View {
     @Environment(\.managedObjectContext) var managedObjectContext
     @FetchRequest(entity: WorkoutHistory.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \WorkoutHistory.createdAt, ascending: false)]) var workoutHistory: FetchedResults<WorkoutHistory>
     
+    @State var shouldShowDeleteConfirmation = false
+    @State var deleteIndex = kCommonListIndex
+    
     init(predicate: NSPredicate?, sortDescriptor: NSSortDescriptor) {
         let fetchRequest = NSFetchRequest<WorkoutHistory>(entityName: WorkoutHistory.entity().name ?? "WorkoutHistory")
         fetchRequest.sortDescriptors = [sortDescriptor]
@@ -42,15 +45,23 @@ struct WorkoutHistoryView: View {
                     }
                     .onDelete { (indexSet) in
                         if let index = indexSet.first, index < self.workoutHistory.count {
-                            withAnimation {
-                                self.delete(workoutHistory: self.workoutHistory[index])
-                            }
+                            self.deleteIndex = index
+                            self.shouldShowDeleteConfirmation.toggle()
                         }
                     }
                 }
             }
             .navigationBarTitle(Text("History"))
         }
+        .alert(isPresented: $shouldShowDeleteConfirmation, content: { () -> Alert in
+            Alert(title: Text("kAlertTitleConfirm"), message: Text("kAlertMsgDeleteWorkoutHistory"), primaryButton: .cancel(), secondaryButton: .destructive(Text("kButtonTitleDelete"), action: {
+                withAnimation {
+                    if self.deleteIndex != kCommonListIndex {
+                        self.delete(workoutHistory: self.workoutHistory[self.deleteIndex])
+                    }
+                }
+            }))
+        })
         .onAppear {
             kAppDelegate.removeSeparatorLineAppearance()
         }
