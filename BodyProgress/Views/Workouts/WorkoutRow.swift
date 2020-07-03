@@ -20,20 +20,17 @@ struct WorkoutRow: View {
         ZStack {
             workout.wBodyPart.color()
             HStack(spacing: 0) {
-                VStack(alignment: .leading, spacing: 10) {
+                VStack(alignment: .leading, spacing: 5) {
                     HStack {
                         Text(workout.wName)
                             .font(kPrimaryBodyFont)
                             .fontWeight(.bold)
-                            .lineLimit(1)
-                        Button(action: {
-                            // todo
-                        }) {
+                            .lineLimit(2)
+                        if workout.wIsFavourite {
                             Image(systemName: "star.fill")
-                            .font(kPrimarySubheadlineFont)
-                            .foregroundColor(.yellow)
+                                .font(kPrimarySubheadlineFont)
+                                .foregroundColor(.yellow)
                         }
-                        .buttonStyle(BorderlessButtonStyle())
                     }
                     
                     HStack {
@@ -46,7 +43,7 @@ struct WorkoutRow: View {
                             Circle()
                                 .fill(Color.pink)
                                 .frame(width: 5, height: 5)
-                            Text("\(workout.wExercises.count) exercises")
+                            Text("\(workout.wExercises.count)")
                                 .font(kPrimarySubheadlineFont)
                                 .opacity(0.75)
                         }
@@ -61,19 +58,19 @@ struct WorkoutRow: View {
                         .font(kPrimarySubheadlineFont)
                         .foregroundColor(.white)
                         .bold()
-                        .padding()
-                            .frame(height: 35)
+                        .padding(10)
+                        .frame(height: 30)
                         .background(Color.green)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .clipShape(RoundedRectangle(cornerRadius: 15))
                     }
                     .buttonStyle(BorderlessButtonStyle())
                     if workout.lastTrainedAt != nil {
                         Text("\(workout.wLastTrainedAt, formatter: DateFormatter().appDormatter)")
-                            .font(kPrimarySubheadlineFont)
+                            .font(kPrimaryFootnoteFont)
                             .opacity(0.75)
                     } else {
                         Text("Not trained yet")
-                            .font(kPrimarySubheadlineFont)
+                            .font(kPrimaryFootnoteFont)
                             .opacity(0.75)
                     }
                 }
