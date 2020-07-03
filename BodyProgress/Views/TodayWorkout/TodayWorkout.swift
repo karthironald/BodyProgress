@@ -46,7 +46,7 @@ struct TodayWorkout: View {
                     if !self.selectedWorkout.isAllSetCompleted() {
                         self.showIncompleteAlert.toggle()
                     } else {
-                        self.updateWorkout()
+                        self.showCompleteInfoAlert.toggle()
                     }
                 }, label: {
                     CustomBarButton(title: "Finish")
@@ -57,7 +57,7 @@ struct TodayWorkout: View {
                     return Alert(title: Text("Few exercise sets are pending. Are you sure to finish?"), primaryButton: Alert.Button.cancel({
                         self.resumeTimer()
                     }), secondaryButton: Alert.Button.default(Text("Finish"), action: {
-                        self.updateWorkout()
+                        self.showCompleteInfoAlert.toggle()
                     }))
             }
         }
@@ -65,7 +65,8 @@ struct TodayWorkout: View {
             Helper.hapticFeedback()
             return Alert(title:
                 Text("🎉"), message: Text("Today workout has been saved successfully"), dismissButton: Alert.Button.cancel(Text("Okay"), action: {
-                self.presentation.wrappedValue.dismiss()
+                    self.presentation.wrappedValue.dismiss()
+                    self.updateWorkout()
             }))
         })
             .onReceive(timer) { date in
@@ -78,15 +79,13 @@ struct TodayWorkout: View {
     func updateWorkout() {
         selectedWorkout.duration = self.duration
         selectedWorkout.status = selectedWorkout.isAllSetCompleted()
-        
-        #warning("Need to fix uncompleted today workout creation issue and enable it")
-//        workout.lastTrainedAt = Date()
-//        selectedWorkout.workout = self.workout
+        workout.lastTrainedAt = Date()
+        selectedWorkout.workout = self.workout
         if managedObjectContext.hasChanges {
             do {
                 try managedObjectContext.save()
-                self.showCompleteInfoAlert.toggle()
             } catch {
+                #warning("We are showing workout saved alert before saving it. There could be posibility to face error when saving the workout. Need to handle it")
                 print(error)
             }
         }
