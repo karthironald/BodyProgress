@@ -11,6 +11,7 @@ import CoreData
 
 struct TodayExerciseSet: View {
     
+    @EnvironmentObject var appSettings: AppSettings
     @ObservedObject var exerciseSet: ExerciseSetHistory
     @State var status: Bool = false
     var isViewOnly = false
@@ -63,7 +64,7 @@ struct TodayExerciseSet: View {
             .aspectRatio(contentMode: .fill)
             .imageScale(.large)
             .frame(width: 25, height: 20)
-            .foregroundColor(status ? .green : .secondary)
+            .foregroundColor(status ? appSettings.themeColorView() : .secondary)
             .padding(.leading)
     }
     

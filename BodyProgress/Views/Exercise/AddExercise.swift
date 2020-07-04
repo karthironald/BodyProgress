@@ -34,7 +34,7 @@ struct AddExercise: View {
                 .alert(isPresented: $shouldShowValidationAlert, content: { () -> Alert in
                     Alert(title: Text("kAlertTitleError"), message: Text(errorMessage), dismissButton: .default(Text("kButtonTitleOkay")))
                 })
-            .navigationBarTitle(Text("kScreenTitleNewExercise"), displayMode: .inline)
+                .navigationBarTitle(Text(selectedExercise == nil ? "kScreenTitleNewExercise" : "kScreenTitleEditExercise"), displayMode: .inline)
             .navigationBarItems(
                 trailing: Button(action: { self.validateData() }) { CustomBarButton(title: NSLocalizedString("kButtonTitleSave", comment: "Button title")).environmentObject(appSettings)
             })

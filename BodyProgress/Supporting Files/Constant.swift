@@ -26,7 +26,7 @@ let kPrimaryFootnoteFont = Font.system(.footnote, design: .rounded)
 let kPrimaryCalloutFont = Font.system(.callout, design: .rounded)
 let kPrimaryCaptionFont = Font.system(.caption, design: .rounded)
 
-let kPrimaryListCellOpacity = 0.5
+let kPrimaryListCellOpacity = 0.2
 let kPrimaryBackgroundColour = Color.secondary.opacity(kPrimaryListCellOpacity)
 let kFavStarColour = Color.yellow
 

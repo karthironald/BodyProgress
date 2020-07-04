@@ -8,8 +8,11 @@
 
 // Screen titles
 "kScreenTitleNewWorkout" = "New Workout";
+"kScreenTitleEditWorkout" = "Edit Workout";
 "kScreenTitleNewExercise" = "New Exercise";
+"kScreenTitleEditExercise" = "Edit Exercise";
 "kScreenTitleNewSet" = "New Set";
+"kScreenTitleEditSet" = "Edit Set";
 "kScreenTitleWorkouts" = "Workouts";
 "kScreenTitleExercises" = "Exercises";
 "kScreenTitleExerciseSets" = "Sets";

@@ -29,7 +29,7 @@ struct TodayWorkout: View {
     var body: some View {
         NavigationView {
             List(selectedWorkout.wExercises, id: \.self) { exercise in
-                TodayExcerciseRow(exercise: exercise).environment(\.managedObjectContext, self.managedObjectContext)
+                TodayExcerciseRow(exercise: exercise).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
             }
             .padding([.top, .bottom], 10)
             .navigationBarTitle(Text("\(selectedWorkout.wName)").font(kPrimaryBodyFont), displayMode: .inline)

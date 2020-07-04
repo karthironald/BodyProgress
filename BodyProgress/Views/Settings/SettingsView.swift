@@ -50,15 +50,16 @@ class AppSettings: ObservableObject {
 struct SettingsView: View {
     
     @EnvironmentObject var appSettings: AppSettings
+    @State private var forceRender = false
     
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Notification"), footer: Text("Daily workout reminder will be send at selected time")) {
-                    DatePicker("Remind me at", selection: $appSettings.notificationTime, displayedComponents: .hourAndMinute)
+                Section(header: Text("Workout Reminder")) {
+                    DatePicker("Remind me daily at", selection: $appSettings.notificationTime, displayedComponents: .hourAndMinute)
                         .accentColor(appSettings.themeColorView())
                 }
-                Section(header: Text("Color")) {
+                Section(header: Text("Theme Color")) {
                     HStack() {
                         ForEach(0..<AppSettings.colors.count, id: \.self) { index in
                             Button(action: {
@@ -84,7 +85,7 @@ struct SettingsView: View {
                     Toggle(isOn: $appSettings.enabledHaptic) {
                         Text("Enable haptic feedback")
                     }
-                    .accentColor(appSettings.themeColorView())
+                    .accentColor(forceRender ? appSettings.themeColorView() : .blue)
                 }
             }
             .navigationBarTitle("Settings")
