@@ -38,14 +38,6 @@ struct ExerciseSetsList: View {
                                         Text("kButtonTitleEdit")
                                     }
                                     Button(action: {
-                                        withAnimation {
-                                            self.toggleFav(exerciseSet: self.selectedExercise.wExerciseSets[exerciseSetIndex])
-                                        }
-                                    }) {
-                                        Image(systemName: self.selectedExercise.wExerciseSets[exerciseSetIndex].wIsFavourite  ? "star.fill" : "star")
-                                        Text(self.selectedExercise.wExerciseSets[exerciseSetIndex].wIsFavourite  ? "kButtonTitleUnfavourite" : "kButtonTitleFavourite")
-                                    }
-                                    Button(action: {
                                         self.deleteIndex = exerciseSetIndex
                                         self.shouldShowDeleteConfirmation.toggle()
                                     }) {
@@ -100,18 +92,6 @@ struct ExerciseSetsList: View {
                 }
             }))
         })
-    }
-    
-    /**Toggle the favourite status of the set*/
-    func toggleFav(exerciseSet: ExerciseSet) {
-        exerciseSet.isFavourite.toggle()
-        if managedObjectContext.hasChanges {
-            do {
-                try managedObjectContext.save()
-            } catch {
-                print(error)
-            }
-        }
     }
     
     /**Deletes the given set*/

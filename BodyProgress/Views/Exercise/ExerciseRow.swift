@@ -16,51 +16,45 @@ struct ExerciseRow: View {
     var body: some View {
         ZStack {
             exercise.wBodyPart.color()
-            VStack {
-                HStack(alignment: .center) {
-                    Image(systemName: "bolt.circle.fill")
-                        .imageScale(.large)
-                        .font(kPrimaryTitleFont)
-                        .padding([.leading], 15)
-                        .foregroundColor(Color.gray)
-                        .opacity(0.5)
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Text(exercise.wName)
-                                .font(kPrimaryHeadlineFont)
-                                .fontWeight(.bold)
-                            if exercise.wIsFavourite {
-                                Image(systemName: "star.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 15, height: 15)
-                                    .foregroundColor(kFavStarColour)
-                            }
-                        }
-                        if (!exercise.wNotes.isEmpty) && (exercise.wNotes != kDefaultValue) {
-                            Text(exercise.wNotes)
-                                .font(kPrimarySubheadlineFont)
-                                .multilineTextAlignment(.leading)
-                        }
-                    }
-                    .padding(5)
-                    Spacer()
-                    if exercise.wExerciseSets.count > 0 {
-                        Text("\(exercise.wExerciseSets.count)")
+            HStack(alignment: .center) {
+                VStack(alignment: .leading) {
+                    HStack {
+                        Text(exercise.wName)
                             .font(kPrimaryBodyFont)
-                            .bold()
-                            .frame(width: 30, height: 30)
-                            .padding([.top, .bottom], 5)
-                            .clipShape(Circle())
+                            .fontWeight(.bold)
+                        if exercise.wIsFavourite {
+                            Image(systemName: "star.fill")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 15, height: 15)
+                                .foregroundColor(kFavStarColour)
+                        }
                     }
-                    Image(systemName: "arrowtriangle.right.fill")
-                        .foregroundColor(.secondary)
-                        .opacity(0.2)
-                        .padding([.top, .bottom, .trailing])
+                    if (!exercise.wNotes.isEmpty) && (exercise.wNotes != kDefaultValue) {
+                        Text(exercise.wNotes)
+                            .font(kPrimarySubheadlineFont)
+                            .multilineTextAlignment(.leading)
+                            .opacity(0.75)
+                    }
                 }
+                .padding()
+                Spacer()
+                if exercise.wExerciseSets.count > 0 {
+                    Text("\(exercise.wExerciseSets.count)")
+                        .font(kPrimaryBodyFont)
+                        .bold()
+                        .frame(width: 30, height: 30)
+                        .padding([.top, .bottom], 5)
+                        .clipShape(Circle())
+                }
+                Image(systemName: "arrowtriangle.right.fill")
+                    .foregroundColor(.secondary)
+                    .opacity(0.2)
+                    .padding([.top, .bottom, .trailing])
             }
+
         }
-        .frame(height: 80)
+        .frame(height: 60)
         .cornerRadius(kCornerRadius)
     }
 }
@@ -71,7 +65,7 @@ struct ExerciseRow_Previews: PreviewProvider {
     static var previews: some View {
         let pExercise = Exercise(context: moc)
         pExercise.name = "Dummbells curl"
-        pExercise.notes = "Do it slowly"
+        pExercise.notes = "Keep dumbeels straight, lift up and down slowly and repeat"
         return ExerciseRow(exercise: pExercise)
     }
 }

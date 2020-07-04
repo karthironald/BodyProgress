@@ -38,14 +38,6 @@ struct ExercisesList: View {
                                         Text("kButtonTitleEdit")
                                     }
                                     Button(action: {
-                                        withAnimation {
-                                            self.toggleFav(exercise: self.selectedWorkout.wExercises[exerciseIndex])
-                                        }
-                                    }) {
-                                        Image(systemName: self.selectedWorkout.wExercises[exerciseIndex].wIsFavourite  ? "star.fill" : "star")
-                                        Text(self.selectedWorkout.wExercises[exerciseIndex].wIsFavourite  ? "kButtonTitleUnfavourite" : "kButtonTitleFavourite")
-                                    }
-                                    Button(action: {
                                         self.deleteIndex = exerciseIndex
                                         self.shouldShowDeleteConfirmation.toggle()
                                     }) {
@@ -95,18 +87,6 @@ struct ExercisesList: View {
             }))
         })
             .navigationBarTitle(Text(selectedWorkout.wName))
-    }
-    
-    /**Toggles the favourite status of the exercise*/
-    func toggleFav(exercise: Exercise) {
-        exercise.isFavourite.toggle()
-        if managedObjectContext.hasChanges {
-            do {
-                try managedObjectContext.save()
-            } catch {
-                print(error)
-            }
-        }
     }
     
     /**Deletes the given exercise*/

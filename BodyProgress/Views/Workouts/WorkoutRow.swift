@@ -36,9 +36,7 @@ struct WorkoutRow: View {
                     HStack {
                         Text(workout.wBodyPart.rawValue)
                             .font(kPrimarySubheadlineFont)
-                            .font(kPrimarySubheadlineFont)
                             .opacity(0.75)
-                        
                         if workout.wExercises.count > 0 {
                             Circle()
                                 .fill(Color.pink)
@@ -91,7 +89,7 @@ struct WorkoutRow: View {
         .sheet(isPresented: $startButtonSelected, content: {
             TodayWorkout(selectedWorkout: self.createWorkoutHistory(), workout: self.workout).environment(\.managedObjectContext, self.managedObjectContext)
         })
-        .frame(height: 100)
+        .frame(height: 80)
         .cornerRadius(kCornerRadius)
     }
     
@@ -151,6 +149,6 @@ struct WorkoutRow_Previews: PreviewProvider {
         pWorkout.exercises = [exer1, exer2]
         
         return WorkoutRow(workout: pWorkout)
-            .previewLayout(.fixed(width: 400, height: 100))
+            .previewLayout(.fixed(width: 400, height: 80))
     }
 }

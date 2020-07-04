@@ -16,42 +16,35 @@ struct ExerciseSetRow: View {
     var body: some View {
         ZStack {
             kPrimaryBackgroundColour
-            VStack {
-                HStack(alignment: .center) {
-                    Image(systemName: "bolt.circle.fill")
-                        .imageScale(.large)
-                        .foregroundColor(Color.gray)
-                        .font(kPrimaryTitleFont)
-                        .padding([.leading], 15)
-                        .opacity(0.5)
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Text(exerciseSet.wName)
-                                .font(kPrimaryHeadlineFont)
-                                .fontWeight(.bold)
-                            if exerciseSet.wIsFavourite {
-                                Image(systemName: "star.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 15, height: 15)
-                                    .foregroundColor(kFavStarColour)
-                            }
+            HStack {
+                VStack(alignment: .leading) {
+                    HStack {
+                        Text(exerciseSet.wName)
+                            .font(kPrimaryBodyFont)
+                            .fontWeight(.bold)
+                        if exerciseSet.wIsFavourite {
+                            Image(systemName: "star.fill")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 15, height: 15)
+                                .foregroundColor(kFavStarColour)
                         }
-                        if (!exerciseSet.wNotes.isEmpty) && (exerciseSet.wNotes != kDefaultValue) {
-                            Text(exerciseSet.wNotes)
-                                .font(kPrimarySubheadlineFont)
-                                .multilineTextAlignment(.leading)
-                        }
-                        Text("\(exerciseSet.wWeight, specifier: "%.2f") kgs X \(exerciseSet.wReputation) rps")
-                            .font(kPrimarySubheadlineFont)
-                            .opacity(0.5)
                     }
-                    .padding(5)
-                    Spacer()
+//                    if (!exerciseSet.wNotes.isEmpty) && (exerciseSet.wNotes != kDefaultValue) {
+//                        Text(exerciseSet.wNotes)
+//                            .font(kPrimarySubheadlineFont)
+//                            .multilineTextAlignment(.leading)
+//                            .opacity(0.75)
+//                    }
+                    Text("\(exerciseSet.wWeight, specifier: "%.2f") kgs X \(exerciseSet.wReputation) rps")
+                        .font(kPrimarySubheadlineFont)
+                        .opacity(0.75)
                 }
+                .padding()
+                Spacer()
             }
         }
-        .frame(height: 80)
+        .frame(height: 60)
         .cornerRadius(kCornerRadius)
     }
 }
