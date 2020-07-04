@@ -101,8 +101,10 @@ struct WorkoutRow: View {
         workoutHistory.notes = workout.notes
         workoutHistory.bodyPart = workout.bodyPart
         workoutHistory.id = UUID()
-        workoutHistory.createdAt = Date()
-        workoutHistory.updatedAt = Date()
+        let date = Date()
+        print(date)
+        workoutHistory.createdAt = date
+        workoutHistory.updatedAt = date
         
         for exercise in workout.wExercises {
             let exerciseHistory = ExerciseHistory(context: managedObjectContext)
@@ -110,16 +112,16 @@ struct WorkoutRow: View {
             exerciseHistory.notes = exercise.notes
             exerciseHistory.bodyPart = workout.bodyPart
             exerciseHistory.id = UUID()
-            exerciseHistory.createdAt = Date()
-            exerciseHistory.updatedAt = Date()
+            exerciseHistory.createdAt = date
+            exerciseHistory.updatedAt = date
             
             for exerciseSet in exercise.wExerciseSets {
                 let newExerciseSetHistory = ExerciseSetHistory(context: managedObjectContext)
                 newExerciseSetHistory.name = exerciseSet.name
                 newExerciseSetHistory.notes = exerciseSet.notes
                 newExerciseSetHistory.id = UUID()
-                newExerciseSetHistory.createdAt = Date()
-                newExerciseSetHistory.updatedAt = Date()
+                newExerciseSetHistory.createdAt = date
+                newExerciseSetHistory.updatedAt = date
                 newExerciseSetHistory.weight = exerciseSet.wWeight
                 newExerciseSetHistory.reputation = exerciseSet.wReputation
                 
@@ -129,6 +131,13 @@ struct WorkoutRow: View {
             workoutHistory.addToExercises(exerciseHistory)
         }
         
+        if managedObjectContext.hasChanges {
+            do {
+                try managedObjectContext.save()
+            } catch {
+                print(error)
+            }
+        }
         return workoutHistory
     }
     
