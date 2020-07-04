@@ -10,6 +10,7 @@ import SwiftUI
 
 struct AddExercise: View {
     
+    @EnvironmentObject var appSettings: AppSettings
     @Binding var shouldPresentAddNewExercise: Bool
     @Environment(\.managedObjectContext) var managedObjectContext
     
@@ -35,7 +36,7 @@ struct AddExercise: View {
                 })
             .navigationBarTitle(Text("kScreenTitleNewExercise"), displayMode: .inline)
             .navigationBarItems(
-                trailing: Button(action: { self.validateData() }) { CustomBarButton(title: NSLocalizedString("kButtonTitleSave", comment: "Button title"))
+                trailing: Button(action: { self.validateData() }) { CustomBarButton(title: NSLocalizedString("kButtonTitleSave", comment: "Button title")).environmentObject(appSettings)
             })
         }
     }

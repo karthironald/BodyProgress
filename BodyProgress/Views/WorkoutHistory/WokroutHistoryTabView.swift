@@ -30,6 +30,7 @@ struct WokroutHistoryTabView: View {
     @State var bodyPartsSort = [BodyParts.arms, BodyParts.chest, BodyParts.shoulders] 
     @State var statusSort = WorkoutHistoryStatusSort.Both
     @State var shouldPresentBodyParts = false
+    @EnvironmentObject var appSettings: AppSettings
     
     var body: some View {
         NavigationView {
@@ -42,7 +43,8 @@ struct WokroutHistoryTabView: View {
                                     .font(kPrimaryFootnoteFont)
                                     .opacity(1)
                                     .padding()
-                                    .background(self.bodyPartsSort.contains(part) ? kPrimaryColour : kPrimaryBackgroundColour)
+                                    .background(self.bodyPartsSort.contains(part) ? self.appSettings.themeColorView() : kPrimaryBackgroundColour)
+                                    .foregroundColor(.white)
                                     .frame(height: 30)
                                     .cornerRadius(10)
                                     .onTapGesture {

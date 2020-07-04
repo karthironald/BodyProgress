@@ -16,7 +16,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        configureAppearances()
         return true
     }
     
@@ -95,9 +94,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITableViewCell.appearance().selectionStyle = .default
     }
     
-    func configureAppearances() {
-        UINavigationBar.appearance().tintColor = kPrimaryUIColour
-        UITableView.appearance().tintColor = kPrimaryUIColour
+    func configureAppearances(color: UIColor) {
+        UINavigationBar.appearance().tintColor = color
+        UITableView.appearance().tintColor = color
+        UISwitch.appearance().onTintColor = color
     }
 
 }

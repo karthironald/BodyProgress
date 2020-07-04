@@ -10,6 +10,7 @@ import SwiftUI
 
 struct WorkoutFilterView: View {
     
+    @EnvironmentObject var appSettings: AppSettings
     @Environment(\.managedObjectContext) var managedObjectContext
     @State private var onlyFavourite = false
     @State var shouldPresentAddNewWorkout: Bool = false
@@ -35,9 +36,9 @@ struct WorkoutFilterView: View {
                     }) {
                         Image(systemName: "plus.circle.fill")
                             .font(kPrimaryTitleFont)
-                            .foregroundColor(kPrimaryColour)
+                            .foregroundColor(appSettings.themeColorView())
                     }.sheet(isPresented: $shouldPresentAddNewWorkout) {
-                        AddWorkout(shouldPresentAddNewWorkout: self.$shouldPresentAddNewWorkout).environment(\.managedObjectContext, self.managedObjectContext)
+                        AddWorkout(shouldPresentAddNewWorkout: self.$shouldPresentAddNewWorkout).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
                     }
             )
         }

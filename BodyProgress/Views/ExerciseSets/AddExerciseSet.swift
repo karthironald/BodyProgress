@@ -11,6 +11,7 @@ import CoreData
 
 struct AddExerciseSet: View {
     
+    @EnvironmentObject var appSettings: AppSettings
     @Binding var shouldPresentAddNewExerciseSet: Bool
     @Environment(\.managedObjectContext) var managedObjectContext
     
@@ -44,7 +45,7 @@ struct AddExerciseSet: View {
                 })
                 .navigationBarTitle(Text("kScreenTitleNewSet"), displayMode: .inline)
                 .navigationBarItems(
-                    trailing: Button(action: { self.validateData() }) { CustomBarButton(title: NSLocalizedString("kButtonTitleSave", comment: "Button title"))
+                    trailing: Button(action: { self.validateData() }) { CustomBarButton(title: NSLocalizedString("kButtonTitleSave", comment: "Button title")).environmentObject(appSettings)
                 })
         }
     }

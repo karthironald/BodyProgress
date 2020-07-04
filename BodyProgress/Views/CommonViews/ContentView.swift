@@ -11,26 +11,30 @@ import SwiftUI
 struct ContentView: View {
     
     @State private var selectedTab = 0 // Sets workout tab as selected tab
+    @EnvironmentObject var appSettings: AppSettings
     
     var body: some View {
         TabView(selection: $selectedTab) {
-            WorkoutFilterView().tabItem {
+            WorkoutFilterView().environmentObject(self.appSettings).tabItem {
                 Image(systemName: "w.circle.fill")
                     .imageScale(.large)
                 Text("Workout")
             }.tag(0)
-            WokroutHistoryTabView().tabItem {
+            WokroutHistoryTabView().environmentObject(self.appSettings).tabItem {
                 Image(systemName: "h.circle.fill")
                     .imageScale(.large)
                 Text("History")
             }.tag(1)
-            SettingsView().tabItem {
+            SettingsView().environmentObject(self.appSettings).tabItem {
                 Image(systemName: "gear")
                     .imageScale(.large)
                 Text("Settings")
             }.tag(2)
         }
-        .accentColor(kPrimaryColour)
+        .onAppear(perform: {
+            kAppDelegate.configureAppearances(color: AppSettings.colors[self.appSettings.themeColorIndex])
+        })
+        .accentColor(appSettings.themeColorView())
     }
 }
 

@@ -17,7 +17,8 @@ struct TodayWorkout: View {
     @State var showIncompleteAlert = false
     @State var showCompleteInfoAlert = false
     @State var shouldPauseTimer = false
-    
+
+    @EnvironmentObject var appSettings: AppSettings
     @Environment(\.managedObjectContext) var managedObjectContext
     @Environment(\.presentationMode) var presentation
     

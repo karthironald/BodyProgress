@@ -10,6 +10,7 @@ import SwiftUI
 
 struct ExercisesList: View {
     
+    @EnvironmentObject var appSettings: AppSettings
     @ObservedObject var selectedWorkout: Workout
     @State var shouldPresentAddNewExercise = false
     @Environment(\.managedObjectContext) var managedObjectContext
@@ -59,7 +60,7 @@ struct ExercisesList: View {
                 }
                 .padding([.top, .bottom], 10)
                 .sheet(isPresented: $shouldPresentEditExercise, content: {
-                    AddExercise(shouldPresentAddNewExercise: self.$shouldPresentEditExercise, selectedWorkout: self.selectedWorkout, name: self.selectedWorkout.wExercises[self.editExerciseIndex].wName, notes: self.selectedWorkout.wExercises[self.editExerciseIndex].wNotes, selectedExercise: self.selectedWorkout.wExercises[self.editExerciseIndex]).environment(\.managedObjectContext, self.managedObjectContext)
+                    AddExercise(shouldPresentAddNewExercise: self.$shouldPresentEditExercise, selectedWorkout: self.selectedWorkout, name: self.selectedWorkout.wExercises[self.editExerciseIndex].wName, notes: self.selectedWorkout.wExercises[self.editExerciseIndex].wNotes, selectedExercise: self.selectedWorkout.wExercises[self.editExerciseIndex]).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
                 })
                     .navigationBarItems(trailing:
                         Button(action: {
@@ -67,9 +68,9 @@ struct ExercisesList: View {
                         }) {
                             Image(systemName: "plus.circle.fill")
                                 .font(kPrimaryTitleFont)
-                                .foregroundColor(kPrimaryColour)
+                                .foregroundColor(appSettings.themeColorView())
                         }.sheet(isPresented: $shouldPresentAddNewExercise) {
-                            AddExercise(shouldPresentAddNewExercise: self.$shouldPresentAddNewExercise, selectedWorkout: self.selectedWorkout).environment(\.managedObjectContext, self.managedObjectContext)
+                            AddExercise(shouldPresentAddNewExercise: self.$shouldPresentAddNewExercise, selectedWorkout: self.selectedWorkout).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
                         }
                 )
             }

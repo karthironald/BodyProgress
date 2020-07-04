@@ -9,7 +9,7 @@
 import SwiftUI
 
 class AppSettings: ObservableObject {
-    static let colors = [UIColor.systemGreen, UIColor.systemRed, UIColor.systemOrange, UIColor.systemBlue, UIColor.systemYellow, UIColor.magenta, UIColor.systemIndigo]
+    static let colors = [UIColor.systemGreen, UIColor.systemRed, UIColor.systemOrange, UIColor.systemBlue, UIColor.systemYellow, UIColor.systemIndigo]
     
     @Published var notificationTime: Date {
         didSet {
@@ -27,6 +27,7 @@ class AppSettings: ObservableObject {
     @Published var themeColorIndex: Int {
         didSet {
             UserDefaults.standard.set(themeColorIndex, forKey: "themeColorIndex")
+            kAppDelegate.configureAppearances(color: AppSettings.colors[themeColorIndex])
         }
     }
     
@@ -42,17 +43,20 @@ class AppSettings: ObservableObject {
         UserDefaults.standard.value(forKey: "enabledHaptic") as? Bool ?? true
     }
     
+    func themeColorView() -> Color { Color(AppSettings.colors[themeColorIndex]) }
+    
 }
 
 struct SettingsView: View {
     
-    @ObservedObject var appSettings = AppSettings()
+    @EnvironmentObject var appSettings: AppSettings
     
     var body: some View {
         NavigationView {
             Form {
                 Section(header: Text("Notification"), footer: Text("Daily workout reminder will be send at selected time")) {
                     DatePicker("Remind me at", selection: $appSettings.notificationTime, displayedComponents: .hourAndMinute)
+                        .accentColor(appSettings.themeColorView())
                 }
                 Section(header: Text("Color")) {
                     HStack() {
@@ -80,6 +84,7 @@ struct SettingsView: View {
                     Toggle(isOn: $appSettings.enabledHaptic) {
                         Text("Enable haptic feedback")
                     }
+                    .accentColor(appSettings.themeColorView())
                 }
             }
             .navigationBarTitle("Settings")

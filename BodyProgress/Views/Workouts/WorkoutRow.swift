@@ -11,6 +11,7 @@ import CoreData
 
 struct WorkoutRow: View {
     
+    @EnvironmentObject var appSettings: AppSettings
     @Environment(\.managedObjectContext) var managedObjectContext
     @ObservedObject var workout: Workout
     @State private var shouldShowStartWorkoutAlert = false
@@ -87,7 +88,7 @@ struct WorkoutRow: View {
             }))
         })
         .sheet(isPresented: $startButtonSelected, content: {
-            TodayWorkout(selectedWorkout: self.createWorkoutHistory(), workout: self.workout).environment(\.managedObjectContext, self.managedObjectContext)
+            TodayWorkout(selectedWorkout: self.createWorkoutHistory(), workout: self.workout).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
         })
         .frame(height: 80)
         .cornerRadius(kCornerRadius)

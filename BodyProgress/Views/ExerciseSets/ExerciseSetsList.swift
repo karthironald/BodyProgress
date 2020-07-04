@@ -10,6 +10,7 @@ import SwiftUI
 
 struct ExerciseSetsList: View {
     
+    @EnvironmentObject var appSettings: AppSettings
     @ObservedObject var selectedExercise: Exercise
     @State var shouldPresentAddNewExerciseSet = false
     @Environment(\.managedObjectContext) var managedObjectContext
@@ -64,7 +65,7 @@ struct ExerciseSetsList: View {
                         weight: self.selectedExercise.wExerciseSets[self.editExerciseSetIndex].wWeight,
                         reputation: Double(self.selectedExercise.wExerciseSets[self.editExerciseSetIndex].wReputation),
                         selectedExerciseSet: self.selectedExercise.wExerciseSets[self.editExerciseSetIndex]
-                    ).environment(\.managedObjectContext, self.managedObjectContext)
+                    ).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
                 })
                     .navigationBarTitle(selectedExercise.wName)
                     .navigationBarItems(trailing:
@@ -73,9 +74,9 @@ struct ExerciseSetsList: View {
                         }) {
                             Image(systemName: "plus.circle.fill")
                                 .font(kPrimaryTitleFont)
-                                .foregroundColor(kPrimaryColour)
+                                .foregroundColor(appSettings.themeColorView())
                         }.sheet(isPresented: $shouldPresentAddNewExerciseSet) {
-                            AddExerciseSet(shouldPresentAddNewExerciseSet: self.$shouldPresentAddNewExerciseSet, selectedExercise: self.selectedExercise).environment(\.managedObjectContext, self.managedObjectContext)
+                            AddExerciseSet(shouldPresentAddNewExerciseSet: self.$shouldPresentAddNewExerciseSet, selectedExercise: self.selectedExercise).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
                         }
                 )
             }
