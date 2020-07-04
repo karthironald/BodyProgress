@@ -52,6 +52,7 @@ struct WorkoutRow: View {
                 Spacer()
                 VStack(spacing: 5) {
                     Button(action: {
+                        Helper.hapticFeedback()
                         self.shouldShowStartWorkoutAlert.toggle()
                     }) {
                         Text("Start workout")

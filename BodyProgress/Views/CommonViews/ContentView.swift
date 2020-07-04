@@ -14,7 +14,7 @@ struct ContentView: View {
     
     var body: some View {
         TabView(selection: $selectedTab) {
-            WorkoutsList().tabItem {
+            WorkoutFilterView().tabItem {
                 Image(systemName: "w.circle.fill")
                     .imageScale(.large)
                 Text("Workout")

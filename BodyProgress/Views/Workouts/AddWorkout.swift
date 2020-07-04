@@ -80,6 +80,7 @@ struct AddWorkout: View {
             newWorkout.id = UUID()
             newWorkout.createdAt = Date()
             newWorkout.updatedAt = Date()
+            newWorkout.isFavourite = false
         }
         if managedObjectContext.hasChanges {
             do {

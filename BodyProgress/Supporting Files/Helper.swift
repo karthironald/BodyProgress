@@ -10,8 +10,8 @@ import UIKit
 
 class Helper: NSObject {
     
-    class func hapticFeedback() {
-        let generator = UIImpactFeedbackGenerator(style: .heavy)
+    class func hapticFeedback(style: UIImpactFeedbackGenerator.FeedbackStyle = .rigid) {
+        let generator = UIImpactFeedbackGenerator(style: style)
         generator.impactOccurred()
     }
     
