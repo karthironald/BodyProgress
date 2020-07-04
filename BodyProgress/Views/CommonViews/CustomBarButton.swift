@@ -11,7 +11,7 @@ import SwiftUI
 struct CustomBarButton: View {
     
     var title: String
-    var background: Color = .green
+    var background: Color = kPrimaryColour
     
     var body: some View {
         Text(title)

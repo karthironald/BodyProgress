@@ -24,6 +24,11 @@ struct ContentView: View {
                     .imageScale(.large)
                 Text("History")
             }.tag(1)
+            SettingsView().tabItem {
+                Image(systemName: "gear")
+                    .imageScale(.large)
+                Text("Settings")
+            }.tag(2)
         }
         .accentColor(kPrimaryColour)
     }

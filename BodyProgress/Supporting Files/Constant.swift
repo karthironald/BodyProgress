@@ -26,8 +26,8 @@ let kPrimaryFootnoteFont = Font.system(.footnote, design: .rounded)
 let kPrimaryCalloutFont = Font.system(.callout, design: .rounded)
 let kPrimaryCaptionFont = Font.system(.caption, design: .rounded)
 
-let kPrimaryColour = Color.green.opacity(kPrimaryColourOpacity)
-let kPrimaryUIColour = UIColor.systemGreen.withAlphaComponent(CGFloat(kPrimaryColourOpacity))
+let kPrimaryColour = Color(AppSettings.colors[UserDefaults.standard.value(forKey: "themeColorIndex") as? Int ?? 0])
+let kPrimaryUIColour = AppSettings.colors[UserDefaults.standard.value(forKey: "themeColorIndex") as? Int ?? 0].withAlphaComponent(CGFloat(kPrimaryColourOpacity))
 let kPrimaryColourOpacity = 1.0
 let kPrimaryListCellOpacity = 0.3
 let kPrimaryBackgroundColour = Color.secondary.opacity(kPrimaryListCellOpacity)

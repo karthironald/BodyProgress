@@ -52,6 +52,8 @@
 		77CB41EF24647F2000052601 /* TodayWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CB41EE24647F2000052601 /* TodayWorkout.swift */; };
 		77CB41F12464864C00052601 /* TodayExcerciseRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CB41F02464864C00052601 /* TodayExcerciseRow.swift */; };
 		77F4C4FB244A21B70048E3CB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77F4C4FA244A21B70048E3CB /* Preview Assets.xcassets */; };
+		77F8AC4024B0676D00A5ABB5 /* NotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F8AC3F24B0676D00A5ABB5 /* NotificationHelper.swift */; };
+		77F8AC4324B06B7500A5ABB5 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F8AC4224B06B7500A5ABB5 /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -102,6 +104,8 @@
 		77F4C4EB244A21B40048E3CB /* BodyProgres.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BodyProgres.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77F4C4FA244A21B70048E3CB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		77F4C4FF244A21B70048E3CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		77F8AC3F24B0676D00A5ABB5 /* NotificationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHelper.swift; sourceTree = "<group>"; };
+		77F8AC4224B06B7500A5ABB5 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,6 +173,7 @@
 		77B6B50E24521903004B9F89 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				77F8AC4124B06B6300A5ABB5 /* Settings */,
 				77BE022B246AFDB600197D06 /* WorkoutHistory */,
 				77CB41ED24647F1100052601 /* TodayWorkout */,
 				770903A5245F3BD4003F7EDD /* ExerciseSets */,
@@ -300,6 +305,7 @@
 		77F4C4ED244A21B40048E3CB /* BodyProgress */ = {
 			isa = PBXGroup;
 			children = (
+				77F8AC3E24B0674700A5ABB5 /* Helpers */,
 				77F4C4FF244A21B70048E3CB /* Info.plist */,
 				77F4C509244A22310048E3CB /* Models */,
 				77B6B50E24521903004B9F89 /* Views */,
@@ -326,6 +332,22 @@
 				77B6B5162452199E004B9F89 /* Workouts */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		77F8AC3E24B0674700A5ABB5 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				77F8AC3F24B0676D00A5ABB5 /* NotificationHelper.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		77F8AC4124B06B6300A5ABB5 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				77F8AC4224B06B7500A5ABB5 /* SettingsView.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -406,11 +428,13 @@
 				774958F4246C6C9F00CF99CF /* ExerciseSetHistory+CoreDataProperties.swift in Sources */,
 				770903A4245F280D003F7EDD /* AddExercise.swift in Sources */,
 				774958F3246C6C9F00CF99CF /* ExerciseSetHistory+CoreDataClass.swift in Sources */,
+				77F8AC4024B0676D00A5ABB5 /* NotificationHelper.swift in Sources */,
 				774958F2246C6C9F00CF99CF /* ExerciseHistory+CoreDataProperties.swift in Sources */,
 				77A3EC422483B314007A92B8 /* Helper.swift in Sources */,
 				770903A9245F3BEE003F7EDD /* ExerciseSetRow.swift in Sources */,
 				77B6B52D24521A90004B9F89 /* BodyProgress.xcdatamodeld in Sources */,
 				77181012245EBFF3005D6E9F /* User+CoreDataProperties.swift in Sources */,
+				77F8AC4324B06B7500A5ABB5 /* SettingsView.swift in Sources */,
 				770903A7245F3BE2003F7EDD /* ExerciseSetsList.swift in Sources */,
 				77B6B51E24521A36004B9F89 /* ContentView.swift in Sources */,
 				7742599A2472FB85008EE26E /* WorkoutHistroyDetails.swift in Sources */,

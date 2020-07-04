@@ -39,7 +39,7 @@ struct WorkoutRow: View {
                             .opacity(0.75)
                         if workout.wExercises.count > 0 {
                             Circle()
-                                .fill(Color.pink)
+                                .fill(Color.secondary)
                                 .frame(width: 5, height: 5)
                             Text("\(workout.wExercises.count)")
                                 .font(kPrimarySubheadlineFont)

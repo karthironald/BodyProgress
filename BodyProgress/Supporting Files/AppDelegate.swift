@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -98,6 +99,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().tintColor = kPrimaryUIColour
         UITableView.appearance().tintColor = kPrimaryUIColour
     }
-    
+
 }
 
+
+// MARK: - UNUserNotificationCenterDelegate methods
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        if UIApplication.shared.applicationState == .active {
+            completionHandler([.sound, .badge])
+            return
+        } else {
+            completionHandler([.sound, .badge, .alert])
+        }
+    }
+    
+}
