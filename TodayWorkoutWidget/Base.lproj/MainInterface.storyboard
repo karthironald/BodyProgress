@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="M4Y-Lb-cyx">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Hosting Controller-->
+        <scene sceneID="gVw-ba-atQ">
+            <objects>
+                <hostingController id="EOo-x5-FYS" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wI6-gr-sfn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="881" y="22"/>
+        </scene>
+        <!--Today View Controller-->
+        <scene sceneID="cwh-vc-ff4">
+            <objects>
+                <viewController id="M4Y-Lb-cyx" customClass="TodayViewController" customModule="Today_Workout" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" simulatedAppContext="notificationCenter" id="S3S-Oj-5AN">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="37"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GSW-TK-QUs">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="37"/>
+                                <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <segue destination="EOo-x5-FYS" kind="embed" destinationCreationSelector="hostControllerSegue:" id="VG6-0R-hlj"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="GSW-TK-QUs" firstAttribute="centerX" secondItem="S3S-Oj-5AN" secondAttribute="centerX" id="1K2-Kh-SAq"/>
+                            <constraint firstItem="ssy-KU-ocm" firstAttribute="bottom" secondItem="GSW-TK-QUs" secondAttribute="bottom" id="9p6-lc-UDd"/>
+                            <constraint firstAttribute="trailing" secondItem="GSW-TK-QUs" secondAttribute="trailing" id="Mfu-xb-ddF"/>
+                            <constraint firstItem="GSW-TK-QUs" firstAttribute="leading" secondItem="S3S-Oj-5AN" secondAttribute="leading" id="xeS-FR-Tmz"/>
+                            <constraint firstItem="GSW-TK-QUs" firstAttribute="top" secondItem="S3S-Oj-5AN" secondAttribute="top" id="ysK-DO-Xsp"/>
+                            <constraint firstItem="GSW-TK-QUs" firstAttribute="centerY" secondItem="S3S-Oj-5AN" secondAttribute="centerY" id="zRS-R4-VO0"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="ssy-KU-ocm"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="37"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vXp-U4-Rya" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="140.57971014492756" y="104.79910714285714"/>
+        </scene>
+    </scenes>
+</document>
