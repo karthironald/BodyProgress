@@ -73,7 +73,8 @@ struct TodayWorkout: View {
             .onReceive(timer) { date in
                 self.duration = Int16(date.timeIntervalSince(self.startDate))
                 self.displayDuration = self.duration.displayDuration()
-        }
+                Helper.informDuration(duration: self.duration)
+            }
     }
     
     /**Update and save the work in core data*/
