@@ -51,6 +51,18 @@
 		77BE022D246AFDC000197D06 /* WorkoutHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77BE022C246AFDC000197D06 /* WorkoutHistoryView.swift */; };
 		77CB41EF24647F2000052601 /* TodayWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CB41EE24647F2000052601 /* TodayWorkout.swift */; };
 		77CB41F12464864C00052601 /* TodayExcerciseRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CB41F02464864C00052601 /* TodayExcerciseRow.swift */; };
+		77CFAAE424B1CBA2003BA128 /* GreenIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 77CFAAE224B1CBA2003BA128 /* GreenIcon@2x.png */; };
+		77CFAAE524B1CBA2003BA128 /* GreenIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 77CFAAE324B1CBA2003BA128 /* GreenIcon@3x.png */; };
+		77CFAAE824B1CBCF003BA128 /* BlueIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 77CFAAE624B1CBCE003BA128 /* BlueIcon@2x.png */; };
+		77CFAAE924B1CBCF003BA128 /* BlueIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 77CFAAE724B1CBCE003BA128 /* BlueIcon@3x.png */; };
+		77CFAAEC24B1CBEC003BA128 /* IndigoIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 77CFAAEA24B1CBEC003BA128 /* IndigoIcon@3x.png */; };
+		77CFAAED24B1CBEC003BA128 /* IndigoIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 77CFAAEB24B1CBEC003BA128 /* IndigoIcon@2x.png */; };
+		77CFAAF024B1CC0A003BA128 /* OrangeIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 77CFAAEE24B1CC0A003BA128 /* OrangeIcon@3x.png */; };
+		77CFAAF124B1CC0A003BA128 /* OrangeIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 77CFAAEF24B1CC0A003BA128 /* OrangeIcon@2x.png */; };
+		77CFAAF424B1CC2B003BA128 /* RedIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 77CFAAF224B1CC2B003BA128 /* RedIcon@3x.png */; };
+		77CFAAF524B1CC2B003BA128 /* RedIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 77CFAAF324B1CC2B003BA128 /* RedIcon@2x.png */; };
+		77CFAAF824B1CC59003BA128 /* YellowIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 77CFAAF624B1CC58003BA128 /* YellowIcon@3x.png */; };
+		77CFAAF924B1CC59003BA128 /* YellowIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 77CFAAF724B1CC59003BA128 /* YellowIcon@2x.png */; };
 		77F4C4FB244A21B70048E3CB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77F4C4FA244A21B70048E3CB /* Preview Assets.xcassets */; };
 		77F8AC4024B0676D00A5ABB5 /* NotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F8AC3F24B0676D00A5ABB5 /* NotificationHelper.swift */; };
 		77F8AC4324B06B7500A5ABB5 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F8AC4224B06B7500A5ABB5 /* SettingsView.swift */; };
@@ -101,7 +113,19 @@
 		77BE022C246AFDC000197D06 /* WorkoutHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryView.swift; sourceTree = "<group>"; };
 		77CB41EE24647F2000052601 /* TodayWorkout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWorkout.swift; sourceTree = "<group>"; };
 		77CB41F02464864C00052601 /* TodayExcerciseRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayExcerciseRow.swift; sourceTree = "<group>"; };
-		77F4C4EB244A21B40048E3CB /* BodyProgres.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BodyProgres.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		77CFAAE224B1CBA2003BA128 /* GreenIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GreenIcon@2x.png"; sourceTree = "<group>"; };
+		77CFAAE324B1CBA2003BA128 /* GreenIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GreenIcon@3x.png"; sourceTree = "<group>"; };
+		77CFAAE624B1CBCE003BA128 /* BlueIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlueIcon@2x.png"; sourceTree = "<group>"; };
+		77CFAAE724B1CBCE003BA128 /* BlueIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlueIcon@3x.png"; sourceTree = "<group>"; };
+		77CFAAEA24B1CBEC003BA128 /* IndigoIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IndigoIcon@3x.png"; sourceTree = "<group>"; };
+		77CFAAEB24B1CBEC003BA128 /* IndigoIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IndigoIcon@2x.png"; sourceTree = "<group>"; };
+		77CFAAEE24B1CC0A003BA128 /* OrangeIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OrangeIcon@3x.png"; sourceTree = "<group>"; };
+		77CFAAEF24B1CC0A003BA128 /* OrangeIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OrangeIcon@2x.png"; sourceTree = "<group>"; };
+		77CFAAF224B1CC2B003BA128 /* RedIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RedIcon@3x.png"; sourceTree = "<group>"; };
+		77CFAAF324B1CC2B003BA128 /* RedIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RedIcon@2x.png"; sourceTree = "<group>"; };
+		77CFAAF624B1CC58003BA128 /* YellowIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "YellowIcon@3x.png"; sourceTree = "<group>"; };
+		77CFAAF724B1CC59003BA128 /* YellowIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "YellowIcon@2x.png"; sourceTree = "<group>"; };
+		77F4C4EB244A21B40048E3CB /* Workout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Workout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77F4C4FA244A21B70048E3CB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		77F4C4FF244A21B70048E3CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		77F8AC3F24B0676D00A5ABB5 /* NotificationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHelper.swift; sourceTree = "<group>"; };
@@ -286,6 +310,25 @@
 			path = TodayWorkout;
 			sourceTree = "<group>";
 		};
+		77CFAAD924B1C19B003BA128 /* App Icons */ = {
+			isa = PBXGroup;
+			children = (
+				77CFAAE224B1CBA2003BA128 /* GreenIcon@2x.png */,
+				77CFAAE324B1CBA2003BA128 /* GreenIcon@3x.png */,
+				77CFAAE624B1CBCE003BA128 /* BlueIcon@2x.png */,
+				77CFAAE724B1CBCE003BA128 /* BlueIcon@3x.png */,
+				77CFAAEB24B1CBEC003BA128 /* IndigoIcon@2x.png */,
+				77CFAAEA24B1CBEC003BA128 /* IndigoIcon@3x.png */,
+				77CFAAEF24B1CC0A003BA128 /* OrangeIcon@2x.png */,
+				77CFAAEE24B1CC0A003BA128 /* OrangeIcon@3x.png */,
+				77CFAAF324B1CC2B003BA128 /* RedIcon@2x.png */,
+				77CFAAF224B1CC2B003BA128 /* RedIcon@3x.png */,
+				77CFAAF724B1CC59003BA128 /* YellowIcon@2x.png */,
+				77CFAAF624B1CC58003BA128 /* YellowIcon@3x.png */,
+			);
+			path = "App Icons";
+			sourceTree = "<group>";
+		};
 		77F4C4E2244A21B40048E3CB = {
 			isa = PBXGroup;
 			children = (
@@ -297,7 +340,7 @@
 		77F4C4EC244A21B40048E3CB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				77F4C4EB244A21B40048E3CB /* BodyProgres.app */,
+				77F4C4EB244A21B40048E3CB /* Workout.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -305,6 +348,7 @@
 		77F4C4ED244A21B40048E3CB /* BodyProgress */ = {
 			isa = PBXGroup;
 			children = (
+				77CFAAD924B1C19B003BA128 /* App Icons */,
 				77F8AC3E24B0674700A5ABB5 /* Helpers */,
 				77F4C4FF244A21B70048E3CB /* Info.plist */,
 				77F4C509244A22310048E3CB /* Models */,
@@ -367,7 +411,7 @@
 			);
 			name = BodyProgress;
 			productName = BodyProgress;
-			productReference = 77F4C4EB244A21B40048E3CB /* BodyProgres.app */;
+			productReference = 77F4C4EB244A21B40048E3CB /* Workout.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -408,7 +452,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77CFAAF524B1CC2B003BA128 /* RedIcon@2x.png in Resources */,
+				77CFAAE424B1CBA2003BA128 /* GreenIcon@2x.png in Resources */,
+				77CFAAE524B1CBA2003BA128 /* GreenIcon@3x.png in Resources */,
+				77CFAAE924B1CBCF003BA128 /* BlueIcon@3x.png in Resources */,
 				77F4C4FB244A21B70048E3CB /* Preview Assets.xcassets in Resources */,
+				77CFAAF924B1CC59003BA128 /* YellowIcon@2x.png in Resources */,
+				77CFAAF024B1CC0A003BA128 /* OrangeIcon@3x.png in Resources */,
+				77CFAAF824B1CC59003BA128 /* YellowIcon@3x.png in Resources */,
+				77CFAAEC24B1CBEC003BA128 /* IndigoIcon@3x.png in Resources */,
+				77CFAAF424B1CC2B003BA128 /* RedIcon@3x.png in Resources */,
+				77CFAAE824B1CBCF003BA128 /* BlueIcon@2x.png in Resources */,
+				77CFAAF124B1CC0A003BA128 /* OrangeIcon@2x.png in Resources */,
+				77CFAAED24B1CBEC003BA128 /* IndigoIcon@2x.png in Resources */,
 				774E09A824ACFE9C005D39AB /* Localizable.strings in Resources */,
 				77B6B52C24521A90004B9F89 /* Assets.xcassets in Resources */,
 				77B6B52A24521A90004B9F89 /* LaunchScreen.storyboard in Resources */,
@@ -611,7 +667,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mallow-tech.BodyProgress";
-				PRODUCT_NAME = BodyProgres;
+				PRODUCT_NAME = Workout;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -632,7 +688,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mallow-tech.BodyProgress";
-				PRODUCT_NAME = BodyProgres;
+				PRODUCT_NAME = Workout;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

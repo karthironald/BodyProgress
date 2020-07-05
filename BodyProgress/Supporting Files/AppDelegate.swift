@@ -100,6 +100,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UISwitch.appearance().onTintColor = color
     }
 
+    func changeAppIcon(for themeIndex: Int?) {
+        if let themeIndex = themeIndex, UIApplication.shared.supportsAlternateIcons {
+            let iconName = AppThemeColours.allCases[themeIndex].appIconName()
+            let currentIconName = UIApplication.shared.alternateIconName
+            if let currentIconName = currentIconName, currentIconName == iconName {
+                // Already selected secondary icon is selected again which is already set
+                return
+            } else {
+                if themeIndex == AppThemeColours.allCases.firstIndex(of: .green) {
+                    if currentIconName == nil { return }
+                    UIApplication.shared.setAlternateIconName(nil, completionHandler: nil) // Primary icon
+                } else {
+                    UIApplication.shared.setAlternateIconName(iconName, completionHandler: nil) // Alternate icon
+                }
+            }
+        }
+    }
 }
 
 

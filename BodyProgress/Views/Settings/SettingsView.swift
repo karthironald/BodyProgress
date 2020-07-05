@@ -8,8 +8,38 @@
 
 import SwiftUI
 
+enum AppThemeColours: String, CaseIterable {
+    case green = "systemGreen"
+    case red = "systemRed"
+    case orange = "systemOrange"
+    case blue = "systemBlue"
+    case yellow = "systemYellow"
+    case indigo = "systemIndigo"
+    
+    func uiColor() -> UIColor {
+        switch self {
+        case .green: return UIColor.systemGreen
+        case .red: return UIColor.systemRed
+        case .orange: return UIColor.systemOrange
+        case .blue: return UIColor.systemBlue
+        case .yellow: return UIColor.systemYellow
+        case .indigo: return UIColor.systemIndigo
+        }
+    }
+    
+    func appIconName() -> String {
+        switch self {
+        case .green: return "GreenIcon"
+        case .red: return "RedIcon"
+        case .orange: return "OrangeIcon"
+        case .blue: return "BlueIcon"
+        case .yellow: return "YellowIcon"
+        case .indigo: return "IndigoIcon"
+        }
+    }
+    
+}
 class AppSettings: ObservableObject {
-    static let colors = [UIColor.systemGreen, UIColor.systemRed, UIColor.systemOrange, UIColor.systemBlue, UIColor.systemYellow, UIColor.systemIndigo]
     
     @Published var notificationTime: Date {
         didSet {
@@ -27,7 +57,8 @@ class AppSettings: ObservableObject {
     @Published var themeColorIndex: Int {
         didSet {
             UserDefaults.standard.set(themeColorIndex, forKey: "themeColorIndex")
-            kAppDelegate.configureAppearances(color: AppSettings.colors[themeColorIndex])
+            kAppDelegate.configureAppearances(color: AppThemeColours.allCases[themeColorIndex].uiColor())
+            kAppDelegate.changeAppIcon(for: themeColorIndex)
         }
     }
     
@@ -43,7 +74,7 @@ class AppSettings: ObservableObject {
         UserDefaults.standard.value(forKey: "enabledHaptic") as? Bool ?? true
     }
     
-    func themeColorView() -> Color { Color(AppSettings.colors[themeColorIndex]) }
+    func themeColorView() -> Color { Color(AppThemeColours.allCases[themeColorIndex].uiColor()) }
     
 }
 
@@ -61,12 +92,12 @@ struct SettingsView: View {
                 }
                 Section(header: Text("Theme Color")) {
                     HStack() {
-                        ForEach(0..<AppSettings.colors.count, id: \.self) { index in
+                        ForEach(0..<AppThemeColours.allCases.count, id: \.self) { index in
                             Button(action: {
                                 self.appSettings.themeColorIndex = index
                             }) {
                                 Circle()
-                                    .fill(Color(AppSettings.colors[index]))
+                                    .fill(Color(AppThemeColours.allCases[index].uiColor()))
                                     .overlay(
                                         Group {
                                             if index == self.appSettings.themeColorIndex {
