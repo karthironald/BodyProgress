@@ -41,10 +41,21 @@ enum AppThemeColours: String, CaseIterable {
 }
 class AppSettings: ObservableObject {
     
+    @Published var enabledReminder: Bool {
+        didSet {
+            UserDefaults.standard.set(enabledReminder, forKey: "enabledReminder")
+            if enabledReminder {
+                notificationTime = Date().advanced(by: 3600)
+                NotificationHelper.addLocalNoification(at: notificationTime)
+            } else {
+                NotificationHelper.resetNotifications()
+            }
+        }
+    }
+    
     @Published var notificationTime: Date {
         didSet {
             UserDefaults.standard.set(notificationTime, forKey: "notificationTime")
-            NotificationHelper.addLocalNoification(at: notificationTime)
         }
     }
     
@@ -63,6 +74,7 @@ class AppSettings: ObservableObject {
     }
     
     init() {
+        self.enabledReminder =  UserDefaults.standard.value(forKey: "enabledReminder") as? Bool ?? false
         self.notificationTime = UserDefaults.standard.value(forKey: "notificationTime") as? Date ?? Date().advanced(by: 3600)
         self.themeColorIndex = UserDefaults.standard.value(forKey: "themeColorIndex") as? Int ?? 0
         self.enabledHaptic = UserDefaults.standard.value(forKey: "enabledHaptic") as? Bool ?? true
@@ -81,20 +93,35 @@ class AppSettings: ObservableObject {
 struct SettingsView: View {
     
     @EnvironmentObject var appSettings: AppSettings
-    @State private var forceRender = false
+    @State private var forceRender = true
     
     var body: some View {
         NavigationView {
             Form {
                 Section(header: Text("Workout Reminder")) {
-                    DatePicker("Remind me daily at", selection: $appSettings.notificationTime, displayedComponents: .hourAndMinute)
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 0)
+                            .fill(Color.white)
+                        if forceRender {
+                            Toggle(isOn: $appSettings.enabledReminder) {
+                                Text("Reminder")
+                            }
+                        }
+                    }
+                    if appSettings.enabledReminder {
+                        DatePicker("Remind me daily at", selection: $appSettings.notificationTime, displayedComponents: .hourAndMinute)
                         .accentColor(appSettings.themeColorView())
+                    }
                 }
                 Section(header: Text("Theme Color")) {
                     HStack() {
                         ForEach(0..<AppThemeColours.allCases.count, id: \.self) { index in
                             Button(action: {
                                 self.appSettings.themeColorIndex = index
+                                self.forceRender = false
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                    self.forceRender = true
+                                }
                             }) {
                                 Circle()
                                     .fill(Color(AppThemeColours.allCases[index].uiColor()))
@@ -113,10 +140,11 @@ struct SettingsView: View {
                     }
                 }
                 Section(header: Text("Haptic")) {
-                    Toggle(isOn: $appSettings.enabledHaptic) {
-                        Text("Enable haptic feedback")
+                    if forceRender {
+                        Toggle(isOn: $appSettings.enabledHaptic) {
+                            Text("Enable haptic feedback")
+                        }
                     }
-                    .accentColor(forceRender ? appSettings.themeColorView() : .blue)
                 }
             }
             .navigationBarTitle("Settings")

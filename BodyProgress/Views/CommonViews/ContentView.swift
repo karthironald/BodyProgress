@@ -16,12 +16,12 @@ struct ContentView: View {
     var body: some View {
         TabView(selection: $selectedTab) {
             WorkoutFilterView().environmentObject(self.appSettings).tabItem {
-                Image(systemName: "w.circle.fill")
+                Image(systemName: "flame")
                     .imageScale(.large)
                 Text("Workout")
             }.tag(0)
             WokroutHistoryTabView().environmentObject(self.appSettings).tabItem {
-                Image(systemName: "h.circle.fill")
+                Image(systemName: "clock")
                     .imageScale(.large)
                 Text("History")
             }.tag(1)

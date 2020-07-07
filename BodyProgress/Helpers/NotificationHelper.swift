@@ -13,7 +13,7 @@ private let kLocalNotificationIdentifier = "kLocalNotificationIdentifier"
 class NotificationHelper: NSObject {
 
     /**We need to post local notification for everyday at `kShiftStartTime`*/
-    static func configureLocalNotification(at hour: Int?, minute: Int?) {
+    static private func configureLocalNotification(at hour: Int?, minute: Int?) {
         invalidateLocalNotification(with: [kLocalNotificationIdentifier])
         
         let centre = UNUserNotificationCenter.current()
@@ -40,9 +40,13 @@ class NotificationHelper: NSObject {
     }
  
     /**Invalidate local notification which we configured in `configureLocalNotification()`*/
-    static func invalidateLocalNotification(with identifiers: [String]) {
+    static private func invalidateLocalNotification(with identifiers: [String]) {
         UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: identifiers)
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: identifiers)
+    }
+    
+    static func resetNotifications() {
+        invalidateLocalNotification(with: [kLocalNotificationIdentifier])
     }
     
     static func addLocalNoification(at date: Date?) {
@@ -62,7 +66,7 @@ class NotificationHelper: NSObject {
         }
     }
     
-    static func registerForPushNotification(at date: Date?) {
+    static private func registerForPushNotification(at date: Date?) {
         let userNotification = UNUserNotificationCenter.current()
         userNotification.requestAuthorization(options: [.sound, .badge, .alert]) { (status, error) in
             if status && error == nil {
