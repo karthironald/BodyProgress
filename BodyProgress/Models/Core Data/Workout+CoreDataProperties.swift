@@ -42,7 +42,7 @@ extension Workout {
     var wExercises: [Exercise] {
         let set = exercises as? Set<Exercise> ?? []
         return set.sorted {
-            $0.createdAt ?? Date() < $1.createdAt ?? Date()
+            $0.displayOrder < $1.displayOrder
         }
     }
     

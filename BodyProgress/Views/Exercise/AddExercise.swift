@@ -71,6 +71,7 @@ struct AddExercise: View {
             newExercise.id = UUID()
             newExercise.createdAt = Date()
             newExercise.updatedAt = Date()
+            newExercise.displayOrder = Int16(selectedWorkout.wExercises.count)
             selectedWorkout.addToExercises(newExercise)
         }
         
