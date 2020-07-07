@@ -46,7 +46,6 @@ class AppSettings: ObservableObject {
             UserDefaults.standard.set(enabledReminder, forKey: "enabledReminder")
             if enabledReminder {
                 notificationTime = Date().advanced(by: 3600)
-                NotificationHelper.addLocalNoification(at: notificationTime)
             } else {
                 NotificationHelper.resetNotifications()
             }
@@ -56,6 +55,7 @@ class AppSettings: ObservableObject {
     @Published var notificationTime: Date {
         didSet {
             UserDefaults.standard.set(notificationTime, forKey: "notificationTime")
+            NotificationHelper.addLocalNoification(at: notificationTime)
         }
     }
     
