@@ -8,88 +8,6 @@
 
 import SwiftUI
 
-enum AppThemeColours: String, CaseIterable {
-    case green = "systemGreen"
-    case red = "systemRed"
-    case orange = "systemOrange"
-    case blue = "systemBlue"
-    case yellow = "systemYellow"
-    case indigo = "systemIndigo"
-    
-    func uiColor() -> UIColor {
-        switch self {
-        case .green: return UIColor.systemGreen
-        case .red: return UIColor.systemRed
-        case .orange: return UIColor.systemOrange
-        case .blue: return UIColor.systemBlue
-        case .yellow: return UIColor.systemYellow
-        case .indigo: return UIColor.systemIndigo
-        }
-    }
-    
-    func appIconName() -> String {
-        switch self {
-        case .green: return "GreenIcon"
-        case .red: return "RedIcon"
-        case .orange: return "OrangeIcon"
-        case .blue: return "BlueIcon"
-        case .yellow: return "YellowIcon"
-        case .indigo: return "IndigoIcon"
-        }
-    }
-    
-}
-class AppSettings: ObservableObject {
-    
-    @Published var enabledReminder: Bool {
-        didSet {
-            UserDefaults.standard.set(enabledReminder, forKey: "enabledReminder")
-            if enabledReminder {
-                notificationTime = Date().advanced(by: 3600)
-            } else {
-                NotificationHelper.resetNotifications()
-            }
-        }
-    }
-    
-    @Published var notificationTime: Date {
-        didSet {
-            UserDefaults.standard.set(notificationTime, forKey: "notificationTime")
-            NotificationHelper.addLocalNoification(at: notificationTime)
-        }
-    }
-    
-    @Published var enabledHaptic: Bool {
-        didSet {
-            UserDefaults.standard.set(enabledHaptic, forKey: "enabledHaptic")
-        }
-    }
-    
-    @Published var themeColorIndex: Int {
-        didSet {
-            UserDefaults.standard.set(themeColorIndex, forKey: "themeColorIndex")
-            kAppDelegate.configureAppearances(color: AppThemeColours.allCases[themeColorIndex].uiColor())
-            kAppDelegate.changeAppIcon(for: themeColorIndex)
-        }
-    }
-    
-    init() {
-        self.enabledReminder =  UserDefaults.standard.value(forKey: "enabledReminder") as? Bool ?? false
-        self.notificationTime = UserDefaults.standard.value(forKey: "notificationTime") as? Date ?? Date().advanced(by: 3600)
-        self.themeColorIndex = UserDefaults.standard.value(forKey: "themeColorIndex") as? Int ?? 0
-        self.enabledHaptic = UserDefaults.standard.value(forKey: "enabledHaptic") as? Bool ?? true
-    }
-    
-    
-    // MARK: - Custom methods
-    class func isHapticEnabled() -> Bool {
-        UserDefaults.standard.value(forKey: "enabledHaptic") as? Bool ?? true
-    }
-    
-    func themeColorView() -> Color { Color(AppThemeColours.allCases[themeColorIndex].uiColor()) }
-    
-}
-
 struct SettingsView: View {
     
     @EnvironmentObject var appSettings: AppSettings
@@ -98,6 +16,14 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             Form {
+                Section {
+                    HStack(spacing: 30) {
+                        Text("Name")
+                        TextField("Fitness Freak", text: $appSettings.userName)
+                            .multilineTextAlignment(.trailing)
+                            
+                    }
+                }
                 Section(header: Text("Workout Reminder")) {
                     ZStack {
                         RoundedRectangle(cornerRadius: 0)

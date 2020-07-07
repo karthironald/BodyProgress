@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7707C18424B496C7001837E1 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7707C18324B496C7001837E1 /* AppSettings.swift */; };
 		770903A0245F2551003F7EDD /* ExercisesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7709039F245F2551003F7EDD /* ExercisesList.swift */; };
 		770903A2245F27F3003F7EDD /* ExerciseRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770903A1245F27F3003F7EDD /* ExerciseRow.swift */; };
 		770903A4245F280D003F7EDD /* AddExercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770903A3245F280D003F7EDD /* AddExercise.swift */; };
@@ -69,6 +70,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7707C18324B496C7001837E1 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		7709039F245F2551003F7EDD /* ExercisesList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExercisesList.swift; sourceTree = "<group>"; };
 		770903A1245F27F3003F7EDD /* ExerciseRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseRow.swift; sourceTree = "<group>"; };
 		770903A3245F280D003F7EDD /* AddExercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExercise.swift; sourceTree = "<group>"; };
@@ -143,6 +145,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7707C18224B496B3001837E1 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				7707C18324B496C7001837E1 /* AppSettings.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		770903A5245F3BD4003F7EDD /* ExerciseSets */ = {
 			isa = PBXGroup;
 			children = (
@@ -371,6 +381,7 @@
 		77F4C509244A22310048E3CB /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				7707C18224B496B3001837E1 /* Common */,
 				77180FF6245EBE14005D6E9F /* Core Data */,
 				77B6B5152452199E004B9F89 /* Diets */,
 				77B6B5162452199E004B9F89 /* Workouts */,
@@ -496,6 +507,7 @@
 				7742599A2472FB85008EE26E /* WorkoutHistroyDetails.swift in Sources */,
 				7766E54224575BDF008627D9 /* AddWorkout.swift in Sources */,
 				77181010245EBFF3005D6E9F /* Workout+CoreDataProperties.swift in Sources */,
+				7707C18424B496C7001837E1 /* AppSettings.swift in Sources */,
 				774958F0246C6C9F00CF99CF /* WorkoutHistory+CoreDataProperties.swift in Sources */,
 				77B6B52024521A7B004B9F89 /* Diets.swift in Sources */,
 				7718100F245EBFF3005D6E9F /* Workout+CoreDataClass.swift in Sources */,

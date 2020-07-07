@@ -30,6 +30,8 @@ let kPrimaryListCellOpacity = 0.2
 let kPrimaryBackgroundColour = Color.secondary.opacity(kPrimaryListCellOpacity)
 let kFavStarColour = Color.yellow
 
+let kCommonUserName = "Fitness Freak"
+
 enum BodyParts: String, CaseIterable {
     case arms = "Arms"
     case chest = "Chest"

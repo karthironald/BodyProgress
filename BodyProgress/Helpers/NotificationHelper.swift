@@ -19,8 +19,8 @@ class NotificationHelper: NSObject {
         let centre = UNUserNotificationCenter.current()
         
         let notificationContent = UNMutableNotificationContent()
-        notificationContent.title = "It's time"
-        notificationContent.body = "Start your workout"
+        notificationContent.title = "Hey, \(AppSettings.userName().isEmpty ? kCommonUserName : AppSettings.userName())!"
+        notificationContent.body = "It's time to start your workout 💪🏻"
         
         notificationContent.sound = UNNotificationSound.default
         
