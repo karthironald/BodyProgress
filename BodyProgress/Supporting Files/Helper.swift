@@ -30,6 +30,7 @@ class Helper: NSObject {
         }
     }
     
+    /**Speaks given string as audio. Not using this currently, need to use it soon*/
     class func speak(word: String) {
         let utterance = AVSpeechUtterance(string: word)
         let synthesizer = AVSpeechSynthesizer()
