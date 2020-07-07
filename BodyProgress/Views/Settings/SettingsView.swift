@@ -101,7 +101,7 @@ struct SettingsView: View {
                 Section(header: Text("Workout Reminder")) {
                     ZStack {
                         RoundedRectangle(cornerRadius: 0)
-                            .fill(Color.white)
+                            .fill(Color.clear)
                         if forceRender {
                             Toggle(isOn: $appSettings.enabledReminder) {
                                 Text("Reminder")
