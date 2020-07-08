@@ -36,39 +36,27 @@ struct ContentView: View {
     }
     
     var body: some View {
-        GeometryReader { geo in
-            ZStack {
-                TabView(selection: self.$selectedTab) {
-                    WorkoutFilterView().environmentObject(self.appSettings).tabItem {
-                        Image(systemName: "w.circle.fill")
-                            .imageScale(.large)
-                        Text("Workout")
-                    }.tag(0)
-                    WokroutHistoryTabView().environmentObject(self.appSettings).tabItem {
-                        Image(systemName: "h.circle.fill")
-                            .imageScale(.large)
-                        Text("History")
-                    }.tag(1)
-                    SettingsView().environmentObject(self.appSettings).tabItem {
-                        Image(systemName: "gear")
-                            .imageScale(.large)
-                        Text("Settings")
-                    }.tag(2)
-                }
-                .onAppear(perform: {
-                    kAppDelegate.configureAppearances(color: AppSettings.colors[self.appSettings.themeColorIndex])
-                })
-                .accentColor(self.appSettings.themeColorView())
-                Text("\(self.todayWorkout.first?.wName ?? "--")")
-                    .frame(width: geo.size.width - 100)
-                    .padding()
-                    .background(Color.pink)
-                    .cornerRadius(15)
-                    .zIndex(2)
-                    .offset(x: 0, y: (geo.size.height / 2) - 100)
-                
-            }
+        TabView(selection: $selectedTab) {
+            WorkoutFilterView().environmentObject(self.appSettings).tabItem {
+                Image(systemName: "flame")
+                    .imageScale(.large)
+                Text("Workout")
+            }.tag(0)
+            WokroutHistoryTabView().environmentObject(self.appSettings).tabItem {
+                Image(systemName: "clock")
+                    .imageScale(.large)
+                Text("History")
+            }.tag(1)
+            SettingsView().environmentObject(self.appSettings).tabItem {
+                Image(systemName: "gear")
+                    .imageScale(.large)
+                Text("Settings")
+            }.tag(2)
         }
+        .onAppear(perform: {
+            kAppDelegate.configureAppearances(color: AppThemeColours.allCases[self.appSettings.themeColorIndex].uiColor())
+        })
+        .accentColor(appSettings.themeColorView())
     }
 }
 

@@ -17,12 +17,6 @@ struct WokroutHistoryRow: View {
         ZStack {
             kPrimaryBackgroundColour
             HStack(alignment: .center) {
-                Image(systemName: "clock.fill")
-                    .imageScale(.large)
-                    .font(kPrimaryTitleFont)
-                    .foregroundColor(Color.gray)
-                    .padding([.leading], 15)
-                    .opacity(0.5)
                 VStack(alignment: .leading) {
                     Text(workoutHistory.wName)
                         .font(kPrimaryHeadlineFont)
@@ -34,7 +28,7 @@ struct WokroutHistoryRow: View {
                         .font(kPrimarySubheadlineFont)
                         .opacity(0.5)
                 }
-                .padding(5)
+                .padding()
                 Spacer()
                 Image(systemName: workoutHistory.isAllSetCompleted() ? "checkmark.seal.fill" : "xmark.seal.fill")
                     .imageScale(.large)

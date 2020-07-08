@@ -27,6 +27,7 @@ extension Exercise {
     @NSManaged public var actualTotalDuration: Int16
     @NSManaged public var expectedRestDuration: Int16
     @NSManaged public var actualRestDuration: Int16
+    @NSManaged public var displayOrder: Int16
     @NSManaged public var isFavourite: Bool
     @NSManaged public var bodyPart: String?
     @NSManaged public var workout: Workout?
