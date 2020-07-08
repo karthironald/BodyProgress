@@ -82,3 +82,38 @@ extension WorkoutHistory {
     @NSManaged public func removeFromExercises(_ values: NSSet)
 
 }
+
+extension WorkoutHistory {
+    
+    static func fetchSum(context: NSManagedObjectContext, completion: @escaping ([(sum: Double, category: BodyParts)]) -> ()) {
+        
+        let keypathDuration = NSExpression(forKeyPath: \WorkoutHistory.duration)
+        let expression = NSExpression(forFunction: "sum:", arguments: [keypathDuration])
+        
+        let sumDesc = NSExpressionDescription()
+        sumDesc.expression = expression
+        sumDesc.name = "sum"
+        sumDesc.expressionResultType = .integer16AttributeType
+        
+        let req = NSFetchRequest<NSFetchRequestResult>(entityName: WorkoutHistory.entity().name ?? "WorkoutHistory")
+        req.returnsObjectsAsFaults = false
+        req.propertiesToGroupBy = ["bodyPart"]
+        req.propertiesToFetch = [sumDesc, "bodyPart"]
+        req.resultType = .dictionaryResultType
+        
+        context.perform {
+            do {
+                let results = try req.execute()
+                let data = results.map { (result) -> (Double, BodyParts)? in
+                    guard let resultDict = result as? [String: Any], let amount = resultDict["sum"] as? Double, let bodyPart = resultDict["bodyPart"] as? String else { return nil }
+                    let part = BodyParts(rawValue: bodyPart) ?? BodyParts.others
+                    return (amount, part)
+                }.compactMap { $0 }
+                completion(data)
+            } catch {
+                print((error.localizedDescription))
+                completion([])
+            }
+        }
+    }
+}

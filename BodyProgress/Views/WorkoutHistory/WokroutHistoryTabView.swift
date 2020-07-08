@@ -75,7 +75,13 @@ struct WokroutHistoryTabView: View {
                 
                 WorkoutHistoryView(predicate: self.predicate(), sortDescriptor: NSSortDescriptor(keyPath: \WorkoutHistory.createdAt, ascending: false))
             }
-            .navigationBarItems(trailing:
+            .navigationBarItems(leading:
+                NavigationLink(destination: SummaryView(), label: {
+                    Image(systemName: "chart.pie.fill")
+                        .font(kPrimaryTitleFont)
+                        .foregroundColor(appSettings.themeColorView())
+                })
+                ,trailing:
                 Button(action: {
                     withAnimation(.linear) {
                         self.shouldPresentBodyParts.toggle()
