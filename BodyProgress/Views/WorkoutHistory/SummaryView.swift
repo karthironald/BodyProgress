@@ -27,16 +27,7 @@ struct SummaryView: View {
                 EmptyStateInfoView(message: "No summary was available. Start your workout.")
             } else {
                 List {
-                    GeometryReader { geoProxy in
-                        ZStack {
-                            ForEach(0..<self.segments.count, id: \.self) { segIndex in
-                                Segment(radius: geoProxy.size.width / 3, startAngle: self.segments[segIndex].startAngle, endAngle: self.segments[segIndex].endAngle)
-                                    .fill(self.progress[segIndex].1.piechartColor())
-                            }
-                        }
-                        .rotationEffect(.degrees(-90))
-                    }
-                    .frame(height: 250)
+                    PieChart(progress: self.progress, segments: self.segments)
                     HStack {
                         Spacer()
                         Text("Total: \(total.detailedDisplayDuration())")
@@ -95,8 +86,38 @@ struct SummaryView: View {
 
 struct SummaryView_Previews: PreviewProvider {
     static var previews: some View {
-        SummaryView()
+        SummaryView(totalWorkoutTime: 100, progress: [(70, BodyParts.arms), (30, BodyParts.chest)], segments: [SegmentData(percentage: 70, startAngle: 0, endAngle: 252), SegmentData(percentage: 30, startAngle: 252, endAngle: 360)])
     }
+}
+
+struct PieChart: View {
+    
+    var progress: [(Double, BodyParts)] = []
+    var segments: [SegmentData] = []
+    @State var shouldShowChart = false
+    
+    var body: some View {
+        GeometryReader { geoProxy in
+            if self.shouldShowChart {
+                ZStack {
+                    ForEach(0..<self.segments.count, id: \.self) { segIndex in
+                        Segment(radius: geoProxy.size.width / 3, startAngle: self.segments[segIndex].startAngle, endAngle: self.segments[segIndex].endAngle)
+                            .fill(self.progress[segIndex].1.piechartColor())
+                    }
+                }
+                .transition(.scale)
+                .rotationEffect(.degrees(-90))
+            }
+        }
+        .animation(Animation.spring())
+        .frame(height: 250)
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.shouldShowChart.toggle()
+            }
+        }
+    }
+    
 }
 
 struct SegmentData {

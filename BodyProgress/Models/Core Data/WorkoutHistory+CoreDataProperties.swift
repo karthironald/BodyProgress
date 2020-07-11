@@ -105,7 +105,7 @@ extension WorkoutHistory {
             do {
                 let results = try req.execute()
                 let data = results.map { (result) -> (Double, BodyParts)? in
-                    guard let resultDict = result as? [String: Any], let amount = resultDict["sum"] as? Double, let bodyPart = resultDict["bodyPart"] as? String else { return nil }
+                    guard let resultDict = result as? [String: Any], let amount = resultDict["sum"] as? Double, amount > 0.0, let bodyPart = resultDict["bodyPart"] as? String else { return nil }
                     let part = BodyParts(rawValue: bodyPart) ?? BodyParts.others
                     return (amount, part)
                 }.compactMap { $0 }
