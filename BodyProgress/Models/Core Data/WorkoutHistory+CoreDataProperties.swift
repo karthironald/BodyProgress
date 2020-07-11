@@ -109,7 +109,7 @@ extension WorkoutHistory {
                     let part = BodyParts(rawValue: bodyPart) ?? BodyParts.others
                     return (amount, part)
                 }.compactMap { $0 }
-                completion(data)
+                completion(data.sorted { $0.0 > $1.0 })
             } catch {
                 print((error.localizedDescription))
                 completion([])

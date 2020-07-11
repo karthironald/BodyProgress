@@ -22,39 +22,45 @@ struct SummaryView: View {
     @State var segments: [SegmentData] = []
     
     var body: some View {
-        List {
-            GeometryReader { geoProxy in
-                ZStack {
-                    ForEach(0..<self.segments.count, id: \.self) { segIndex in
-                        Segment(radius: geoProxy.size.width / 3, startAngle: self.segments[segIndex].startAngle, endAngle: self.segments[segIndex].endAngle)
-                            .fill(self.progress[segIndex].1.piechartColor())
+        ZStack {
+            if progress.count == 0 {
+                EmptyStateInfoView(message: "No summary was available. Start your workout.")
+            } else {
+                List {
+                    GeometryReader { geoProxy in
+                        ZStack {
+                            ForEach(0..<self.segments.count, id: \.self) { segIndex in
+                                Segment(radius: geoProxy.size.width / 3, startAngle: self.segments[segIndex].startAngle, endAngle: self.segments[segIndex].endAngle)
+                                    .fill(self.progress[segIndex].1.piechartColor())
+                            }
+                        }
+                        .rotationEffect(.degrees(-90))
                     }
-                }
-                .rotationEffect(.degrees(-90))
-            }
-            .frame(height: 250)
-            HStack {
-                Spacer()
-                Text("Total: \(total.detailedDisplayDuration())")
-                    .font(kPrimaryTitleFont)
-                    .bold()
-                    .padding()
-                    .multilineTextAlignment(.center)
-                Spacer()
-            }
-            ForEach(0..<self.progress.count, id: \.self) { segIndex in
-                HStack {
-                    Circle()
-                        .fill(self.progress[segIndex].1.piechartColor())
-                        .frame(width: 10, height: 10)
-                    HStack(alignment: .center) {
-                        Text("\(self.progress[segIndex].1.rawValue)")
-                            .font(kPrimaryBodyFont)
-                            .bold()
+                    .frame(height: 250)
+                    HStack {
                         Spacer()
-                        Text("\(self.progress[segIndex].0.detailedDisplayDuration()) (\(self.percentage(of: self.progress[segIndex].0), specifier: "%.2f") %)")
-                            .font(kPrimaryBodyFont)
+                        Text("Total: \(total.detailedDisplayDuration())")
+                            .font(kPrimaryTitleFont)
                             .bold()
+                            .padding()
+                            .multilineTextAlignment(.center)
+                        Spacer()
+                    }
+                    ForEach(0..<self.progress.count, id: \.self) { segIndex in
+                        HStack {
+                            Circle()
+                                .fill(self.progress[segIndex].1.piechartColor())
+                                .frame(width: 10, height: 10)
+                            HStack(alignment: .center) {
+                                Text("\(self.progress[segIndex].1.rawValue)")
+                                    .font(kPrimaryBodyFont)
+                                    .bold()
+                                Spacer()
+                                Text("\(self.progress[segIndex].0.detailedDisplayDuration()) (\(self.percentage(of: self.progress[segIndex].0), specifier: "%.2f") %)")
+                                    .font(kPrimaryBodyFont)
+                                    .bold()
+                            }
+                        }
                     }
                 }
             }
