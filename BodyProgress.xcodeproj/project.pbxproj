@@ -22,7 +22,6 @@
 		77181014245EBFF3005D6E9F /* Exercise+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7718100C245EBFF3005D6E9F /* Exercise+CoreDataProperties.swift */; };
 		77181015245EBFF3005D6E9F /* ExerciseSet+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7718100D245EBFF3005D6E9F /* ExerciseSet+CoreDataClass.swift */; };
 		77181016245EBFF3005D6E9F /* ExerciseSet+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7718100E245EBFF3005D6E9F /* ExerciseSet+CoreDataProperties.swift */; };
-		771A59DE24B62BE100B9DD9D /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771A59DD24B62BE100B9DD9D /* SummaryView.swift */; };
 		7742599A2472FB85008EE26E /* WorkoutHistroyDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774259992472FB85008EE26E /* WorkoutHistroyDetails.swift */; };
 		774958EF246C6C9F00CF99CF /* WorkoutHistory+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774958E9246C6C9F00CF99CF /* WorkoutHistory+CoreDataClass.swift */; };
 		774958F0246C6C9F00CF99CF /* WorkoutHistory+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774958EA246C6C9F00CF99CF /* WorkoutHistory+CoreDataProperties.swift */; };
@@ -86,7 +85,6 @@
 		7718100C245EBFF3005D6E9F /* Exercise+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Exercise+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		7718100D245EBFF3005D6E9F /* ExerciseSet+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExerciseSet+CoreDataClass.swift"; sourceTree = "<group>"; };
 		7718100E245EBFF3005D6E9F /* ExerciseSet+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExerciseSet+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		771A59DD24B62BE100B9DD9D /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
 		774259992472FB85008EE26E /* WorkoutHistroyDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistroyDetails.swift; sourceTree = "<group>"; };
 		774958E9246C6C9F00CF99CF /* WorkoutHistory+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WorkoutHistory+CoreDataClass.swift"; sourceTree = "<group>"; };
 		774958EA246C6C9F00CF99CF /* WorkoutHistory+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WorkoutHistory+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -129,7 +127,7 @@
 		77CFAAF324B1CC2B003BA128 /* RedIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RedIcon@2x.png"; sourceTree = "<group>"; };
 		77CFAAF624B1CC58003BA128 /* YellowIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "YellowIcon@3x.png"; sourceTree = "<group>"; };
 		77CFAAF724B1CC59003BA128 /* YellowIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "YellowIcon@2x.png"; sourceTree = "<group>"; };
-		77F4C4EB244A21B40048E3CB /* Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		77F4C4EB244A21B40048E3CB /* Workout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Workout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77F4C4FA244A21B70048E3CB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		77F4C4FF244A21B70048E3CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		77F8AC3F24B0676D00A5ABB5 /* NotificationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHelper.swift; sourceTree = "<group>"; };
@@ -308,7 +306,6 @@
 				778E10A4246E3FEE00C0A477 /* WokroutHistoryRow.swift */,
 				77585E232470F57900F4FF69 /* WokroutHistoryTabView.swift */,
 				774259992472FB85008EE26E /* WorkoutHistroyDetails.swift */,
-				771A59DD24B62BE100B9DD9D /* SummaryView.swift */,
 			);
 			path = WorkoutHistory;
 			sourceTree = "<group>";
@@ -353,7 +350,7 @@
 		77F4C4EC244A21B40048E3CB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				77F4C4EB244A21B40048E3CB /* Sample.app */,
+				77F4C4EB244A21B40048E3CB /* Workout.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -425,7 +422,7 @@
 			);
 			name = BodyProgress;
 			productName = BodyProgress;
-			productReference = 77F4C4EB244A21B40048E3CB /* Sample.app */;
+			productReference = 77F4C4EB244A21B40048E3CB /* Workout.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -509,7 +506,6 @@
 				77B6B51E24521A36004B9F89 /* ContentView.swift in Sources */,
 				7742599A2472FB85008EE26E /* WorkoutHistroyDetails.swift in Sources */,
 				7766E54224575BDF008627D9 /* AddWorkout.swift in Sources */,
-				771A59DE24B62BE100B9DD9D /* SummaryView.swift in Sources */,
 				77181010245EBFF3005D6E9F /* Workout+CoreDataProperties.swift in Sources */,
 				7707C18424B496C7001837E1 /* AppSettings.swift in Sources */,
 				774958F0246C6C9F00CF99CF /* WorkoutHistory+CoreDataProperties.swift in Sources */,
@@ -672,7 +668,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_ASSET_PATHS = "\"BodyProgress/Preview Content\"";
 				DEVELOPMENT_TEAM = 3RHR7K3FP7;
 				ENABLE_PREVIEWS = YES;
@@ -683,7 +680,8 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mallow-tech.BodyProgress";
-				PRODUCT_NAME = Sample;
+				PRODUCT_NAME = Workout;
+				PROVISIONING_PROFILE_SPECIFIER = "BodyProgress Development Profile";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -693,7 +691,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_ASSET_PATHS = "\"BodyProgress/Preview Content\"";
 				DEVELOPMENT_TEAM = 3RHR7K3FP7;
 				ENABLE_PREVIEWS = YES;
@@ -704,7 +703,8 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mallow-tech.BodyProgress";
-				PRODUCT_NAME = Sample;
+				PRODUCT_NAME = Workout;
+				PROVISIONING_PROFILE_SPECIFIER = "BodyProgress Distribution Profile";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
