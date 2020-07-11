@@ -85,7 +85,7 @@ extension WorkoutHistory {
 
 extension WorkoutHistory {
     
-    static func fetchSum(context: NSManagedObjectContext, completion: @escaping ([(sum: Double, category: BodyParts)]) -> ()) {
+    static func fetchSum(context: NSManagedObjectContext, completion: @escaping ([(sum: Double, bodyPart: BodyParts)]) -> ()) {
         
         let keypathDuration = NSExpression(forKeyPath: \WorkoutHistory.duration)
         let expression = NSExpression(forFunction: "sum:", arguments: [keypathDuration])

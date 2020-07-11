@@ -78,7 +78,7 @@ struct WokroutHistoryTabView: View {
             .navigationBarItems(leading:
                 NavigationLink(destination: SummaryView(), label: {
                     Image(systemName: "chart.pie.fill")
-                        .font(kPrimaryTitleFont)
+                        .imageScale(.large)
                         .foregroundColor(appSettings.themeColorView())
                 })
                 ,trailing:
