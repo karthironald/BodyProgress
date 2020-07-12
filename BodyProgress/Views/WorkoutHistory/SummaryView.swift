@@ -31,7 +31,7 @@ struct SummaryView: View {
                     HStack {
                         Spacer()
                         Text("Total: \(total.detailedDisplayDuration())")
-                            .font(kPrimaryTitleFont)
+                            .font(kPrimaryBodyFont)
                             .bold()
                             .padding()
                             .multilineTextAlignment(.center)
@@ -46,11 +46,9 @@ struct SummaryView: View {
                                 HStack(alignment: .center) {
                                     Text("\(self.progress[segIndex].1.rawValue)")
                                         .font(kPrimaryBodyFont)
-                                        .bold()
                                     Spacer()
                                     Text("\(self.progress[segIndex].0.detailedDisplayDuration()) (\(self.percentage(of: self.progress[segIndex].0), specifier: "%.2f") %)")
                                         .font(kPrimaryBodyFont)
-                                        .bold()
                                 }
                             }
                         }
@@ -73,6 +71,7 @@ struct SummaryView: View {
     
     func chartData() {
         var lastEndAngle = 0.0
+        segments = []
         
         for pro in self.progress {
             let percent = percentage(of: pro.0)
@@ -115,7 +114,7 @@ struct PieChart: View {
         .frame(height: 250)
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.shouldShowChart.toggle()
+                self.shouldShowChart = true
             }
         }
     }

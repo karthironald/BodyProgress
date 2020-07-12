@@ -105,9 +105,9 @@ extension WorkoutHistory {
             do {
                 let results = try req.execute()
                 let data = results.map { (result) -> (Double, BodyParts)? in
-                    guard let resultDict = result as? [String: Any], let amount = resultDict["sum"] as? Double, amount > 0.0, let bodyPart = resultDict["bodyPart"] as? String else { return nil }
+                    guard let resultDict = result as? [String: Any], let sum = resultDict["sum"] as? Double, sum > 0.0, let bodyPart = resultDict["bodyPart"] as? String else { return nil }
                     let part = BodyParts(rawValue: bodyPart) ?? BodyParts.others
-                    return (amount, part)
+                    return (sum, part)
                 }.compactMap { $0 }
                 completion(data.sorted { $0.0 > $1.0 })
             } catch {
@@ -117,7 +117,7 @@ extension WorkoutHistory {
         }
     }
     
-    static func fetchBodyPartSummary(context: NSManagedObjectContext, of bodyPart: BodyParts, completion: @escaping ([(sum: Double, bodyPart: BodyParts)]) -> ()) {
+    static func fetchBodyPartSummary(context: NSManagedObjectContext, of bodyPart: BodyParts, completion: @escaping ([(sum: Double, min: Double, max: Double, average: Double, count: Double, workout: String)]) -> ()) {
         
         let keypathWorkout = NSExpression(forKeyPath: \WorkoutHistory.duration)
         let sumExpression = NSExpression(forFunction: "sum:", arguments: [keypathWorkout])
@@ -167,8 +167,11 @@ extension WorkoutHistory {
         context.perform {
             do {
                 let results = try req.execute()
-                print(results)
-                completion([])
+                let data = results.map { (result) -> (Double, Double, Double, Double, Double, String)? in
+                    guard let resultDict = result as? [String: Any], let sum = resultDict["sum"] as? Double, let min = resultDict["min"] as? Double, let max = resultDict["max"] as? Double, let average = resultDict["average"] as? Double,  let count = resultDict["count"] as? Double, let workout = resultDict["name"] as? String else { return nil }
+                    return (sum, min, max, average, count, workout)
+                }.compactMap { $0 }
+                completion(data.sorted { $0.0 > $1.0 })
             } catch {
                 print((error.localizedDescription))
                 completion([])

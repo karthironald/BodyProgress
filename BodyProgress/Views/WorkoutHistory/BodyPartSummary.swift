@@ -14,50 +14,29 @@ struct BodyPartSummary: View {
     @EnvironmentObject var appSettings: AppSettings
     @Environment(\.managedObjectContext) var managedObjectContext
     
-    @State var histories: [WorkoutHistory] = []
+    @State var data: [(sum: Double, min: Double, max: Double, average: Double, count: Double, workout: String)] = []
     
     var bodyPart: BodyParts
-    var total: Int { histories.count }
-    var completed: Int { histories.filter { $0.status == true }.count }
     
     var body: some View {
-        VStack {
-            HStack(spacing: 50) {
-                Text("Completed: \(completed)")
-                    .font(kPrimaryBodyFont)
-                    .bold()
-                    .foregroundColor(.white)
-                    .frame(width: 150, height: 60)
-                    .background(Color.green)
-                    .clipShape(RoundedRectangle(cornerRadius: 15))
-                
-                Text("Gaveup: \(total - completed)")
-                    .font(kPrimaryBodyFont)
-                    .bold()
-                    .foregroundColor(.white)
-                    .frame(width: 150, height: 60)
-                    .background(Color.green)
-                    .clipShape(RoundedRectangle(cornerRadius: 15))
-            }
-            .padding()
-            
-            HStack{
-                ForEach(1...15, id: \.self) { index in
-                    RoundedRectangle(cornerRadius: 10)
-                        .fill(Color.pink)
-                        .frame(width: 10, height: 150)
+        List(0..<data.count, id: \.self) { index in
+            HStack {
+                VStack(alignment: .leading) {
+                    Text("Name: \(self.data[index].workout)")
+                    Text("Sum: \(self.data[index].sum.detailedDisplayDuration())")
+                    Text("Min: \(self.data[index].min.detailedDisplayDuration())")
+                    Text("Max: \(self.data[index].max.detailedDisplayDuration())")
+                    Text("Count: \(Int(self.data[index].count))")
+                    Text("Average: \(self.data[index].average.detailedDisplayDuration())")
                 }
+                Spacer()
             }
-            Spacer()
-            
         }
+        .navigationBarTitle(Text("\(bodyPart.rawValue)"))
         .onAppear {
-            WorkoutHistory.fetchBodyPartSummary(context: self.managedObjectContext, of: self.bodyPart) { (result) in
-                print(result)
+            WorkoutHistory.fetchBodyPartSummary(context: self.managedObjectContext, of: self.bodyPart) { (data) in
+                self.data = data
             }
-//            WorkoutHistory.fetchDetails(of: self.bodyPart, context: self.managedObjectContext) { (histories) in
-//                self.histories = histories
-//            }
         }
     }
 }
