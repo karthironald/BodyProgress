@@ -32,6 +32,7 @@
 		774E09A824ACFE9C005D39AB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 774E09A724ACFE9C005D39AB /* Localizable.strings */; };
 		77549D1724B03031002BBF21 /* WorkoutFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77549D1624B03031002BBF21 /* WorkoutFilterView.swift */; };
 		77585E242470F57900F4FF69 /* WokroutHistoryTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77585E232470F57900F4FF69 /* WokroutHistoryTabView.swift */; };
+		775E26C224BB1307006CF859 /* BodyPartSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775E26C124BB1307006CF859 /* BodyPartSummary.swift */; };
 		7766E54024575361008627D9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7766E53F24575361008627D9 /* Extensions.swift */; };
 		7766E54224575BDF008627D9 /* AddWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7766E54124575BDF008627D9 /* AddWorkout.swift */; };
 		776AE34A2465DB140050DD9A /* TodayExerciseSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776AE3492465DB140050DD9A /* TodayExerciseSet.swift */; };
@@ -96,6 +97,7 @@
 		774E09A724ACFE9C005D39AB /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		77549D1624B03031002BBF21 /* WorkoutFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutFilterView.swift; sourceTree = "<group>"; };
 		77585E232470F57900F4FF69 /* WokroutHistoryTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WokroutHistoryTabView.swift; sourceTree = "<group>"; };
+		775E26C124BB1307006CF859 /* BodyPartSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyPartSummary.swift; sourceTree = "<group>"; };
 		7766E53F24575361008627D9 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		7766E54124575BDF008627D9 /* AddWorkout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWorkout.swift; sourceTree = "<group>"; };
 		776AE3492465DB140050DD9A /* TodayExerciseSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayExerciseSet.swift; sourceTree = "<group>"; };
@@ -309,6 +311,7 @@
 				778E10A4246E3FEE00C0A477 /* WokroutHistoryRow.swift */,
 				77585E232470F57900F4FF69 /* WokroutHistoryTabView.swift */,
 				774259992472FB85008EE26E /* WorkoutHistroyDetails.swift */,
+				775E26C124BB1307006CF859 /* BodyPartSummary.swift */,
 			);
 			path = WorkoutHistory;
 			sourceTree = "<group>";
@@ -499,6 +502,7 @@
 				770903A4245F280D003F7EDD /* AddExercise.swift in Sources */,
 				774958F3246C6C9F00CF99CF /* ExerciseSetHistory+CoreDataClass.swift in Sources */,
 				77F8AC4024B0676D00A5ABB5 /* NotificationHelper.swift in Sources */,
+				775E26C224BB1307006CF859 /* BodyPartSummary.swift in Sources */,
 				774958F2246C6C9F00CF99CF /* ExerciseHistory+CoreDataProperties.swift in Sources */,
 				77A3EC422483B314007A92B8 /* Helper.swift in Sources */,
 				770903A9245F3BEE003F7EDD /* ExerciseSetRow.swift in Sources */,

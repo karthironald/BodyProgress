@@ -85,7 +85,7 @@ extension WorkoutHistory {
 
 extension WorkoutHistory {
     
-    static func fetchSum(context: NSManagedObjectContext, completion: @escaping ([(sum: Double, bodyPart: BodyParts)]) -> ()) {
+    static func fetchSummary(context: NSManagedObjectContext, completion: @escaping ([(sum: Double, bodyPart: BodyParts)]) -> ()) {
         
         let keypathDuration = NSExpression(forKeyPath: \WorkoutHistory.duration)
         let expression = NSExpression(forFunction: "sum:", arguments: [keypathDuration])
@@ -116,4 +116,64 @@ extension WorkoutHistory {
             }
         }
     }
+    
+    static func fetchBodyPartSummary(context: NSManagedObjectContext, of bodyPart: BodyParts, completion: @escaping ([(sum: Double, bodyPart: BodyParts)]) -> ()) {
+        
+        let keypathWorkout = NSExpression(forKeyPath: \WorkoutHistory.duration)
+        let sumExpression = NSExpression(forFunction: "sum:", arguments: [keypathWorkout])
+        
+        let sumDesc = NSExpressionDescription()
+        sumDesc.expression = sumExpression
+        sumDesc.name = "sum"
+        sumDesc.expressionResultType = .doubleAttributeType
+        
+        
+        let minExpression = NSExpression(forFunction: "min:", arguments: [keypathWorkout])
+        
+        let minDesc = NSExpressionDescription()
+        minDesc.expression = minExpression
+        minDesc.name = "min"
+        minDesc.expressionResultType = .doubleAttributeType
+        
+        
+        let maxExpression = NSExpression(forFunction: "max:", arguments: [keypathWorkout])
+        
+        let maxDesc = NSExpressionDescription()
+        maxDesc.expression = maxExpression
+        maxDesc.name = "max"
+        maxDesc.expressionResultType = .doubleAttributeType
+       
+        let avgExpression = NSExpression(forFunction: "average:", arguments: [keypathWorkout])
+        
+        let avgDesc = NSExpressionDescription()
+        avgDesc.expression = avgExpression
+        avgDesc.name = "average"
+        avgDesc.expressionResultType = .doubleAttributeType
+        
+        let countExpression = NSExpression(forFunction: "count:", arguments: [keypathWorkout])
+        
+        let countDesc = NSExpressionDescription()
+        countDesc.expression = countExpression
+        countDesc.name = "count"
+        countDesc.expressionResultType = .doubleAttributeType
+        
+        let req = NSFetchRequest<NSFetchRequestResult>(entityName: WorkoutHistory.entity().name ?? "WorkoutHistory")
+        req.returnsObjectsAsFaults = false
+        req.propertiesToGroupBy = ["name"]
+        req.propertiesToFetch = [sumDesc, minDesc, maxDesc, avgDesc, countDesc,  "name"]
+        req.resultType = .dictionaryResultType
+        req.predicate = NSPredicate(format: "bodyPart == %@", bodyPart.rawValue)
+        
+        context.perform {
+            do {
+                let results = try req.execute()
+                print(results)
+                completion([])
+            } catch {
+                print((error.localizedDescription))
+                completion([])
+            }
+        }
+    }
+
 }

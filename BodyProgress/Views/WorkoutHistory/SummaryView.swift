@@ -38,18 +38,20 @@ struct SummaryView: View {
                         Spacer()
                     }
                     ForEach(0..<self.progress.count, id: \.self) { segIndex in
-                        HStack {
-                            Circle()
-                                .fill(self.progress[segIndex].1.piechartColor())
-                                .frame(width: 10, height: 10)
-                            HStack(alignment: .center) {
-                                Text("\(self.progress[segIndex].1.rawValue)")
-                                    .font(kPrimaryBodyFont)
-                                    .bold()
-                                Spacer()
-                                Text("\(self.progress[segIndex].0.detailedDisplayDuration()) (\(self.percentage(of: self.progress[segIndex].0), specifier: "%.2f") %)")
-                                    .font(kPrimaryBodyFont)
-                                    .bold()
+                        NavigationLink(destination: BodyPartSummary(bodyPart: self.progress[segIndex].1).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)) {
+                            HStack {
+                                Circle()
+                                    .fill(self.progress[segIndex].1.piechartColor())
+                                    .frame(width: 10, height: 10)
+                                HStack(alignment: .center) {
+                                    Text("\(self.progress[segIndex].1.rawValue)")
+                                        .font(kPrimaryBodyFont)
+                                        .bold()
+                                    Spacer()
+                                    Text("\(self.progress[segIndex].0.detailedDisplayDuration()) (\(self.percentage(of: self.progress[segIndex].0), specifier: "%.2f") %)")
+                                        .font(kPrimaryBodyFont)
+                                        .bold()
+                                }
                             }
                         }
                     }
@@ -57,7 +59,7 @@ struct SummaryView: View {
             }
         }
         .onAppear {
-            WorkoutHistory.fetchSum(context: self.managedObjectContext) { (data) in
+            WorkoutHistory.fetchSummary(context: self.managedObjectContext) { (data) in
                 self.progress = data
                 self.chartData()
             }
