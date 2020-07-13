@@ -30,9 +30,9 @@ struct BodyPartSummaryRow: View {
                             .bold()
                         HStack(spacing: 10) {
                             ZStack(alignment: .trailing) {
-                                RoundedRectangle(cornerRadius: 10)
+                                RoundedRectangle(cornerRadius: 12.5)
                                     .fill(self.appSettings.themeColorView())
-                                    .frame(width: (geo.size.width / 100) * CGFloat(self.percentage), height: 20)
+                                    .frame(width: (geo.size.width / 100) * CGFloat(self.percentage), height: 25)
                                 Text("\(self.percentage, specifier: "%0.2f") %")
                                     .font(kPrimaryFootnoteFont)
                                     .foregroundColor(.white)
@@ -54,7 +54,7 @@ struct BodyPartSummaryRow: View {
                                 .modifier(SummaryModifier(geo: geo))
                         }
                         HStack {
-                            Text("Avg. session duration : \(self.summary.average.detailedDisplayDuration())")
+                            Text("Avg. session duration: \(self.summary.average.detailedDisplayDuration())")
                                 .frame(width: geo.size.width, height: 25)
                                 .font(kPrimaryFootnoteFont)
                                 .background(Color.black.opacity(0.1))
@@ -82,7 +82,7 @@ struct SummaryModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(kPrimaryFootnoteFont)
-            .frame(width: geo.size.width / 2 - 10, height: 25)
+            .frame(width: geo.size.width / 2 - 5, height: 25)
             .background(Color.black.opacity(0.1))
             .foregroundColor(Color.black.opacity(0.7))
             .clipShape(RoundedRectangle(cornerRadius: 15))

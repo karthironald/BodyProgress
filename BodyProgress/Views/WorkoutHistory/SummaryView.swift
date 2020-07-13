@@ -47,8 +47,13 @@ struct SummaryView: View {
                                     Text("\(self.progress[segIndex].1.rawValue)")
                                         .font(kPrimaryBodyFont)
                                     Spacer()
-                                    Text("\(self.progress[segIndex].0.detailedDisplayDuration()) (\(self.percentage(of: self.progress[segIndex].0), specifier: "%.2f") %)")
-                                        .font(kPrimaryBodyFont)
+                                    HStack {
+                                        Text("\(self.progress[segIndex].0.detailedDisplayDuration())")
+                                            .font(kPrimaryBodyFont)
+                                            .foregroundColor(.secondary)
+                                        Text("(\(self.percentage(of: self.progress[segIndex].0), specifier: "%.2f") %)")
+                                            .font(kPrimaryBodyFont)
+                                    }
                                 }
                             }
                         }
