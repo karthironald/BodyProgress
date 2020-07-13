@@ -80,6 +80,7 @@ struct WokroutHistoryTabView: View {
                     Image(systemName: "chart.pie.fill")
                         .imageScale(.large)
                         .foregroundColor(appSettings.themeColorView())
+                        .frame(width: 30, height: 30)
                 })
                 ,trailing:
                 Button(action: {

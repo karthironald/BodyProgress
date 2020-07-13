@@ -29,11 +29,15 @@ struct BodyPartSummaryRow: View {
                             .font(kPrimaryBodyFont)
                             .bold()
                         HStack(spacing: 10) {
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(self.appSettings.themeColorView())
-                                .frame(width: (geo.size.width / 100) * CGFloat(self.percentage), height: 20)
-                            Text("\(self.percentage, specifier: "%0.2f") %")
-                                .font(kPrimaryFootnoteFont)
+                            ZStack(alignment: .trailing) {
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(self.appSettings.themeColorView())
+                                    .frame(width: (geo.size.width / 100) * CGFloat(self.percentage), height: 20)
+                                Text("\(self.percentage, specifier: "%0.2f") %")
+                                    .font(kPrimaryFootnoteFont)
+                                    .foregroundColor(.white)
+                                    .padding([.leading, .trailing], 5)
+                            }
                         }
                         HStack {
                             Text("Total: \(self.summary.sum.detailedDisplayDuration())")

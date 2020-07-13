@@ -22,8 +22,14 @@ struct BodyPartSummary: View {
     }
     
     var body: some View {
-        List(0..<data.count, id: \.self) { index in
-            BodyPartSummaryRow(summary: self.data[index], bodyPart: self.bodyPart, total: self.total).environmentObject(self.appSettings)
+        ZStack {
+            if data.count == 0 {
+                EmptyStateInfoView(message: "No summary was available. Start your workout.")
+            } else {
+                List(0..<data.count, id: \.self) { index in
+                    BodyPartSummaryRow(summary: self.data[index], bodyPart: self.bodyPart, total: self.total).environmentObject(self.appSettings)
+                }
+            }
         }
         .navigationBarTitle(Text("\(bodyPart.rawValue)"))
         .onAppear {
