@@ -133,7 +133,7 @@
 		77CFAAF624B1CC58003BA128 /* YellowIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "YellowIcon@3x.png"; sourceTree = "<group>"; };
 		77CFAAF724B1CC59003BA128 /* YellowIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "YellowIcon@2x.png"; sourceTree = "<group>"; };
 		77E5075F24BBFD3F0083BE10 /* BodyPartSummaryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyPartSummaryRow.swift; sourceTree = "<group>"; };
-		77F4C4EB244A21B40048E3CB /* Workout Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Workout Test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		77F4C4EB244A21B40048E3CB /* W(out)FH.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "W(out)FH.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		77F4C4FA244A21B70048E3CB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		77F4C4FF244A21B70048E3CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		77F8AC3F24B0676D00A5ABB5 /* NotificationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHelper.swift; sourceTree = "<group>"; };
@@ -359,7 +359,7 @@
 		77F4C4EC244A21B40048E3CB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				77F4C4EB244A21B40048E3CB /* Workout Test.app */,
+				77F4C4EB244A21B40048E3CB /* W(out)FH.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -431,7 +431,7 @@
 			);
 			name = BodyProgress;
 			productName = BodyProgress;
-			productReference = 77F4C4EB244A21B40048E3CB /* Workout Test.app */;
+			productReference = 77F4C4EB244A21B40048E3CB /* W(out)FH.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -692,7 +692,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mallow-tech.BodyProgress";
-				PRODUCT_NAME = "Workout Test";
+				PRODUCT_NAME = "W(out)FH";
 				PROVISIONING_PROFILE_SPECIFIER = "BodyProgress Development Profile";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -715,7 +715,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mallow-tech.BodyProgress";
-				PRODUCT_NAME = "Workout Test";
+				PRODUCT_NAME = "W(out)FH";
 				PROVISIONING_PROFILE_SPECIFIER = "BodyProgress Distribution Profile";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
