@@ -17,20 +17,13 @@ struct BodyPartSummary: View {
     @State var data: [(sum: Double, min: Double, max: Double, average: Double, count: Double, workout: String)] = []
     
     var bodyPart: BodyParts
+    var total: Double {
+        data.map { $0.sum }.reduce(0.0, +)
+    }
     
     var body: some View {
         List(0..<data.count, id: \.self) { index in
-            HStack {
-                VStack(alignment: .leading) {
-                    Text("Name: \(self.data[index].workout)")
-                    Text("Sum: \(self.data[index].sum.detailedDisplayDuration())")
-                    Text("Min: \(self.data[index].min.detailedDisplayDuration())")
-                    Text("Max: \(self.data[index].max.detailedDisplayDuration())")
-                    Text("Count: \(Int(self.data[index].count))")
-                    Text("Average: \(self.data[index].average.detailedDisplayDuration())")
-                }
-                Spacer()
-            }
+            BodyPartSummaryRow(summary: self.data[index], bodyPart: self.bodyPart, total: self.total).environmentObject(self.appSettings)
         }
         .navigationBarTitle(Text("\(bodyPart.rawValue)"))
         .onAppear {
