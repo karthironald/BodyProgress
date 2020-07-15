@@ -83,12 +83,34 @@ class AppSettings: ObservableObject {
         }
     }
     
+    @Published var historySelectedBodyParts: [BodyParts] {
+        didSet {
+            let rawValues = historySelectedBodyParts.map { $0.rawValue }
+            UserDefaults.standard.set(rawValues, forKey: "historySelectedBodyParts")
+        }
+    }
+    
+    @Published var historySelectedCompletionStatus: WorkoutHistoryStatusSort {
+        didSet {
+            let rawValues = historySelectedCompletionStatus.rawValue
+            UserDefaults.standard.set(rawValues, forKey: "historySelectedCompletionStatus")
+        }
+    }
+    
     init() {
         self.userName = AppSettings.userName()
         self.enabledReminder =  UserDefaults.standard.value(forKey: "enabledReminder") as? Bool ?? false
         self.notificationTime = UserDefaults.standard.value(forKey: "notificationTime") as? Date ?? Date().advanced(by: 3600)
         self.themeColorIndex = UserDefaults.standard.value(forKey: "themeColorIndex") as? Int ?? 0
         self.enabledHaptic = AppSettings.isHapticEnabled()
+        
+        let rawBalues = UserDefaults.standard.value(forKey: "historySelectedBodyParts") as? [String] ?? BodyParts.allCases.map { $0.rawValue }
+        self.historySelectedBodyParts = rawBalues.map { (BodyParts(rawValue: $0) ?? BodyParts.others) }
+        
+        let selectionRawValue = UserDefaults.standard.value(forKey: "historySelectedCompletionStatus") as? String ?? WorkoutHistoryStatusSort.Both.rawValue
+        self.historySelectedCompletionStatus = WorkoutHistoryStatusSort(rawValue: selectionRawValue) ?? WorkoutHistoryStatusSort.Both
+        
+        
     }
     
     
