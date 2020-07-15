@@ -25,45 +25,47 @@ struct BodyPartSummaryRow: View {
         GeometryReader { geo in
             ZStack {
                 HStack {
-                    VStack(alignment: .leading, spacing: 10) {
+                    VStack(alignment: .leading, spacing: 5) {
                         Text("\(self.summary.workout)")
                             .font(kPrimaryBodyFont)
                             .bold()
-                        HStack(spacing: 10) {
-                            ZStack(alignment: .trailing) {
-                                RoundedRectangle(cornerRadius: 10)
-                                    .fill(self.appSettings.themeColorView())
-                                    .frame(width: (geo.size.width / 100) * CGFloat(self.percentage), height: 20)
-                                Text("\(self.percentage, specifier: "%0.2f") %")
-                                    .font(kPrimaryFootnoteFont)
-                                    .foregroundColor(.white)
-                                    .padding([.leading, .trailing], 5)
-                            }
-                            Spacer()
-                        }
-                        if self.shouldShowDetails {
-                            Group {
-                                HStack {
-                                    Text("Total: \(self.summary.sum.detailedDisplayDuration())")
-                                        .modifier(SummaryModifier(geo: geo))
-                                    Spacer()
-                                    Text("Sessions: \(Int(self.summary.count))")
-                                        .modifier(SummaryModifier(geo: geo))
-                                }
-                                HStack {
-                                    Text("Min: \(self.summary.min.detailedDisplayDuration())")
-                                        .modifier(SummaryModifier(geo: geo))
-                                    Spacer()
-                                    Text("Max: \(self.summary.max.detailedDisplayDuration())")
-                                        .modifier(SummaryModifier(geo: geo))
-                                }
-                                HStack {
-                                    Text("Avg. session duration: \(self.summary.average.detailedDisplayDuration())")
-                                        .frame(width: geo.size.width, height: 25)
+                        VStack(alignment: .leading, spacing: 10) {
+                            HStack(spacing: 10) {
+                                ZStack(alignment: .trailing) {
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .fill(self.appSettings.themeColorView())
+                                        .frame(width: (geo.size.width / 100) * CGFloat(self.percentage), height: 20)
+                                    Text("\(self.percentage, specifier: "%0.2f") %")
                                         .font(kPrimaryFootnoteFont)
-                                        .background(Color.black.opacity(0.1))
-                                        .foregroundColor(Color.black.opacity(0.7))
-                                        .clipShape(RoundedRectangle(cornerRadius: 15))
+                                        .foregroundColor(.white)
+                                        .padding([.leading, .trailing], 5)
+                                }
+                                Spacer()
+                            }
+                            if self.shouldShowDetails {
+                                Group {
+                                    HStack {
+                                        Text("Total: \(self.summary.sum.detailedDisplayDuration())")
+                                            .modifier(SummaryModifier(geo: geo))
+                                        Spacer()
+                                        Text("Sessions: \(Int(self.summary.count))")
+                                            .modifier(SummaryModifier(geo: geo))
+                                    }
+                                    HStack {
+                                        Text("Min: \(self.summary.min.detailedDisplayDuration())")
+                                            .modifier(SummaryModifier(geo: geo))
+                                        Spacer()
+                                        Text("Max: \(self.summary.max.detailedDisplayDuration())")
+                                            .modifier(SummaryModifier(geo: geo))
+                                    }
+                                    HStack {
+                                        Text("Avg. session duration: \(self.summary.average.detailedDisplayDuration())")
+                                            .frame(width: geo.size.width, height: 25)
+                                            .font(kPrimaryFootnoteFont)
+                                            .background(Color.black.opacity(0.1))
+                                            .foregroundColor(Color.black.opacity(0.7))
+                                            .clipShape(RoundedRectangle(cornerRadius: 15))
+                                    }
                                 }
                             }
                         }
