@@ -82,3 +82,101 @@ extension WorkoutHistory {
     @NSManaged public func removeFromExercises(_ values: NSSet)
 
 }
+
+extension WorkoutHistory {
+    
+    static func fetchSummary(context: NSManagedObjectContext, completion: @escaping ([(sum: Double, bodyPart: BodyParts)]) -> ()) {
+        
+        let keypathDuration = NSExpression(forKeyPath: \WorkoutHistory.duration)
+        let expression = NSExpression(forFunction: "sum:", arguments: [keypathDuration])
+        
+        let sumDesc = NSExpressionDescription()
+        sumDesc.expression = expression
+        sumDesc.name = "sum"
+        sumDesc.expressionResultType = .integer16AttributeType
+        
+        let req = NSFetchRequest<NSFetchRequestResult>(entityName: WorkoutHistory.entity().name ?? "WorkoutHistory")
+        req.returnsObjectsAsFaults = false
+        req.propertiesToGroupBy = ["bodyPart"]
+        req.propertiesToFetch = [sumDesc, "bodyPart"]
+        req.resultType = .dictionaryResultType
+        
+        context.perform {
+            do {
+                let results = try req.execute()
+                let data = results.map { (result) -> (Double, BodyParts)? in
+                    guard let resultDict = result as? [String: Any], let sum = resultDict["sum"] as? Double, sum > 0.0, let bodyPart = resultDict["bodyPart"] as? String else { return nil }
+                    let part = BodyParts(rawValue: bodyPart) ?? BodyParts.others
+                    return (sum, part)
+                }.compactMap { $0 }
+                completion(data.sorted { $0.0 > $1.0 })
+            } catch {
+                print((error.localizedDescription))
+                completion([])
+            }
+        }
+    }
+    
+    static func fetchBodyPartSummary(context: NSManagedObjectContext, of bodyPart: BodyParts, completion: @escaping ([(sum: Double, min: Double, max: Double, average: Double, count: Double, workout: String)]) -> ()) {
+        
+        let keypathWorkout = NSExpression(forKeyPath: \WorkoutHistory.duration)
+        let sumExpression = NSExpression(forFunction: "sum:", arguments: [keypathWorkout])
+        
+        let sumDesc = NSExpressionDescription()
+        sumDesc.expression = sumExpression
+        sumDesc.name = "sum"
+        sumDesc.expressionResultType = .doubleAttributeType
+        
+        
+        let minExpression = NSExpression(forFunction: "min:", arguments: [keypathWorkout])
+        
+        let minDesc = NSExpressionDescription()
+        minDesc.expression = minExpression
+        minDesc.name = "min"
+        minDesc.expressionResultType = .doubleAttributeType
+        
+        
+        let maxExpression = NSExpression(forFunction: "max:", arguments: [keypathWorkout])
+        
+        let maxDesc = NSExpressionDescription()
+        maxDesc.expression = maxExpression
+        maxDesc.name = "max"
+        maxDesc.expressionResultType = .doubleAttributeType
+       
+        let avgExpression = NSExpression(forFunction: "average:", arguments: [keypathWorkout])
+        
+        let avgDesc = NSExpressionDescription()
+        avgDesc.expression = avgExpression
+        avgDesc.name = "average"
+        avgDesc.expressionResultType = .doubleAttributeType
+        
+        let countExpression = NSExpression(forFunction: "count:", arguments: [keypathWorkout])
+        
+        let countDesc = NSExpressionDescription()
+        countDesc.expression = countExpression
+        countDesc.name = "count"
+        countDesc.expressionResultType = .doubleAttributeType
+        
+        let req = NSFetchRequest<NSFetchRequestResult>(entityName: WorkoutHistory.entity().name ?? "WorkoutHistory")
+        req.returnsObjectsAsFaults = false
+        req.propertiesToGroupBy = ["name"]
+        req.propertiesToFetch = [sumDesc, minDesc, maxDesc, avgDesc, countDesc,  "name"]
+        req.resultType = .dictionaryResultType
+        req.predicate = NSPredicate(format: "bodyPart == %@", bodyPart.rawValue)
+        
+        context.perform {
+            do {
+                let results = try req.execute()
+                let data = results.map { (result) -> (Double, Double, Double, Double, Double, String)? in
+                    guard let resultDict = result as? [String: Any], let sum = resultDict["sum"] as? Double, let min = resultDict["min"] as? Double, let max = resultDict["max"] as? Double, let average = resultDict["average"] as? Double,  let count = resultDict["count"] as? Double, let workout = resultDict["name"] as? String else { return nil }
+                    return (sum, min, max, average, count, workout)
+                }.compactMap { $0 }
+                completion(data.sorted { $0.0 > $1.0 })
+            } catch {
+                print((error.localizedDescription))
+                completion([])
+            }
+        }
+    }
+
+}

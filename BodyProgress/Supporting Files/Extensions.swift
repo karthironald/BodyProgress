@@ -85,3 +85,31 @@ public extension URL {
         return fileContainer.appendingPathComponent("\(databaseName).sqlite")
     }
 }
+
+extension Double {
+    
+    func detailedDisplayDuration(shouldIncludeSeconds: Bool = true) -> String {
+        let duration = self
+        let kOneHour: Double = 3600.0
+        let kOneMinute: Double = 60.0
+        
+        let hours = Int(duration / kOneHour)
+        let minutes = Int((duration.truncatingRemainder(dividingBy: kOneHour)) / kOneMinute)
+        let seconds = Int((duration.truncatingRemainder(dividingBy: kOneHour)).truncatingRemainder(dividingBy: kOneMinute))
+        var hourString = ""
+        var minuteString = ""
+        var secondsString = ""
+        
+        if hours > 0 {
+            hourString.append("\(hours)h")
+        }
+        if minutes > 0 {
+            minuteString.append("\(minutes)m")
+        }
+        if seconds > 0 {
+            secondsString.append("\(seconds)s")
+        }
+        let sample: [String] = [hourString, minuteString, secondsString]
+        return sample.joined(separator: " ").trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+}

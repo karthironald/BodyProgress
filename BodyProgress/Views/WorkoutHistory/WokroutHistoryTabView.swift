@@ -27,8 +27,6 @@ enum WorkoutHistoryStatusSort: String, CaseIterable {
 
 struct WokroutHistoryTabView: View {
     
-    @State var bodyPartsSort = [BodyParts.arms, BodyParts.chest, BodyParts.shoulders] 
-    @State var statusSort = WorkoutHistoryStatusSort.Both
     @State var shouldPresentBodyParts = false
     @EnvironmentObject var appSettings: AppSettings
     
@@ -43,17 +41,19 @@ struct WokroutHistoryTabView: View {
                                     .font(kPrimaryFootnoteFont)
                                     .opacity(1)
                                     .padding()
-                                    .background(self.bodyPartsSort.contains(part) ? self.appSettings.themeColorView() : kPrimaryBackgroundColour)
+                                    .background(self.appSettings.historySelectedBodyParts.contains(part) ? self.appSettings.themeColorView() : kPrimaryBackgroundColour)
                                     .foregroundColor(.white)
                                     .frame(height: 30)
                                     .cornerRadius(10)
                                     .onTapGesture {
-                                        if self.bodyPartsSort.contains(part) {
-                                            if let index = self.bodyPartsSort.firstIndex(of: part) {
-                                                self.bodyPartsSort.remove(at: index)
+                                        if self.appSettings.historySelectedBodyParts.contains(part) {
+                                            if let index = self.appSettings.historySelectedBodyParts.firstIndex(of: part) {
+                                                self.appSettings.historySelectedBodyParts.remove(at: index)
+                                                self.appSettings.historySelectedBodyParts = self.appSettings.historySelectedBodyParts
                                             }
                                         } else {
-                                            self.bodyPartsSort.append(part)
+                                            self.appSettings.historySelectedBodyParts.append(part)
+                                            self.appSettings.historySelectedBodyParts = self.appSettings.historySelectedBodyParts
                                         }
                                 }
                             }
@@ -62,7 +62,7 @@ struct WokroutHistoryTabView: View {
                     .padding([.leading, .trailing], 15)
                     Divider()
                         .padding([.leading, .trailing], 15)
-                    Picker(selection: $statusSort, label: Text("Status")) {
+                    Picker(selection: $appSettings.historySelectedCompletionStatus, label: Text("Status")) {
                         ForEach(WorkoutHistoryStatusSort.allCases, id: \.self) { status in
                             Text(status.title())
                         }
@@ -75,7 +75,14 @@ struct WokroutHistoryTabView: View {
                 
                 WorkoutHistoryView(predicate: self.predicate(), sortDescriptor: NSSortDescriptor(keyPath: \WorkoutHistory.createdAt, ascending: false))
             }
-            .navigationBarItems(trailing:
+            .navigationBarItems(leading:
+                NavigationLink(destination: SummaryView(), label: {
+                    Image(systemName: "chart.pie.fill")
+                        .imageScale(.large)
+                        .foregroundColor(appSettings.themeColorView())
+                        .frame(width: 30, height: 30)
+                })
+                ,trailing:
                 Button(action: {
                     withAnimation(.linear) {
                         self.shouldPresentBodyParts.toggle()
@@ -92,9 +99,9 @@ struct WokroutHistoryTabView: View {
     /**Creates predicate based on filter values*/
     func predicate() -> NSPredicate? {
         var predicates: [NSPredicate] = []
-        predicates.append(NSPredicate(format: "bodyPart IN %@", bodyPartsSort.map { $0.rawValue }))
-        if statusSort != .Both {
-            predicates.append(NSPredicate(format: "status == %@", statusSort == .Completed ? NSNumber(booleanLiteral: true) : NSNumber(booleanLiteral: false)))
+        predicates.append(NSPredicate(format: "bodyPart IN %@", appSettings.historySelectedBodyParts.map { $0.rawValue }))
+        if appSettings.historySelectedCompletionStatus != .Both {
+            predicates.append(NSPredicate(format: "status == %@", appSettings.historySelectedCompletionStatus == .Completed ? NSNumber(booleanLiteral: true) : NSNumber(booleanLiteral: false)))
         }
         return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
     }

@@ -55,4 +55,19 @@ enum BodyParts: String, CaseIterable {
         case .fullBody: return Color.secondary.opacity(kPrimaryListCellOpacity)
         }
     }
+    
+    func piechartColor() -> Color {
+        switch self {
+        case .arms: return Color(.systemGreen)
+        case .back: return Color(.systemBlue)
+        case .chest: return Color(.systemRed)
+        case .legs: return Color(.systemYellow)
+        case .shoulders: return Color(.systemOrange)
+        case .abs: return Color(.systemPurple)
+        case .fullBody: return Color(.systemIndigo)
+        case .others: return Color(.systemGray)
+        case .core: return Color(.systemTeal)
+        case .cardio: return Color(.systemGray2)
+        }
+    }
 }

@@ -23,6 +23,7 @@ struct EmptyStateInfoView: View {
                 .shadow(radius: 10)
             Text(message)
                 .font(kPrimaryBodyFont)
+                .multilineTextAlignment(.center)
         }
         .padding()
         .zIndex(1)
