@@ -21,7 +21,7 @@ struct WorkoutRow: View {
         ZStack {
             workout.wBodyPart.color()
             HStack(spacing: 0) {
-                VStack(alignment: .leading, spacing: 5) {
+                VStack(alignment: .leading, spacing: 7) {
                     HStack {
                         Text(workout.wName)
                             .font(kPrimaryBodyFont)

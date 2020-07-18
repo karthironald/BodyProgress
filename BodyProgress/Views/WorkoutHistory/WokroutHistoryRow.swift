@@ -17,16 +17,21 @@ struct WokroutHistoryRow: View {
         ZStack {
             kPrimaryBackgroundColour
             HStack(alignment: .center) {
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 7) {
                     Text(workoutHistory.wName)
                         .font(kPrimaryHeadlineFont)
                         .fontWeight(.bold)
-                    Text("\(workoutHistory.wCreatedAt, formatter: DateFormatter().appDormatter)")
-                        .font(kPrimarySubheadlineFont)
-                        .opacity(0.5)
-                    Text("\(workoutHistory.wBodyPart.rawValue)")
-                        .font(kPrimarySubheadlineFont)
-                        .opacity(0.5)
+                    HStack {
+                        Text("\(workoutHistory.wBodyPart.rawValue)")
+                            .font(kPrimarySubheadlineFont)
+                            .opacity(0.75)
+                        Circle()
+                            .fill(Color.secondary)
+                            .frame(width: 5, height: 5)
+                        Text("\(workoutHistory.wCreatedAt, formatter: DateFormatter().appDormatter)")
+                            .font(kPrimarySubheadlineFont)
+                            .opacity(0.75)
+                    }
                 }
                 .padding()
                 Spacer()
@@ -41,7 +46,7 @@ struct WokroutHistoryRow: View {
                     .padding([.top, .bottom, .trailing])
             }
         }
-        .frame(height: 90)
+        .frame(height: 80)
         .cornerRadius(kCornerRadius)
     }
     
