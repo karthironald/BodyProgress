@@ -66,6 +66,9 @@ struct TodayWorkout: View {
                         self.showCompleteInfoAlert.toggle()
                     }))
             }
+            .onDisappear {
+                self.updateWorkout()
+            }
         }
         .alert(isPresented: $showCompleteInfoAlert, content: { () -> Alert in
             Helper.hapticFeedback()
