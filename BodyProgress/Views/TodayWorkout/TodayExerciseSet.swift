@@ -11,6 +11,7 @@ import CoreData
 
 struct TodayExerciseSet: View {
     
+    @Environment(\.managedObjectContext) var managedObjectContext
     @EnvironmentObject var appSettings: AppSettings
     @ObservedObject var exerciseSet: ExerciseSetHistory
     @State var status: Bool = false
@@ -51,6 +52,7 @@ struct TodayExerciseSet: View {
                                 self.exerciseSet.status.toggle()
                                 self.status = self.exerciseSet.status
                             }
+                            self.save()
                     }
                 }
             }
@@ -68,6 +70,15 @@ struct TodayExerciseSet: View {
             .padding(.leading)
     }
     
+    func save() {
+        if managedObjectContext.hasChanges {
+            do {
+                try managedObjectContext.save()
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
 }
 
 struct TodayExerciseSet_Previews: PreviewProvider {

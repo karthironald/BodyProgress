@@ -10,6 +10,7 @@ import SwiftUI
 
 struct TodayExcerciseRow: View {
     
+    @Environment(\.managedObjectContext) var managedObjectContext
     @EnvironmentObject var appSettings: AppSettings
     @ObservedObject var exercise: ExerciseHistory
     var isViewOnly = false
@@ -27,7 +28,7 @@ struct TodayExcerciseRow: View {
                 Divider()
                 VStack(alignment: .leading) {
                     ForEach(exercise.wExerciseSets, id: \.self) { exSet in
-                        TodayExerciseSet(exerciseSet: exSet, isViewOnly: self.isViewOnly).environmentObject(self.appSettings)
+                        TodayExerciseSet(exerciseSet: exSet, isViewOnly: self.isViewOnly).environmentObject(self.appSettings).environment(\.managedObjectContext, self.managedObjectContext)
                     }
                 }
             }

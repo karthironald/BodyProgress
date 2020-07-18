@@ -38,7 +38,7 @@ struct WorkoutHistoryView: View {
                     ForEach(0..<workoutHistory.count, id: \.self) { workoutIndex in
                         ZStack {
                             WokroutHistoryRow(workoutHistory: self.workoutHistory[workoutIndex])
-                            NavigationLink(destination: WorkoutHistroyDetails(selectedWorkout: self.workoutHistory[workoutIndex])) {
+                            NavigationLink(destination: WorkoutHistroyDetails(selectedWorkout: self.workoutHistory[workoutIndex]).environmentObject(self.appSettings).environment(\.managedObjectContext, self.managedObjectContext)) {
                                 EmptyView()
                                     .zIndex(1)
                             }

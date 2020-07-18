@@ -31,6 +31,11 @@ struct TodayWorkout: View {
             List(selectedWorkout.wExercises, id: \.self) { exercise in
                 TodayExcerciseRow(exercise: exercise).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
             }
+            .onAppear(perform: {
+                if self.duration > 0 {
+                    self.resumeTimer()
+                }
+            })
             .padding([.top, .bottom], 10)
             .navigationBarTitle(Text("\(selectedWorkout.wName)").font(kPrimaryBodyFont), displayMode: .inline)
             .navigationBarItems(

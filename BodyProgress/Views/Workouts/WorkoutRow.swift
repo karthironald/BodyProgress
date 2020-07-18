@@ -55,13 +55,13 @@ struct WorkoutRow: View {
                         self.shouldShowStartWorkoutAlert.toggle()
                     }) {
                         Text("Start workout")
-                        .font(kPrimarySubheadlineFont)
-                        .foregroundColor(.white)
-                        .bold()
-                        .padding(10)
-                        .frame(height: 30)
-                        .background(Color.green)
-                        .clipShape(RoundedRectangle(cornerRadius: 15))
+                            .font(kPrimarySubheadlineFont)
+                            .foregroundColor(.white)
+                            .bold()
+                            .padding(10)
+                            .frame(height: 30)
+                            .background(Color.green)
+                            .clipShape(RoundedRectangle(cornerRadius: 15))
                     }
                     .buttonStyle(BorderlessButtonStyle())
                     if workout.lastTrainedAt != nil {
