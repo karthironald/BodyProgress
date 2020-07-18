@@ -32,7 +32,7 @@ struct WorkoutHistroyDetails: View {
                         .font(kPrimaryBodyFont)
                         .foregroundColor(.orange)
                 }
-                if !selectedWorkout.wStatus {
+                if !selectedWorkout.wStatus && selectedWorkout.workout != nil {
                     Button(action: {
                         self.resumeButtonSelected.toggle()
                     }) {
