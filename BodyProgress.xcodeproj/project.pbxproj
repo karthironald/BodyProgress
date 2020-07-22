@@ -42,6 +42,7 @@
 		779BE97D245AF3DD006FDAE8 /* CustomBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779BE97C245AF3DD006FDAE8 /* CustomBarButton.swift */; };
 		77A3EC422483B314007A92B8 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A3EC412483B314007A92B8 /* Helper.swift */; };
 		77B18BC924B992060016124A /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B18BC824B992060016124A /* SummaryView.swift */; };
+		77B34C9C24C8BF2E0076CBF3 /* CelebrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B34C9B24C8BF2E0076CBF3 /* CelebrationView.swift */; };
 		77B6B51A24521A2D004B9F89 /* WorkoutsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B6B51724521A2D004B9F89 /* WorkoutsList.swift */; };
 		77B6B51C24521A2D004B9F89 /* WorkoutRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B6B51924521A2D004B9F89 /* WorkoutRow.swift */; };
 		77B6B51E24521A36004B9F89 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B6B51D24521A36004B9F89 /* ContentView.swift */; };
@@ -108,6 +109,7 @@
 		779BE97C245AF3DD006FDAE8 /* CustomBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBarButton.swift; sourceTree = "<group>"; };
 		77A3EC412483B314007A92B8 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		77B18BC824B992060016124A /* SummaryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
+		77B34C9B24C8BF2E0076CBF3 /* CelebrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelebrationView.swift; sourceTree = "<group>"; };
 		77B6B51724521A2D004B9F89 /* WorkoutsList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutsList.swift; sourceTree = "<group>"; };
 		77B6B51924521A2D004B9F89 /* WorkoutRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutRow.swift; sourceTree = "<group>"; };
 		77B6B51D24521A36004B9F89 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 				77B6B51D24521A36004B9F89 /* ContentView.swift */,
 				779BE97C245AF3DD006FDAE8 /* CustomBarButton.swift */,
 				779614F7245EE31C00E0216C /* EmptyStateInfoView.swift */,
+				77B34C9B24C8BF2E0076CBF3 /* CelebrationView.swift */,
 			);
 			path = CommonViews;
 			sourceTree = "<group>";
@@ -430,6 +433,8 @@
 			dependencies = (
 			);
 			name = BodyProgress;
+			packageProductDependencies = (
+			);
 			productName = BodyProgress;
 			productReference = 77F4C4EB244A21B40048E3CB /* W(out)FH.app */;
 			productType = "com.apple.product-type.application";
@@ -458,6 +463,8 @@
 				Base,
 			);
 			mainGroup = 77F4C4E2244A21B40048E3CB;
+			packageReferences = (
+			);
 			productRefGroup = 77F4C4EC244A21B40048E3CB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -517,6 +524,7 @@
 				7742599A2472FB85008EE26E /* WorkoutHistroyDetails.swift in Sources */,
 				7766E54224575BDF008627D9 /* AddWorkout.swift in Sources */,
 				77B18BC924B992060016124A /* SummaryView.swift in Sources */,
+				77B34C9C24C8BF2E0076CBF3 /* CelebrationView.swift in Sources */,
 				77181010245EBFF3005D6E9F /* Workout+CoreDataProperties.swift in Sources */,
 				7707C18424B496C7001837E1 /* AppSettings.swift in Sources */,
 				774958F0246C6C9F00CF99CF /* WorkoutHistory+CoreDataProperties.swift in Sources */,
