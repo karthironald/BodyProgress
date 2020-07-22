@@ -8,21 +8,25 @@
 
 import SwiftUI
 import CoreData
+import Combine
 
 struct TodayWorkout: View {
     
     @State var startDate = Date()
-    @State var displayDuration = ""
-    @State var duration: Int16 = 0
+    @State var duration: Int16 = 1
     @State var showIncompleteAlert = false
     @State var showCompleteInfoAlert = false
-    @State var shouldPauseTimer = false
-
+    @State var shouldPauseTimer = false {
+        didSet {
+            shouldPauseTimer ? pauseTimer() : resumeTimer()
+        }
+    }
+    @State var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    
     @EnvironmentObject var appSettings: AppSettings
     @Environment(\.managedObjectContext) var managedObjectContext
     @Environment(\.presentationMode) var presentation
     
-    @State var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     var selectedWorkout: WorkoutHistory
     var workout: Workout
     
@@ -31,24 +35,12 @@ struct TodayWorkout: View {
             List(selectedWorkout.wExercises, id: \.self) { exercise in
                 TodayExcerciseRow(exercise: exercise).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
             }
-            .onAppear(perform: {
-                if self.duration > 0 {
-                    self.resumeTimer()
-                }
-            })
             .padding([.top, .bottom], 10)
             .navigationBarTitle(Text("\(selectedWorkout.wName)").font(kPrimaryBodyFont), displayMode: .inline)
             .navigationBarItems(
-                leading: Text("\(displayDuration)")
-                    .font(kPrimaryBodyFont)
-                    .foregroundColor(.orange)
-                    .opacity(shouldPauseTimer ? 0.5 : 1)
-                    .padding([.trailing, .top, .bottom])
-                    .onTapGesture {
-                        self.shouldPauseTimer ? self.resumeTimer() : self.pauseTimer()
-                    },
+                leading: TimerView(startDate: $startDate, duration: $duration, shouldPauseTimer: $shouldPauseTimer, timer: $timer, selectedWorkout: selectedWorkout, workout: workout).environment(\.managedObjectContext, managedObjectContext),
                 trailing: Button(action: {
-                    self.pauseTimer()
+                    self.shouldPauseTimer = true
                     if !self.selectedWorkout.isAllSetCompleted() {
                         self.showIncompleteAlert.toggle()
                     } else {
@@ -61,7 +53,7 @@ struct TodayWorkout: View {
                 .alert(isPresented: $showIncompleteAlert) { () -> Alert in
                     Helper.hapticFeedback()
                     return Alert(title: Text("Few exercise sets are pending. Are you sure to finish?"), primaryButton: Alert.Button.cancel({
-                        self.resumeTimer()
+                        self.shouldPauseTimer = false
                     }), secondaryButton: Alert.Button.default(Text("Finish"), action: {
                         self.showCompleteInfoAlert.toggle()
                     }))
@@ -76,12 +68,21 @@ struct TodayWorkout: View {
                 Text("🎉"), message: Text("Today workout has been saved successfully"), dismissButton: Alert.Button.cancel(Text("Okay"), action: {
                     self.presentation.wrappedValue.dismiss()
                     self.updateWorkout()
-            }))
+                }))
         })
-            .onReceive(timer) { date in
-                self.duration = Int16(date.timeIntervalSince(self.startDate))
-                self.displayDuration = self.duration.displayDuration()
-            }
+    }
+    
+    /**Pauses the timer*/
+    func pauseTimer() {
+        self.timer.upstream.connect().cancel()
+        Helper.hapticFeedback()
+    }
+    
+    /**Resumes the timer from previously stopped time*/
+    func resumeTimer() {
+        self.startDate = Date().advanced(by: TimeInterval(-self.duration)) // Consider already ran duration when resuming the timer.
+        self.timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+        Helper.hapticFeedback()
     }
     
     /**Update and save the work in core data*/
@@ -100,10 +101,100 @@ struct TodayWorkout: View {
         }
     }
     
+}
+
+struct TodayWorkout_Previews: PreviewProvider {
+    static let moc = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+    
+    static var previews: some View {
+        let previewData = createWorkoutHistory()
+        return TodayWorkout(selectedWorkout: previewData.1, workout: previewData.0).environment(\.managedObjectContext, moc).environmentObject(AppSettings())
+    }
+    
+    
+    static func createWorkoutHistory() -> (Workout, WorkoutHistory) {
+        let workout = Workout(context: moc)
+        
+        let workoutHistory = WorkoutHistory(context: moc)
+        workoutHistory.name = workout.name
+        workoutHistory.notes = workout.notes
+        workoutHistory.bodyPart = workout.bodyPart
+        workoutHistory.id = UUID()
+        workoutHistory.createdAt = Date()
+        workoutHistory.updatedAt = Date()
+        
+        for exercise in workout.wExercises {
+            let exerciseHistory = ExerciseHistory(context: moc)
+            exerciseHistory.name = exercise.name
+            exerciseHistory.notes = exercise.notes
+            exerciseHistory.bodyPart = workout.bodyPart
+            exerciseHistory.id = UUID()
+            exerciseHistory.createdAt = Date()
+            exerciseHistory.updatedAt = Date()
+            
+            for exerciseSet in exercise.wExerciseSets {
+                let newExerciseSetHistory = ExerciseSetHistory(context: moc)
+                newExerciseSetHistory.name = exerciseSet.name
+                newExerciseSetHistory.notes = exerciseSet.notes
+                newExerciseSetHistory.id = UUID()
+                newExerciseSetHistory.createdAt = Date()
+                newExerciseSetHistory.updatedAt = Date()
+                newExerciseSetHistory.weight = exerciseSet.wWeight
+                newExerciseSetHistory.reputation = exerciseSet.wReputation
+                
+                exerciseHistory.addToExerciseSets(newExerciseSetHistory)
+            }
+            
+            workoutHistory.addToExercises(exerciseHistory)
+        }
+        
+        return (workout, workoutHistory)
+    }
+    
+}
+
+struct TimerView: View {
+    
+    @Binding var startDate: Date
+    @State var displayDuration = ""
+    @Binding var duration: Int16
+    @Binding var shouldPauseTimer: Bool
+    @State var shouldPause = false
+    @Binding var timer: Publishers.Autoconnect<Timer.TimerPublisher>
+    
+    @Environment(\.managedObjectContext) var managedObjectContext
+    var selectedWorkout: WorkoutHistory
+    var workout: Workout
+    
+    var body: some View {
+        Text("\(displayDuration)")
+            .font(kPrimaryBodyFont)
+            .foregroundColor(.orange)
+            .opacity((shouldPauseTimer || shouldPause) ? 0.5 : 1)
+            .padding([.trailing, .top, .bottom])
+            .frame(width: 100)
+            .onReceive(timer) { date in
+                self.duration = Int16(date.timeIntervalSince(self.startDate))
+                self.displayDuration = self.duration.displayDuration()
+                self.updateWorkout()
+        }
+        .onTapGesture {
+            self.shouldPause.toggle()
+            self.shouldPause ? self.pauseTimer() : self.resumeTimer()
+        }
+        .onAppear(perform: {
+            if self.duration > 0 {
+                self.resumeTimer()
+            }
+        })
+            .onDisappear {
+                self.pauseTimer()
+        }
+    }
+    
     /**Pauses the timer*/
     func pauseTimer() {
         self.timer.upstream.connect().cancel()
-        shouldPauseTimer = true
         Helper.hapticFeedback()
     }
     
@@ -111,14 +202,20 @@ struct TodayWorkout: View {
     func resumeTimer() {
         self.startDate = Date().advanced(by: TimeInterval(-self.duration)) // Consider already ran duration when resuming the timer.
         self.timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-        shouldPauseTimer = false
         Helper.hapticFeedback()
     }
     
-}
-
-struct TodayWorkout_Previews: PreviewProvider {
-    static var previews: some View {
-        Text("Yet to configure preview")
+    /**Update and save the work in core data*/
+    func updateWorkout() {
+        selectedWorkout.duration = self.duration
+        if managedObjectContext.hasChanges {
+            do {
+                try managedObjectContext.save()
+            } catch {
+                #warning("We are showing workout saved alert before saving it. There could be posibility to face error when saving the workout. Need to handle it")
+                print(error)
+            }
+        }
     }
+    
 }
