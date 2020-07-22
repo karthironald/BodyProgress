@@ -13,7 +13,7 @@ import Combine
 struct TodayWorkout: View {
     
     @State var startDate = Date()
-    @State var duration: Int16 = 1
+    @State var duration: Int16 = 0
     @State var showIncompleteAlert = false
     @State var showCompleteInfoAlert = false
     @State var shouldPauseTimer = false {
@@ -183,9 +183,7 @@ struct TimerView: View {
             self.shouldPause ? self.pauseTimer() : self.resumeTimer()
         }
         .onAppear(perform: {
-            if self.duration > 0 {
-                self.resumeTimer()
-            }
+            self.resumeTimer()
         })
             .onDisappear {
                 self.pauseTimer()
