@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct SummaryView: View {
     
@@ -28,15 +29,6 @@ struct SummaryView: View {
             } else {
                 List {
                     PieChart(progress: self.progress, segments: self.segments)
-                    HStack {
-                        Spacer()
-                        Text("Total: \(total.detailedDisplayDuration())")
-                            .font(kPrimaryBodyFont)
-                            .bold()
-                            .padding()
-                            .multilineTextAlignment(.center)
-                        Spacer()
-                    }
                     ForEach(0..<self.progress.count, id: \.self) { segIndex in
                         NavigationLink(destination: BodyPartSummary(bodyPart: self.progress[segIndex].1).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)) {
                             HStack {
@@ -49,9 +41,9 @@ struct SummaryView: View {
                                     Spacer()
                                     HStack {
                                         Text("\(self.progress[segIndex].0.detailedDisplayDuration())")
-                                            .font(kPrimaryBodyFont)
+                                            .font(kPrimaryCalloutFont)
                                             .foregroundColor(.secondary)
-                                        Text("(\(self.percentage(of: self.progress[segIndex].0), specifier: "%.2f") %)")
+                                        Text("(\(self.percentage(of: self.progress[segIndex].0), specifier: "%.2f")%)")
                                             .font(kPrimaryBodyFont)
                                     }
                                 }
@@ -91,14 +83,21 @@ struct SummaryView: View {
 }
 
 struct SummaryView_Previews: PreviewProvider {
+    
+    static let moc = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+    
     static var previews: some View {
-        SummaryView(totalWorkoutTime: 100, progress: [(70, BodyParts.arms), (30, BodyParts.chest)], segments: [SegmentData(percentage: 70, startAngle: 0, endAngle: 252), SegmentData(percentage: 30, startAngle: 252, endAngle: 360)])
+        return SummaryView(totalWorkoutTime: 100, progress: [(70, BodyParts.arms), (30, BodyParts.chest)], segments: [SegmentData(percentage: 70, startAngle: 0, endAngle: 252), SegmentData(percentage: 30, startAngle: 252, endAngle: 360)]).environment(\.managedObjectContext, moc).environmentObject(AppSettings())
     }
 }
 
 struct PieChart: View {
     
     var progress: [(Double, BodyParts)] = []
+    var total : Double {
+        let durations = progress.map { $0.0 }
+        return durations.reduce(0.0, +)
+    }
     var segments: [SegmentData] = []
     @State var shouldShowChart = false
     
@@ -110,6 +109,17 @@ struct PieChart: View {
                         Segment(radius: geoProxy.size.width / 3, startAngle: self.segments[segIndex].startAngle, endAngle: self.segments[segIndex].endAngle)
                             .fill(self.progress[segIndex].1.piechartColor())
                     }
+                    Circle()
+                        .fill(Color(UIColor.systemBackground))
+                        .frame(width: geoProxy.size.width / 2, height: geoProxy.size.width / 2)
+                    .overlay(
+                        Text("\(self.total.detailedDisplayDuration())")
+                            .font(kPrimaryBodyFont)
+                            .bold()
+                            .padding()
+                            .multilineTextAlignment(.center)
+                            .rotationEffect(.degrees(90))
+                    )
                 }
                 .transition(.scale)
                 .rotationEffect(.degrees(-90))
