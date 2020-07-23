@@ -46,6 +46,20 @@ extension Workout {
         }
     }
     
+    func lastTrainedAtString() -> String {
+        if let lastTrainedAt = lastTrainedAt {
+            let previousDate = lastTrainedAt
+            let now = Date()
+
+            let formatter = DateComponentsFormatter()
+            formatter.unitsStyle = .full
+            formatter.allowedUnits = [.day, .hour, .minute, .second]
+            formatter.maximumUnitCount = 1
+
+            return "\(formatter.string(from: previousDate, to: now) ?? "") ago" 
+        }
+        return ""
+    }
 }
 
 // MARK: Generated accessors for exercises

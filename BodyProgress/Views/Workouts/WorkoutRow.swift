@@ -65,7 +65,7 @@ struct WorkoutRow: View {
                     }
                     .buttonStyle(BorderlessButtonStyle())
                     if workout.lastTrainedAt != nil {
-                        Text("\(workout.wLastTrainedAt, formatter: DateFormatter().appDormatter)")
+                        Text("\(workout.lastTrainedAtString())")
                             .font(kPrimaryFootnoteFont)
                             .opacity(0.75)
                     } else {
