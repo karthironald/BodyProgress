@@ -22,7 +22,6 @@ struct TodayWorkout: View {
         }
     }
     @State var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    @State var celebrate = false
     
     @EnvironmentObject var appSettings: AppSettings
     @Environment(\.managedObjectContext) var managedObjectContext
@@ -33,44 +32,34 @@ struct TodayWorkout: View {
     
     var body: some View {
         NavigationView {
-            ZStack {
-                List(selectedWorkout.wExercises, id: \.self) { exercise in
-                    TodayExcerciseRow(exercise: exercise).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
-                }
-                .padding([.top, .bottom], 10)
-                .navigationBarTitle(Text("\(selectedWorkout.wName)").font(kPrimaryBodyFont), displayMode: .inline)
-                .navigationBarItems(
-                    leading: TimerView(startDate: $startDate, duration: $duration, shouldPauseTimer: $shouldPauseTimer, timer: $timer, selectedWorkout: selectedWorkout, workout: workout).environment(\.managedObjectContext, managedObjectContext),
-                    trailing: Button(action: {
-                        self.shouldPauseTimer = true
-                        if !self.selectedWorkout.isAllSetCompleted() {
-                            self.showIncompleteAlert.toggle()
-                        } else {
-                            self.showCompleteInfoAlert.toggle()
-                            self.celebrate.toggle()
-                        }
-                    }, label: {
-                        CustomBarButton(title: "Finish")
-                    })
-                )
-                    .alert(isPresented: $showIncompleteAlert) { () -> Alert in
-                        Helper.hapticFeedback()
-                        return Alert(title: Text("Few exercise sets are pending. Are you sure to finish?"), primaryButton: Alert.Button.cancel({
-                            self.shouldPauseTimer = false
-                        }), secondaryButton: Alert.Button.default(Text("Finish"), action: {
-                            self.showCompleteInfoAlert.toggle()
-                            self.celebrate.toggle()
-                        }))
-                }
-                .onDisappear {
-                    self.updateWorkout()
-                }
-                if self.celebrate {
-                    ConfettiView(confetti: [.text("💪🏻"), .text("🎉")])
-                        .transition(.opacity)
-                        .animation(.easeOut(duration: 2))
-                        .zIndex(2)
-                }
+            List(selectedWorkout.wExercises, id: \.self) { exercise in
+                TodayExcerciseRow(exercise: exercise).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
+            }
+            .padding([.top, .bottom], 10)
+            .navigationBarTitle(Text("\(selectedWorkout.wName)").font(kPrimaryBodyFont), displayMode: .inline)
+            .navigationBarItems(
+                leading: TimerView(startDate: $startDate, duration: $duration, shouldPauseTimer: $shouldPauseTimer, timer: $timer, selectedWorkout: selectedWorkout, workout: workout).environment(\.managedObjectContext, managedObjectContext),
+                trailing: Button(action: {
+                    self.shouldPauseTimer = true
+                    if !self.selectedWorkout.isAllSetCompleted() {
+                        self.showIncompleteAlert.toggle()
+                    } else {
+                        self.showCompleteInfoAlert.toggle()
+                    }
+                }, label: {
+                    CustomBarButton(title: "Finish")
+                })
+            )
+                .alert(isPresented: $showIncompleteAlert) { () -> Alert in
+                    Helper.hapticFeedback()
+                    return Alert(title: Text("Few exercise sets are pending. Are you sure to finish?"), primaryButton: Alert.Button.cancel({
+                        self.shouldPauseTimer = false
+                    }), secondaryButton: Alert.Button.default(Text("Finish"), action: {
+                        self.showCompleteInfoAlert.toggle()
+                    }))
+            }
+            .onDisappear {
+                self.updateWorkout()
             }
         }
         .alert(isPresented: $showCompleteInfoAlert, content: { () -> Alert in

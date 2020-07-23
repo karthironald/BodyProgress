@@ -69,15 +69,14 @@ fileprivate final class Layer: CAEmitterLayer {
      func configure(with contents: [Confetti]) {
         emitterCells = contents.map { content in
             let cell = CAEmitterCell()
-
-            cell.birthRate = 50.0
+            cell.birthRate = 40.0
             cell.lifetime = 10.0
             cell.velocity = CGFloat(cell.birthRate * cell.lifetime)
             cell.velocityRange = cell.velocity / 2
             cell.emissionLongitude = .pi
             cell.emissionRange = .pi / 4
             cell.spinRange = .pi * 8
-            cell.scaleRange = 0.25
+            cell.scaleRange = 0.65
             cell.scale = 1.0 - cell.scaleRange
             cell.contents = content.image.cgImage
 
