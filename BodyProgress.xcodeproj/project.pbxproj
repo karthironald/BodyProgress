@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2FEB3D48947B7EC23508C242 /* Pods_BodyProgress.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 765881E4F1A84356EBE7DFAB /* Pods_BodyProgress.framework */; };
 		7707C18424B496C7001837E1 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7707C18324B496C7001837E1 /* AppSettings.swift */; };
 		770903A0245F2551003F7EDD /* ExercisesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7709039F245F2551003F7EDD /* ExercisesList.swift */; };
 		770903A2245F27F3003F7EDD /* ExerciseRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770903A1245F27F3003F7EDD /* ExerciseRow.swift */; };
@@ -52,6 +53,7 @@
 		77B6B52B24521A90004B9F89 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B6B52524521A90004B9F89 /* SceneDelegate.swift */; };
 		77B6B52C24521A90004B9F89 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77B6B52624521A90004B9F89 /* Assets.xcassets */; };
 		77B6B52D24521A90004B9F89 /* BodyProgress.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 77B6B52724521A90004B9F89 /* BodyProgress.xcdatamodeld */; };
+		77BABFEA24CB5DC0001D647A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 77BABFE924CB5DC0001D647A /* GoogleService-Info.plist */; };
 		77BE022D246AFDC000197D06 /* WorkoutHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77BE022C246AFDC000197D06 /* WorkoutHistoryView.swift */; };
 		77CB41EF24647F2000052601 /* TodayWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CB41EE24647F2000052601 /* TodayWorkout.swift */; };
 		77CB41F12464864C00052601 /* TodayExcerciseRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CB41F02464864C00052601 /* TodayExcerciseRow.swift */; };
@@ -74,6 +76,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		765881E4F1A84356EBE7DFAB /* Pods_BodyProgress.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BodyProgress.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7707C18324B496C7001837E1 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		7709039F245F2551003F7EDD /* ExercisesList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExercisesList.swift; sourceTree = "<group>"; };
 		770903A1245F27F3003F7EDD /* ExerciseRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseRow.swift; sourceTree = "<group>"; };
@@ -119,6 +122,7 @@
 		77B6B52524521A90004B9F89 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		77B6B52624521A90004B9F89 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		77B6B52824521A90004B9F89 /* BodyProgress.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BodyProgress.xcdatamodel; sourceTree = "<group>"; };
+		77BABFE924CB5DC0001D647A /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		77BE022C246AFDC000197D06 /* WorkoutHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryView.swift; sourceTree = "<group>"; };
 		77CB41EE24647F2000052601 /* TodayWorkout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWorkout.swift; sourceTree = "<group>"; };
 		77CB41F02464864C00052601 /* TodayExcerciseRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayExcerciseRow.swift; sourceTree = "<group>"; };
@@ -140,6 +144,8 @@
 		77F4C4FF244A21B70048E3CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		77F8AC3F24B0676D00A5ABB5 /* NotificationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHelper.swift; sourceTree = "<group>"; };
 		77F8AC4224B06B7500A5ABB5 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		7E0D7A872FC567579EEE6E96 /* Pods-BodyProgress.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BodyProgress.release.xcconfig"; path = "Target Support Files/Pods-BodyProgress/Pods-BodyProgress.release.xcconfig"; sourceTree = "<group>"; };
+		BA7C91A15A46B510B6DBDB80 /* Pods-BodyProgress.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BodyProgress.debug.xcconfig"; path = "Target Support Files/Pods-BodyProgress/Pods-BodyProgress.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,12 +153,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FEB3D48947B7EC23508C242 /* Pods_BodyProgress.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2FEC74F87748713AB9621D49 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BA7C91A15A46B510B6DBDB80 /* Pods-BodyProgress.debug.xcconfig */,
+				7E0D7A872FC567579EEE6E96 /* Pods-BodyProgress.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		6BFE0494139F4A0F16907FC7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				765881E4F1A84356EBE7DFAB /* Pods_BodyProgress.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		7707C18224B496B3001837E1 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -356,6 +380,8 @@
 			children = (
 				77F4C4ED244A21B40048E3CB /* BodyProgress */,
 				77F4C4EC244A21B40048E3CB /* Products */,
+				2FEC74F87748713AB9621D49 /* Pods */,
+				6BFE0494139F4A0F16907FC7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -370,6 +396,7 @@
 		77F4C4ED244A21B40048E3CB /* BodyProgress */ = {
 			isa = PBXGroup;
 			children = (
+				77BABFE924CB5DC0001D647A /* GoogleService-Info.plist */,
 				77CFAAD924B1C19B003BA128 /* App Icons */,
 				77F8AC3E24B0674700A5ABB5 /* Helpers */,
 				77F4C4FF244A21B70048E3CB /* Info.plist */,
@@ -424,17 +451,17 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 77F4C502244A21B70048E3CB /* Build configuration list for PBXNativeTarget "BodyProgress" */;
 			buildPhases = (
+				1A5504B741561377FFBCC716 /* [CP] Check Pods Manifest.lock */,
 				77F4C4E7244A21B40048E3CB /* Sources */,
 				77F4C4E8244A21B40048E3CB /* Frameworks */,
 				77F4C4E9244A21B40048E3CB /* Resources */,
+				4C6B6B9B28BB098E991D647D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = BodyProgress;
-			packageProductDependencies = (
-			);
 			productName = BodyProgress;
 			productReference = 77F4C4EB244A21B40048E3CB /* W(out)FH.app */;
 			productType = "com.apple.product-type.application";
@@ -463,8 +490,6 @@
 				Base,
 			);
 			mainGroup = 77F4C4E2244A21B40048E3CB;
-			packageReferences = (
-			);
 			productRefGroup = 77F4C4EC244A21B40048E3CB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -491,6 +516,7 @@
 				77CFAAF424B1CC2B003BA128 /* RedIcon@3x.png in Resources */,
 				77CFAAE824B1CBCF003BA128 /* BlueIcon@2x.png in Resources */,
 				77CFAAF124B1CC0A003BA128 /* OrangeIcon@2x.png in Resources */,
+				77BABFEA24CB5DC0001D647A /* GoogleService-Info.plist in Resources */,
 				77CFAAED24B1CBEC003BA128 /* IndigoIcon@2x.png in Resources */,
 				774E09A824ACFE9C005D39AB /* Localizable.strings in Resources */,
 				77B6B52C24521A90004B9F89 /* Assets.xcassets in Resources */,
@@ -499,6 +525,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1A5504B741561377FFBCC716 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BodyProgress-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4C6B6B9B28BB098E991D647D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BodyProgress/Pods-BodyProgress-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BodyProgress/Pods-BodyProgress-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BodyProgress/Pods-BodyProgress-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		77F4C4E7244A21B40048E3CB /* Sources */ = {
@@ -686,6 +754,7 @@
 		};
 		77F4C503244A21B70048E3CB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BA7C91A15A46B510B6DBDB80 /* Pods-BodyProgress.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -709,6 +778,7 @@
 		};
 		77F4C504244A21B70048E3CB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7E0D7A872FC567579EEE6E96 /* Pods-BodyProgress.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
