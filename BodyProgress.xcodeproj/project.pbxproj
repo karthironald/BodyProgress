@@ -53,7 +53,8 @@
 		77B6B52B24521A90004B9F89 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B6B52524521A90004B9F89 /* SceneDelegate.swift */; };
 		77B6B52C24521A90004B9F89 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77B6B52624521A90004B9F89 /* Assets.xcassets */; };
 		77B6B52D24521A90004B9F89 /* BodyProgress.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 77B6B52724521A90004B9F89 /* BodyProgress.xcdatamodeld */; };
-		77BABFEA24CB5DC0001D647A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 77BABFE924CB5DC0001D647A /* GoogleService-Info.plist */; };
+		77BABFED24CB610B001D647A /* GoogleService-Info-Prod.plist in Resources */ = {isa = PBXBuildFile; fileRef = 77BABFEB24CB610A001D647A /* GoogleService-Info-Prod.plist */; };
+		77BABFEE24CB610B001D647A /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = 77BABFEC24CB610A001D647A /* GoogleService-Info-Dev.plist */; };
 		77BE022D246AFDC000197D06 /* WorkoutHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77BE022C246AFDC000197D06 /* WorkoutHistoryView.swift */; };
 		77CB41EF24647F2000052601 /* TodayWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CB41EE24647F2000052601 /* TodayWorkout.swift */; };
 		77CB41F12464864C00052601 /* TodayExcerciseRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CB41F02464864C00052601 /* TodayExcerciseRow.swift */; };
@@ -122,7 +123,8 @@
 		77B6B52524521A90004B9F89 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		77B6B52624521A90004B9F89 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		77B6B52824521A90004B9F89 /* BodyProgress.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BodyProgress.xcdatamodel; sourceTree = "<group>"; };
-		77BABFE924CB5DC0001D647A /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		77BABFEB24CB610A001D647A /* GoogleService-Info-Prod.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info-Prod.plist"; sourceTree = SOURCE_ROOT; };
+		77BABFEC24CB610A001D647A /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info-Dev.plist"; sourceTree = SOURCE_ROOT; };
 		77BE022C246AFDC000197D06 /* WorkoutHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryView.swift; sourceTree = "<group>"; };
 		77CB41EE24647F2000052601 /* TodayWorkout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWorkout.swift; sourceTree = "<group>"; };
 		77CB41F02464864C00052601 /* TodayExcerciseRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayExcerciseRow.swift; sourceTree = "<group>"; };
@@ -396,7 +398,8 @@
 		77F4C4ED244A21B40048E3CB /* BodyProgress */ = {
 			isa = PBXGroup;
 			children = (
-				77BABFE924CB5DC0001D647A /* GoogleService-Info.plist */,
+				77BABFEC24CB610A001D647A /* GoogleService-Info-Dev.plist */,
+				77BABFEB24CB610A001D647A /* GoogleService-Info-Prod.plist */,
 				77CFAAD924B1C19B003BA128 /* App Icons */,
 				77F8AC3E24B0674700A5ABB5 /* Helpers */,
 				77F4C4FF244A21B70048E3CB /* Info.plist */,
@@ -505,9 +508,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				77CFAAF524B1CC2B003BA128 /* RedIcon@2x.png in Resources */,
+				77BABFEE24CB610B001D647A /* GoogleService-Info-Dev.plist in Resources */,
 				77CFAAE424B1CBA2003BA128 /* GreenIcon@2x.png in Resources */,
 				77CFAAE524B1CBA2003BA128 /* GreenIcon@3x.png in Resources */,
 				77CFAAE924B1CBCF003BA128 /* BlueIcon@3x.png in Resources */,
+				77BABFED24CB610B001D647A /* GoogleService-Info-Prod.plist in Resources */,
 				77F4C4FB244A21B70048E3CB /* Preview Assets.xcassets in Resources */,
 				77CFAAF924B1CC59003BA128 /* YellowIcon@2x.png in Resources */,
 				77CFAAF024B1CC0A003BA128 /* OrangeIcon@3x.png in Resources */,
@@ -516,7 +521,6 @@
 				77CFAAF424B1CC2B003BA128 /* RedIcon@3x.png in Resources */,
 				77CFAAE824B1CBCF003BA128 /* BlueIcon@2x.png in Resources */,
 				77CFAAF124B1CC0A003BA128 /* OrangeIcon@2x.png in Resources */,
-				77BABFEA24CB5DC0001D647A /* GoogleService-Info.plist in Resources */,
 				77CFAAED24B1CBEC003BA128 /* IndigoIcon@2x.png in Resources */,
 				774E09A824ACFE9C005D39AB /* Localizable.strings in Resources */,
 				77B6B52C24521A90004B9F89 /* Assets.xcassets in Resources */,

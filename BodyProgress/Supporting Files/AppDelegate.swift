@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        FirebaseApp.configure()
+        configureFirebase()
         return true
     }
     
@@ -119,6 +119,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+    
+    
+    /**Configure the firebase connection*/
+    func configureFirebase() {
+        var filePath: String? = ""
+        #if DEBUG
+        filePath = Bundle.main.path(forResource: "GoogleService-Info-Dev", ofType: "plist")
+        #else
+        filePath = Bundle.main.path(forResource: "GoogleService-Info-Prod", ofType: "plist")
+        #endif
+        if let filePath = filePath, let options = FirebaseOptions(contentsOfFile: filePath) {
+            FirebaseApp.configure(options: options)
+        }
+    }
+    
 }
 
 
