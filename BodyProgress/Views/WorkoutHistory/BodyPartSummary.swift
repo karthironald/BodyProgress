@@ -20,8 +20,6 @@ struct BodyPartSummary: View {
     var total: Double {
         data.map { $0.sum }.reduce(0.0, +)
     }
-    @State var shouldShowDetails = false
-    @State var index = kCommonListIndex
     
     var body: some View {
         ZStack {
@@ -29,11 +27,7 @@ struct BodyPartSummary: View {
                 EmptyStateInfoView(message: "No summary was available. Start your workout.")
             } else {
                 List(0..<data.count, id: \.self) { index in
-                    Button(action: {
-                        self.index = (self.index == index) ? kCommonListIndex : index
-                    }) {
-                        BodyPartSummaryRow(summary: self.data[index], bodyPart: self.bodyPart, total: self.total, shouldShowDetails: self.index == index ? true : false).environmentObject(self.appSettings)
-                    }
+                    BodyPartSummaryRow(summary: self.data[index], bodyPart: self.bodyPart, total: self.total).environmentObject(self.appSettings)
                 }
             }
         }

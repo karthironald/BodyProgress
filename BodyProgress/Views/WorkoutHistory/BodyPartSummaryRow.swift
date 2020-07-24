@@ -15,7 +15,6 @@ struct BodyPartSummaryRow: View {
     var summary: (sum: Double, min: Double, max: Double, average: Double, count: Double, workout: String)
     var bodyPart: BodyParts
     var total: Double
-    var shouldShowDetails: Bool
     
     var percentage: Double {
         summary.sum / total * 100.0
@@ -24,75 +23,108 @@ struct BodyPartSummaryRow: View {
     var body: some View {
         GeometryReader { geo in
             VStack(alignment: .leading, spacing: 5) {
-                Text("\(self.summary.workout)")
-                    .font(kPrimaryBodyFont)
-                    .bold()
+                HStack {
+                    Text("\(self.summary.workout)")
+                        .font(kPrimaryBodyFont)
+                        .bold()
+                        .lineLimit(1)
+                    Spacer()
+                    Group {
+                        Text("\(Int(self.summary.count))")
+                        Text("sessions")
+                            .foregroundColor(.secondary)
+                    }
+                    .font(kPrimaryFootnoteFont)
+                }
                 VStack(alignment: .leading, spacing: 10) {
                     HStack(spacing: 10) {
                         ZStack(alignment: .leading) {
                             RoundedRectangle(cornerRadius: 12.5)
-                                .fill(Color.black.opacity(0.1))
+                                .fill(self.bodyPart.color())
                                 .frame(width: geo.size.width, height: 25)
                             RoundedRectangle(cornerRadius: 12.5)
                                 .fill(self.appSettings.themeColorView())
                                 .frame(width: (geo.size.width / 100) * CGFloat(self.percentage), height: 25)
                                 .overlay(
-                                    Text("\(self.percentage, specifier: "%0.2f") %")
-                                    .font(kPrimaryFootnoteFont)
-                                    .foregroundColor(.white)
-                                    .padding([.leading, .trailing], 5)
+                                    Text("\(self.percentage, specifier: "%0.2f")%")
+                                        .font(kPrimaryFootnoteFont)
+                                        .foregroundColor(.white)
+                                        .padding([.leading, .trailing], 5)
                                     , alignment: .trailing)
                         }
                     }
-                    if self.shouldShowDetails {
-                        Group {
+                    Group {
+                        HStack {
                             HStack {
-                                Text("Total: \(self.summary.sum.detailedDisplayDuration())")
-                                    .modifier(SummaryModifier(geo: geo))
+                                Image(systemName: "clock")
+                                    .foregroundColor(.secondary)
+                                    .padding([.leading], 10)
+                                Text("Total:")
+                                    .foregroundColor(.secondary)
+                                Text("\(self.summary.sum.detailedDisplayDuration())")
                                 Spacer()
-                                Text("Sessions: \(Int(self.summary.count))")
-                                    .modifier(SummaryModifier(geo: geo))
                             }
-                            HStack {
-                                Text("Min: \(self.summary.min.detailedDisplayDuration())")
-                                    .modifier(SummaryModifier(geo: geo))
+                            .modifier(SummaryModifier(geo: geo, bodyPart: self.bodyPart))
+                            Spacer()
+                            HStack() {
+                                Image(systemName: "clock")
+                                    .foregroundColor(.secondary)
+                                    .padding([.leading], 10)
+                                Text("Avg:")
+                                    .foregroundColor(.secondary)
+                                Text("\(self.summary.average.detailedDisplayDuration())")
                                 Spacer()
-                                Text("Max: \(self.summary.max.detailedDisplayDuration())")
-                                    .modifier(SummaryModifier(geo: geo))
                             }
-                            HStack {
-                                Text("Avg. session duration: \(self.summary.average.detailedDisplayDuration())")
-                                    .frame(width: geo.size.width, height: 25)
-                                    .font(kPrimaryFootnoteFont)
-                                    .background(Color.black.opacity(0.1))
-                                    .foregroundColor(Color.black.opacity(0.7))
-                                    .clipShape(RoundedRectangle(cornerRadius: 15))
+                            .modifier(SummaryModifier(geo: geo, bodyPart: self.bodyPart))
+                        }
+                        HStack {
+                            HStack() {
+                                Image(systemName: "clock")
+                                    .foregroundColor(.secondary)
+                                    .padding([.leading], 10)
+                                Text("Min:")
+                                    .foregroundColor(.secondary)
+                                Text("\(self.summary.min.detailedDisplayDuration())")
+                                Spacer()
                             }
+                            .modifier(SummaryModifier(geo: geo, bodyPart: self.bodyPart))
+                            Spacer()
+                            HStack() {
+                                Image(systemName: "clock")
+                                    .foregroundColor(.secondary)
+                                    .padding([.leading], 10)
+                                Text("Max:")
+                                    .foregroundColor(.secondary)
+                                Text("\(self.summary.max.detailedDisplayDuration())")
+                                Spacer()
+                            }
+                            .modifier(SummaryModifier(geo: geo, bodyPart: self.bodyPart))
                         }
                     }
                 }
             }
         }
-        .frame(height: shouldShowDetails ? 150 : 50)
+        .frame(height: 135)
     }
 }
 
 struct BodyPartSummaryRow_Previews: PreviewProvider {
     static var previews: some View {
-        BodyPartSummaryRow(summary: (3600, 120, 3480, 360, 10, "Biceps"), bodyPart: .arms, total: 7200, shouldShowDetails: false).environmentObject(AppSettings())
+        BodyPartSummaryRow(summary: (3600, 1200000, 34809999, 360, 10, "Biceps"), bodyPart: .arms, total: 7200).environmentObject(AppSettings())
+            .previewLayout(.fixed(width: 400, height: 150))
     }
 }
 
 struct SummaryModifier: ViewModifier {
     
     var geo: GeometryProxy
+    var bodyPart: BodyParts
     
     func body(content: Content) -> some View {
         content
             .font(kPrimaryFootnoteFont)
             .frame(width: geo.size.width / 2 - 5, height: 25)
-            .background(Color.black.opacity(0.1))
-            .foregroundColor(Color.black.opacity(0.7))
+            .background(bodyPart.color())
             .clipShape(RoundedRectangle(cornerRadius: 15))
     }
 }
