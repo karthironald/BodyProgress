@@ -128,7 +128,14 @@ struct AddExerciseSet: View {
 }
 
 struct AddExerciseSet_Previews: PreviewProvider {
+    
+    static let moc = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+    
     static var previews: some View {
-        Text("Yet to configure preview")
+        let exer = Exercise(context: moc)
+        exer.name = "Barbell Curl"
+        exer.id = UUID()
+        
+        return AddExerciseSet(shouldPresentAddNewExerciseSet: .constant(true), selectedExercise: exer).environment(\.managedObjectContext, moc).environmentObject(AppSettings())
     }
 }
