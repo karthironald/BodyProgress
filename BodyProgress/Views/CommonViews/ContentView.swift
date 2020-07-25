@@ -25,11 +25,16 @@ struct ContentView: View {
                     .imageScale(.large)
                 Text("History")
             }.tag(1)
+            ReferenceLinksListView().environmentObject(self.appSettings).tabItem {
+                Image(systemName: "paperclip.circle")
+                    .imageScale(.large)
+                Text("Reference")
+            }.tag(2)
             SettingsView().environmentObject(self.appSettings).tabItem {
                 Image(systemName: "gear")
                     .imageScale(.large)
                 Text("Settings")
-            }.tag(2)
+            }.tag(3)
         }
         .onAppear(perform: {
             kAppDelegate.configureAppearances(color: AppThemeColours.allCases[self.appSettings.themeColorIndex].uiColor())
@@ -40,6 +45,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView().environmentObject(AppSettings())
     }
 }

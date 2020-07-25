@@ -61,6 +61,14 @@
         <attribute name="weight" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="exercise" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ExerciseHistory" inverseName="exerciseSets" inverseEntity="ExerciseHistory"/>
     </entity>
+    <entity name="ReferenceLinks" representedClassName="ReferenceLinks" syncable="YES">
+        <attribute name="bodyPart" optional="YES" attributeType="String"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="metadata" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="url" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="User" representedClassName="User" syncable="YES">
         <attribute name="dob" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="firstName" optional="YES" attributeType="String"/>
@@ -108,5 +116,6 @@
         <element name="User" positionX="18" positionY="189" width="128" height="148"/>
         <element name="Workout" positionX="-18" positionY="27" width="128" height="223"/>
         <element name="WorkoutHistory" positionX="9" positionY="180" width="128" height="253"/>
+        <element name="ReferenceLinks" positionX="9" positionY="180" width="128" height="133"/>
     </elements>
 </model>
