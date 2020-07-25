@@ -13,11 +13,13 @@ import SwiftUI
 struct ReferenceLinksListView: View {
     
     @EnvironmentObject var appSettings: AppSettings
-    @State var shouldPresentAddNewReference = true
+    @Environment(\.managedObjectContext) var managedObjectContext
     
+    @State var shouldPresentAddNewReference = true
     @State var redrawPreview = false
     @State var newLink = ""
-    let links : [StringLink]  = [StringLink(string: "https://www.instagram.com/p/CDBl3aIn7pg/?utm_source=ig_web_copy_link")]
+    
+    @FetchRequest(entity: ReferenceLinks.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \ReferenceLinks.createdAt, ascending: true)]) var referencesLinks: FetchedResults<ReferenceLinks>
     
     var body: some View {
         NavigationView {
@@ -32,19 +34,22 @@ struct ReferenceLinksListView: View {
                                 withAnimation {
                                     self.shouldPresentAddNewReference.toggle()
                                 }
+                                if !self.newLink.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                                    self.createNewReference()
+                                }
                             }) {
-                                Image(systemName: newLink.count == 0 ? "xmark.circle.fill" : "checkmark.circle.fill")
+                                Image(systemName: newLink.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? "xmark.circle.fill" : "checkmark.circle.fill")
                                     .imageScale(.medium)
                                     .padding(.trailing)
-                                    .foregroundColor( newLink.count == 0 ? .secondary : .green)
+                                    .foregroundColor( newLink.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? .secondary : .green)
                             }
                         }
                         .frame(height: 40)
                         .background(Color.secondary.opacity(0.2))
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                     }
-                    ForEach(links) { link in
-                        LinkRow(previewURL: URL(string: link.string)!, redraw: self.$redrawPreview)
+                    ForEach(referencesLinks, id: \.self) { link in
+                        LinkRow(referenceLink: link, redraw: self.$redrawPreview)
                     }
                 }
                 .padding()
@@ -63,6 +68,23 @@ struct ReferenceLinksListView: View {
             )
         }
     }
+    
+    func createNewReference() {
+        let reference = ReferenceLinks(context: managedObjectContext)
+        reference.id = UUID()
+        reference.createdAt = Date()
+        reference.updatedAt = Date()
+        reference.url = newLink
+        if managedObjectContext.hasChanges {
+            do {
+                try managedObjectContext.save()
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    
 }
 
 struct ReferenceLinksListView_Previews: PreviewProvider {
