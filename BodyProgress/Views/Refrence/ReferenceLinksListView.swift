@@ -7,19 +7,21 @@
 //
 
 import SwiftUI
-
-//, StringLink(string: "https://www.instagram.com/p/CDBl3aIn7pg/?utm_source=ig_web_copy_link"), StringLink(string: "https://www.instagram.com/p/CCwID_pDYkr/?utm_source=ig_web_copy_link"), StringLink(string: "https://www.instagram.com/p/CDBCF5WpX50/?utm_source=ig_web_copy_link"), StringLink(string: "https://www.instagram.com/p/CCouyMXpXop/?utm_source=ig_web_copy_link"), StringLink(string: "https://www.instagram.com/p/CCMUsfGJQfK/?utm_source=ig_web_copy_link"), StringLink(string: "https://www.instagram.com/p/CBWd-5tD39Q/?utm_source=ig_web_copy_link")
+import CoreData
 
 struct ReferenceLinksListView: View {
     
     @EnvironmentObject var appSettings: AppSettings
     @Environment(\.managedObjectContext) var managedObjectContext
     
-    @State var shouldPresentAddNewReference = true
+    @State var shouldPresentAddNewReference = false
     @State var redrawPreview = false
     @State var newLink = ""
+    @State var shouldShowDeleteConfirmation = false
+    @State var deleteIndex = kCommonListIndex
+    @State var editMode = false
     
-    @FetchRequest(entity: ReferenceLinks.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \ReferenceLinks.createdAt, ascending: true)]) var referencesLinks: FetchedResults<ReferenceLinks>
+    @FetchRequest(entity: ReferenceLinks.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \ReferenceLinks.createdAt, ascending: false)]) var referencesLinks: FetchedResults<ReferenceLinks>
     
     var body: some View {
         NavigationView {
@@ -48,15 +50,44 @@ struct ReferenceLinksListView: View {
                         .background(Color.secondary.opacity(0.2))
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                     }
-                    ForEach(referencesLinks, id: \.self) { link in
-                        LinkRow(referenceLink: link, redraw: self.$redrawPreview)
+                    ForEach(0..<referencesLinks.count, id: \.self) { linkIndex in
+                        ZStack {
+                            LinkRow(referenceLink: self.referencesLinks[linkIndex], redraw: self.$redrawPreview)
+                            if self.editMode {
+                                Button(action: {
+                                    withAnimation {
+                                        self.deleteIndex = linkIndex
+                                        self.shouldShowDeleteConfirmation.toggle()
+                                    }
+                                }) {
+                                    Image(systemName: "trash")
+                                        .padding()
+                                        .background(Color.red)
+                                        .shadow(radius: 5)
+                                        .clipShape(Circle())
+                                }
+                            }
+                        }
                     }
                 }
                 .padding()
+                .frame(maxWidth: .infinity)
             }
             .navigationBarTitle("Reference")
-            .navigationBarItems(trailing:
+            .navigationBarItems(
+                leading:
                 Button(action: {
+                    withAnimation {
+                        self.editMode.toggle()
+                    }
+                }) {
+                    Text(self.editMode ? "Done" : "Edit")
+                        .font(kPrimaryBodyFont)
+                        .foregroundColor(appSettings.themeColorView())
+                },
+                trailing:
+                Button(action: {
+                    self.newLink = ""
                     withAnimation {
                         self.shouldPresentAddNewReference.toggle()
                     }
@@ -66,6 +97,15 @@ struct ReferenceLinksListView: View {
                         .foregroundColor(appSettings.themeColorView())
                 }
             )
+            .alert(isPresented: $shouldShowDeleteConfirmation, content: { () -> Alert in
+                Alert(title: Text("kAlertTitleConfirm"), message: Text("kAlertMsgDeleteReferenceLink"), primaryButton: .cancel(), secondaryButton: .destructive(Text("kButtonTitleDelete"), action: {
+                    withAnimation {
+                        if self.deleteIndex != kCommonListIndex {
+                            self.delete(referenceLink: self.referencesLinks[self.deleteIndex])
+                        }
+                    }
+                }))
+            })
         }
     }
     
@@ -84,12 +124,30 @@ struct ReferenceLinksListView: View {
         }
     }
     
+    /**Deletes the given exercise*/
+    func delete(referenceLink: ReferenceLinks) {
+        managedObjectContext.delete(referenceLink)
+        if managedObjectContext.hasChanges {
+            do {
+                try managedObjectContext.save()
+            } catch {
+                print(error)
+            }
+        }
+    }
     
 }
 
 struct ReferenceLinksListView_Previews: PreviewProvider {
     static var previews: some View {
-        ReferenceLinksListView().environmentObject(AppSettings())
+        let moc = kAppDelegate.persistentContainer.viewContext
+        
+        let link = ReferenceLinks(context: moc)
+        link.id = UUID()
+        link.createdAt = Date()
+        link.updatedAt = Date()
+        link.url = "www.google.com"
+        return ReferenceLinksListView().environment(\.managedObjectContext, moc).environmentObject(AppSettings())
     }
 }
 

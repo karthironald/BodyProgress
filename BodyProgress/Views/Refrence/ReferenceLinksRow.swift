@@ -22,17 +22,14 @@ struct LinkRow : UIViewRepresentable {
             let view = LPLinkView(url: url)
             
             let provider = LPMetadataProvider()
-            provider.shouldFetchSubresources = false
             if let metadata = try? NSKeyedUnarchiver.unarchivedObject(ofClass: LPLinkMetadata.self, from: referenceLink.wMetadata) {
                 view.metadata = metadata
-                view.sizeToFit()
                 self.redraw.toggle()
             } else {
                 provider.startFetchingMetadata(for: url) { (metadata, error) in
                     if let metadata = metadata {
                         DispatchQueue.main.async {
                             view.metadata = metadata
-                            view.sizeToFit()
                             self.redraw.toggle()
                         }
                         self.cache(metadata: metadata)
