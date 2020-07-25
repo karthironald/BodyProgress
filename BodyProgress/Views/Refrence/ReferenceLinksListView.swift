@@ -29,7 +29,7 @@ struct ReferenceLinksListView: View {
                 VStack {
                     if shouldPresentAddNewReference {
                         HStack {
-                            TextField("Paste the link", text: $newLink)
+                            TextField("Enter reference link...", text: $newLink)
                                 .padding(.leading)
                                 .font(kPrimaryBodyFont)
                             Button(action: {
@@ -49,6 +49,7 @@ struct ReferenceLinksListView: View {
                         .frame(height: 40)
                         .background(Color.secondary.opacity(0.2))
                         .clipShape(RoundedRectangle(cornerRadius: 20))
+                        .padding(.bottom)
                     }
                     ForEach(0..<referencesLinks.count, id: \.self) { linkIndex in
                         ZStack {
@@ -92,7 +93,7 @@ struct ReferenceLinksListView: View {
                         self.shouldPresentAddNewReference.toggle()
                     }
                 }) {
-                    Image(systemName: "plus.circle.fill")
+                    Image(systemName: self.shouldPresentAddNewReference ? "multiply.circle.fill" : "plus.circle.fill")
                         .font(kPrimaryTitleFont)
                         .foregroundColor(appSettings.themeColorView())
                 }
