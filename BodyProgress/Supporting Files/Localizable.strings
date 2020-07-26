@@ -25,6 +25,7 @@
 "kAlertMsgWorkoutNameRequired" = "Workout name is required";
 "kAlertMsgExerciseNameRequired" = "Exercise name is required";
 "kAlertMsgExerciseSetNameRequired" = "Set name is required";
+"kAlertMsgRefLinkRequired" = "Enter valid reference link";
 "kAlertMsgDeleteWorkout" = "Are you sure to delete the workout?\n\nNote: All exercises and sets will be deleted with the workout";
 "kAlertMsgDeleteExercise" = "Are you sure to delete the exercise?\n\nNote: All sets will be deleted with the exercise";
 "kAlertMsgDeleteExerciseSet" = "Are you sure to delete the exercise set?";
@@ -55,6 +56,7 @@
 "kInfoMsgNoWorkoutsAdded" = "No workouts added";
 "kInfoMsgNoExercisesAdded" = "No exercises added";
 "kInfoMsgNoExercisesSetsAdded" = "No exercise sets added";
+"kInfoMsgNoReferenceLinksAdded" = "No reference links added";
 
 // Preview messages
 "kPreviewYtb" = "The preview yet to be configured";
