@@ -141,7 +141,7 @@ struct AddNewReferenceLinkView: View {
                             .font(kPrimaryBodyFont)
                         if shouldShowPasteButton {
                             Button("Paste") {
-                                if let urlString = copiedUrl?.absoluteString {
+                                if let urlString = self.copiedUrl?.absoluteString {
                                     self.newLink = urlString
                                 }
                             }
@@ -158,7 +158,7 @@ struct AddNewReferenceLinkView: View {
                 }
             }
             .onAppear(perform: {
-                self.shouldShowPasteButton = (copiedUrl != nil) ? true : false
+                self.shouldShowPasteButton = (self.copiedUrl != nil) ? true : false
             })
             .navigationBarTitle(Text("New reference"), displayMode: .inline)
             .alert(isPresented: $shouldShowValidationAlert, content: { () -> Alert in
