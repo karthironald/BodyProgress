@@ -14,73 +14,65 @@ struct ReferenceLinksListView: View {
     @EnvironmentObject var appSettings: AppSettings
     @Environment(\.managedObjectContext) var managedObjectContext
     
-    @State var shouldPresentAddNewReference = false
     @State var redrawPreview = false
     @State var shouldShowDeleteConfirmation = false
     @State var deleteIndex = kCommonListIndex
-    @State var editMode = false
+    @State var editMode: Bool = false
     
     @FetchRequest(entity: ReferenceLinks.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \ReferenceLinks.createdAt, ascending: false)]) var referencesLinks: FetchedResults<ReferenceLinks>
     
+    init(predicate: NSPredicate?, sortDescriptor: NSSortDescriptor) {
+        let fetchRequest = NSFetchRequest<ReferenceLinks>(entityName: ReferenceLinks.entity().name ?? "ReferenceLinks")
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        if let predicate = predicate {
+            fetchRequest.predicate = predicate
+        }
+        _referencesLinks = FetchRequest(fetchRequest: fetchRequest)
+    }
+    
     var body: some View {
-        NavigationView {
-            ZStack {
-                if referencesLinks.count == 0 {
-                    EmptyStateInfoView(message: NSLocalizedString("kInfoMsgNoReferenceLinksAdded", comment: "Info message"))
-                } else {
-                    ScrollView(.vertical) {
-                        VStack {
-                            ForEach(0..<referencesLinks.count, id: \.self) { linkIndex in
-                                ZStack {
-                                    LinkRow(referenceLink: self.referencesLinks[linkIndex], redraw: self.$redrawPreview)
-                                    if self.editMode {
-                                        Button(action: {
-                                            withAnimation {
-                                                self.deleteIndex = linkIndex
-                                                self.shouldShowDeleteConfirmation.toggle()
-                                            }
-                                        }) {
-                                            Image(systemName: "trash")
-                                                .padding()
-                                                .background(Color.red)
-                                                .shadow(radius: 5)
-                                                .clipShape(Circle())
-                                        }
+        ZStack {
+            if referencesLinks.count == 0 {
+                EmptyStateInfoView(message: NSLocalizedString("kInfoMsgNoReferenceLinksAdded", comment: "Info message"))
+            }
+            ScrollView(.vertical) {
+                VStack {
+                    ForEach(0..<referencesLinks.count, id: \.self) { linkIndex in
+                        ZStack {
+                            LinkRow(referenceLink: self.referencesLinks[linkIndex], redraw: self.$redrawPreview)
+                            if self.editMode {
+                                Button(action: {
+                                    withAnimation {
+                                        self.deleteIndex = linkIndex
+                                        self.shouldShowDeleteConfirmation.toggle()
                                     }
-                                }
+                                }) {
+                                    Image(systemName: "trash")
+                                        .padding()
+                                        .background(Color.red)
+                                        .shadow(radius: 5)
+                                        .clipShape(Circle())
+                                }.zIndex(2)
                             }
                         }
-                        .padding()
-                        .frame(maxWidth: .infinity)
                     }
                 }
+                .padding()
+                .frame(maxWidth: .infinity)
             }
-            .sheet(isPresented: $shouldPresentAddNewReference, content: {
-                AddNewReferenceLinkView(newLink: "", shouldPresentAddNewReference: self.$shouldPresentAddNewReference).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
-            })
-            .navigationBarTitle("Reference")
-            .navigationBarItems(
-                leading:
-                    Button(action: {
-                        withAnimation {
-                            self.editMode.toggle()
-                        }
-                    }) {
-                        Text(self.editMode ? "Done" : "Edit")
-                            .font(kPrimaryBodyFont)
-                            .foregroundColor(appSettings.themeColorView())
-                    },
-                trailing:
-                    Button(action: {
-                        withAnimation {
-                            self.shouldPresentAddNewReference.toggle()
-                        }
-                    }) {
-                        Image(systemName: "plus.circle.fill")
-                            .font(kPrimaryTitleFont)
-                            .foregroundColor(appSettings.themeColorView())
-                    }
-            )
+        }
+        .navigationBarItems(leading:
+            Button(action: {
+                withAnimation {
+                    self.editMode.toggle()
+                }
+            }) {
+                Text(self.editMode ? "Done" : "Edit")
+                    .font(kPrimaryBodyFont)
+                    .foregroundColor(appSettings.themeColorView())
+            }
+        )
             .alert(isPresented: $shouldShowDeleteConfirmation, content: { () -> Alert in
                 Alert(title: Text("kAlertTitleConfirm"), message: Text("kAlertMsgDeleteReferenceLink"), primaryButton: .cancel(), secondaryButton: .destructive(Text("kButtonTitleDelete"), action: {
                     withAnimation {
@@ -90,7 +82,6 @@ struct ReferenceLinksListView: View {
                     }
                 }))
             })
-        }
     }
     
     /**Deletes the given exercise*/
@@ -160,13 +151,13 @@ struct AddNewReferenceLinkView: View {
             .onAppear(perform: {
                 self.shouldShowPasteButton = (self.copiedUrl != nil) ? true : false
             })
-            .navigationBarTitle(Text("New reference"), displayMode: .inline)
-            .alert(isPresented: $shouldShowValidationAlert, content: { () -> Alert in
-                Alert(title: Text("kAlertTitleError"), message: Text(errorMessage), dismissButton: .default(Text("kButtonTitleOkay")))
-            })
-            .navigationBarItems(
-                trailing: Button(action: { self.validateData() }) { CustomBarButton(title: NSLocalizedString("kButtonTitleSave", comment: "Button title")).environmentObject(appSettings)
-            })
+                .navigationBarTitle(Text("New reference"), displayMode: .inline)
+                .alert(isPresented: $shouldShowValidationAlert, content: { () -> Alert in
+                    Alert(title: Text("kAlertTitleError"), message: Text(errorMessage), dismissButton: .default(Text("kButtonTitleOkay")))
+                })
+                .navigationBarItems(
+                    trailing: Button(action: { self.validateData() }) { CustomBarButton(title: NSLocalizedString("kButtonTitleSave", comment: "Button title")).environmentObject(appSettings)
+                })
         }
     }
     

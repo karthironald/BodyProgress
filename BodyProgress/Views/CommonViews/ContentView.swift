@@ -25,7 +25,7 @@ struct ContentView: View {
                     .imageScale(.large)
                 Text("History")
             }.tag(1)
-            ReferenceLinksListView().environmentObject(self.appSettings).tabItem {
+            ReferenceLinkFilterView().environmentObject(self.appSettings).tabItem {
                 Image(systemName: "paperclip.circle")
                     .imageScale(.large)
                 Text("Reference")

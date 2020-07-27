@@ -90,6 +90,13 @@ class AppSettings: ObservableObject {
         }
     }
     
+    @Published var referenceSelectedBodyParts: [BodyParts] {
+        didSet {
+            let rawValues = referenceSelectedBodyParts.map { $0.rawValue }
+            UserDefaults.standard.set(rawValues, forKey: "referenceSelectedBodyParts")
+        }
+    }
+    
     @Published var historySelectedCompletionStatus: WorkoutHistoryStatusSort {
         didSet {
             let rawValues = historySelectedCompletionStatus.rawValue
@@ -104,13 +111,14 @@ class AppSettings: ObservableObject {
         self.themeColorIndex = UserDefaults.standard.value(forKey: "themeColorIndex") as? Int ?? 0
         self.enabledHaptic = AppSettings.isHapticEnabled()
         
-        let rawBalues = UserDefaults.standard.value(forKey: "historySelectedBodyParts") as? [String] ?? BodyParts.allCases.map { $0.rawValue }
-        self.historySelectedBodyParts = rawBalues.map { (BodyParts(rawValue: $0) ?? BodyParts.others) }
+        let historyRawValues = UserDefaults.standard.value(forKey: "historySelectedBodyParts") as? [String] ?? BodyParts.allCases.map { $0.rawValue }
+        self.historySelectedBodyParts = historyRawValues.map { (BodyParts(rawValue: $0) ?? BodyParts.others) }
+        
+        let referenceRawValues = UserDefaults.standard.value(forKey: "referenceSelectedBodyParts") as? [String] ?? BodyParts.allCases.map { $0.rawValue }
+        self.referenceSelectedBodyParts = referenceRawValues.map { (BodyParts(rawValue: $0) ?? BodyParts.others) }
         
         let selectionRawValue = UserDefaults.standard.value(forKey: "historySelectedCompletionStatus") as? String ?? WorkoutHistoryStatusSort.Both.rawValue
         self.historySelectedCompletionStatus = WorkoutHistoryStatusSort(rawValue: selectionRawValue) ?? WorkoutHistoryStatusSort.Both
-        
-        
     }
     
     
