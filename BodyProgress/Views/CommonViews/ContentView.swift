@@ -25,16 +25,18 @@ struct ContentView: View {
                     .imageScale(.large)
                 Text("History")
             }.tag(1)
-            ReferenceLinkFilterView().environmentObject(self.appSettings).tabItem {
-                Image(systemName: "paperclip.circle")
-                    .imageScale(.large)
-                Text("Reference")
-            }.tag(2)
+            
+            #warning("Need to use this view later")
+//            ReferenceLinkFilterView().environmentObject(self.appSettings).tabItem {
+//                Image(systemName: "paperclip.circle")
+//                    .imageScale(.large)
+//                Text("Reference")
+//            }.tag(2)
             SettingsView().environmentObject(self.appSettings).tabItem {
                 Image(systemName: "gear")
                     .imageScale(.large)
                 Text("Settings")
-            }.tag(3)
+            }.tag(2)
         }
         .onAppear(perform: {
             kAppDelegate.configureAppearances(color: AppThemeColours.allCases[self.appSettings.themeColorIndex].uiColor())

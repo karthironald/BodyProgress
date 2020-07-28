@@ -32,6 +32,7 @@ extension Exercise {
     @NSManaged public var bodyPart: String?
     @NSManaged public var workout: Workout?
     @NSManaged public var exerciseSets: NSSet?
+    @NSManaged public var references: NSSet?
 
     var wId: UUID { id ?? UUID() }
     var wName: String { name ?? kDefaultValue }
@@ -52,7 +53,12 @@ extension Exercise {
             $0.createdAt ?? Date() < $1.createdAt ?? Date()
         }
     }
-    
+    var wReferences: [ReferenceLinks] {
+        let set = references as? Set<ReferenceLinks> ?? []
+        return set.sorted {
+            $0.createdAt ?? Date() < $1.createdAt ?? Date()
+        }
+    }
 }
 
 // MARK: Generated accessors for exerciseSets
