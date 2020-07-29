@@ -29,7 +29,7 @@ struct TodayExerciseSet: View {
                         .font(kPrimaryBodyFont)
                     Text("kgs")
                         .font(kPrimaryBodyFont)
-                        .opacity(0.5)
+                        .foregroundColor(.secondary)
                 }
                 .frame(width: geo.size.width / 4, alignment: .trailing)
                 Spacer()
@@ -38,7 +38,7 @@ struct TodayExerciseSet: View {
                         .font(kPrimaryBodyFont)
                     Text("rps")
                         .font(kPrimaryBodyFont)
-                        .opacity(0.5)
+                        .foregroundColor(.secondary)
                 }
                 .frame(width: geo.size.width / 4, alignment: .trailing)
                 Spacer()

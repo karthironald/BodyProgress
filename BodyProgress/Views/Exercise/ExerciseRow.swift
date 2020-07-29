@@ -34,7 +34,7 @@ struct ExerciseRow: View {
                         Text(exercise.wNotes)
                             .font(kPrimarySubheadlineFont)
                             .multilineTextAlignment(.leading)
-                            .opacity(0.75)
+                            .foregroundColor(.secondary)
                     }
                 }
                 .padding()

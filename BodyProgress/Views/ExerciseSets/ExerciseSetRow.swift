@@ -38,7 +38,7 @@ struct ExerciseSetRow: View {
 //                    }
                     Text("\(exerciseSet.wWeight, specifier: "%.2f") kgs X \(exerciseSet.wReputation) rps")
                         .font(kPrimarySubheadlineFont)
-                        .opacity(0.75)
+                        .foregroundColor(.secondary)
                 }
                 .padding()
                 Spacer()

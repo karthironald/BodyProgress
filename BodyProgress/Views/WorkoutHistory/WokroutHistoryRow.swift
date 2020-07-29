@@ -24,13 +24,13 @@ struct WokroutHistoryRow: View {
                     HStack {
                         Text("\(workoutHistory.wBodyPart.rawValue)")
                             .font(kPrimarySubheadlineFont)
-                            .opacity(0.75)
+                            .foregroundColor(.secondary)
                         Circle()
                             .fill(Color.secondary)
                             .frame(width: 5, height: 5)
                         Text("\(workoutHistory.wCreatedAt, formatter: DateFormatter().appDormatter)")
                             .font(kPrimarySubheadlineFont)
-                            .opacity(0.75)
+                            .foregroundColor(.secondary)
                     }
                 }
                 .padding()

@@ -37,14 +37,14 @@ struct WorkoutRow: View {
                     HStack {
                         Text(workout.wBodyPart.rawValue)
                             .font(kPrimarySubheadlineFont)
-                            .opacity(0.75)
+                            .foregroundColor(.secondary)
                         if workout.wExercises.count > 0 {
                             Circle()
                                 .fill(Color.secondary)
                                 .frame(width: 5, height: 5)
                             Text("\(workout.wExercises.count)")
                                 .font(kPrimarySubheadlineFont)
-                                .opacity(0.75)
+                                .foregroundColor(.secondary)
                         }
                     }
                 }
@@ -67,11 +67,11 @@ struct WorkoutRow: View {
                     if workout.lastTrainedAt != nil {
                         Text("\(workout.lastTrainedAtString())")
                             .font(kPrimaryFootnoteFont)
-                            .opacity(0.75)
+                            .foregroundColor(.secondary)
                     } else {
                         Text("Not trained yet")
                             .font(kPrimaryFootnoteFont)
-                            .opacity(0.75)
+                            .foregroundColor(.secondary)
                     }
                 }
                 Image(systemName: "arrowtriangle.right.fill")
