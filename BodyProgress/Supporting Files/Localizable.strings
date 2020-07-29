@@ -31,6 +31,7 @@
 "kAlertMsgDeleteExerciseSet" = "Are you sure to delete the exercise set?";
 "kAlertMsgDeleteWorkoutHistory" = "Are you sure to delete the workout history?";
 "kAlertMsgDeleteReferenceLink" = "Are you sure to delete the reference link?";
+"kAlertMsgDeleteExerciseReference" = "Are you sure to delete the reference?";
 
 // Buttons
 "kButtonTitleOkay" = "Okay";

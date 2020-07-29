@@ -22,6 +22,7 @@ struct TodayExerciseSet: View {
             HStack() {
                 Text(self.exerciseSet.wName)
                     .font(kPrimaryBodyFont)
+                    .foregroundColor(.secondary)
                     .frame(width: geo.size.width / 4, alignment: .leading)
                 Spacer()
                 HStack() {

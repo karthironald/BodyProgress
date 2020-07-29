@@ -24,7 +24,9 @@ struct AddExercise: View {
 
     @State private var errorMessage = ""
     @State private var shouldShowValidationAlert = false
-
+    @State var shouldShowDeleteConfirmation = false
+    @State var deleteIndex = kCommonListIndex
+    
     var body: some View {
         
         NavigationView {
@@ -47,8 +49,8 @@ struct AddExercise: View {
                                     }, set: {
                                         self.referenceLinks[linkIndex] = $0.lowercased()
                                     }))
-                                        .font(kPrimaryBodyFont)
-                                        .foregroundColor(self.canOpenURL(self.referenceLinks[linkIndex]) ? nil : .red)
+                                    .font(kPrimaryBodyFont)
+                                    .foregroundColor(self.canOpenURL(self.referenceLinks[linkIndex]) ? nil : .red)
                                     if self.shouldShowPasteButton {
                                         Button("Paste") {
                                             if let urlString = self.copiedUrl?.absoluteString {
@@ -60,6 +62,11 @@ struct AddExercise: View {
                                 }
                             }
                         }
+                    }.onDelete { (indexSet) in
+                        if let index = indexSet.first, index < self.selectedExercise?.wReferences.count ?? 0 {
+                            self.deleteIndex = index
+                            self.shouldShowDeleteConfirmation.toggle()
+                        }
                     }
                 }
             }
@@ -70,6 +77,15 @@ struct AddExercise: View {
                 .alert(isPresented: $shouldShowValidationAlert, content: { () -> Alert in
                     Alert(title: Text("kAlertTitleError"), message: Text(errorMessage), dismissButton: .default(Text("kButtonTitleOkay")))
                 })
+                .alert(isPresented: $shouldShowDeleteConfirmation, content: { () -> Alert in
+                    Alert(title: Text("kAlertTitleConfirm"), message: Text("kAlertMsgDeleteExerciseReference"), primaryButton: .cancel(), secondaryButton: .destructive(Text("kButtonTitleDelete"), action: {
+                        withAnimation {
+                            if self.deleteIndex != kCommonListIndex {
+                                self.delete(referenceLink: self.selectedExercise?.wReferences[self.deleteIndex])
+                            }
+                        }
+                    }))
+                })
                 .navigationBarTitle(Text(selectedExercise == nil ? "kScreenTitleNewExercise" : "kScreenTitleEditExercise"), displayMode: .inline)
             .navigationBarItems(
                 trailing: Button(action: { self.validateData() }) { CustomBarButton(title: NSLocalizedString("kButtonTitleSave", comment: "Button title")).environmentObject(appSettings)
@@ -78,12 +94,10 @@ struct AddExercise: View {
     }
     
     func canOpenURL(_ string: String?) -> Bool {
-        guard let urlString = string, let url = URL(string: urlString) else { return false }
-        if !UIApplication.shared.canOpenURL(url) { return false }
-
-        let regEx = "((https|http)://)((\\w|-)+)(([.]|[/])((\\w|-)+))+"
-        let predicate = NSPredicate(format:"SELF MATCHES %@", argumentArray:[regEx])
-        return predicate.evaluate(with: string)
+        var formatterString = string?.trimmingCharacters(in: .whitespacesAndNewlines)
+        formatterString = formatterString?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        guard let urlString = formatterString, let url = URL(string: urlString) else { return false }
+        return UIApplication.shared.canOpenURL(url)
     }
     
     /**Dismisses the view*/
@@ -104,10 +118,16 @@ struct AddExercise: View {
     
     /**Saves the new workout*/
     func saveExercise() {
+        
+        let references = createNewReference()
+        
         if selectedExercise != nil { // Update exercise flow
             selectedExercise?.name = self.name
             selectedExercise?.notes = self.notes
             selectedExercise?.bodyPart = selectedWorkout.wBodyPart.rawValue
+            if references.count > 0 {
+                selectedExercise?.addToReferences(NSSet(array: references))
+            }
         } else { // New workout flow
             let newExercise = Exercise(context: managedObjectContext)
             newExercise.name = self.name
@@ -117,7 +137,9 @@ struct AddExercise: View {
             newExercise.createdAt = Date()
             newExercise.updatedAt = Date()
             newExercise.displayOrder = Int16(selectedWorkout.wExercises.count)
-            newExercise.references = NSSet(array: createNewReference())
+            if references.count > 0 {
+                newExercise.addToReferences(NSSet(array: references))
+            }
             selectedWorkout.addToExercises(newExercise)
         }
         if managedObjectContext.hasChanges {
@@ -132,17 +154,34 @@ struct AddExercise: View {
     
     func createNewReference() -> [ReferenceLinks] {
         var links: [ReferenceLinks] = []
-        for link in referenceLinks where canOpenURL(link) {
+        for link in referenceLinks where canOpenURL(link) && !(selectedExercise?.wReferences.map({ $0.url }).contains(link) ?? false) {
             let reference = ReferenceLinks(context: managedObjectContext)
             reference.id = UUID()
             reference.createdAt = Date()
             reference.updatedAt = Date()
-            reference.url = link
+            reference.url = link.trimmingCharacters(in: .whitespacesAndNewlines)
             reference.bodyPart = selectedWorkout.wBodyPart.rawValue
             
             links.append(reference)
         }
         return links
+    }
+    
+    /**Deletes the given exercise*/
+    func delete(referenceLink: ReferenceLinks?) {
+        if let referenceLink = referenceLink {
+            managedObjectContext.delete(referenceLink)
+            if managedObjectContext.hasChanges {
+                do {
+                    try managedObjectContext.save()
+                    if let selectedExercise = selectedExercise {
+                        referenceLinks = selectedExercise.wReferences.map { $0.wUrl }
+                    }
+                } catch {
+                    print(error)
+                }
+            }
+        }
     }
     
 }
