@@ -17,6 +17,9 @@ struct ExercisesList: View {
     @State var shouldPresentEditExercise: Bool = false
     @State var editExerciseIndex: Int = kCommonListIndex
     
+    @State private var shouldPresentReferences = false
+    @State var referenceViewIndex: Int = kCommonListIndex
+    
     @State var shouldShowDeleteConfirmation = false
     @State var deleteIndex = kCommonListIndex
     
@@ -30,7 +33,17 @@ struct ExercisesList: View {
                     ForEach(0..<selectedWorkout.wExercises.count, id: \.self) { exerciseIndex in
                         ZStack {
                             ExerciseRow(exercise: self.selectedWorkout.wExercises[exerciseIndex])
+                                .sheet(isPresented: self.$shouldPresentReferences, content: {
+                                    ExerciseReferenceView(shouldPresentReferences: self.$shouldPresentReferences, referencesLinks: self.selectedWorkout.wExercises[self.referenceViewIndex].wReferences, exerciseName: self.selectedWorkout.wExercises[self.referenceViewIndex].wName).environmentObject(self.appSettings)
+                                })
                                 .contextMenu {
+                                    Button(action: {
+                                        self.referenceViewIndex = exerciseIndex
+                                        self.shouldPresentReferences = true
+                                    }) {
+                                        Image(systemName: "info.circle.fill")
+                                        Text("kButtonTitleReferences")
+                                    }
                                     Button(action: {
                                         self.editExerciseIndex = exerciseIndex
                                         self.shouldPresentEditExercise = true

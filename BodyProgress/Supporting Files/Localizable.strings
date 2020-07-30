@@ -43,6 +43,7 @@
 "kButtonTitleUnfavourite" = "Unfavourite";
 "kButtonTitleFavourite" = "Favourite";
 "kButtonTitleDone" = "Done";
+"kButtonTitleReferences" = "References";
 
 // Header titles
 "kHeaderName" = "Name";

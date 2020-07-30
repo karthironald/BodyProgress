@@ -34,6 +34,7 @@ struct TodayExcerciseRow: View {
                                 .imageScale(.large)
                                 .foregroundColor(.secondary)
                         }
+                        .buttonStyle(BorderlessButtonStyle())
                     }
                 }
                 Divider()
