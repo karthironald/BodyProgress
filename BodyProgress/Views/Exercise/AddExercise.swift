@@ -13,14 +13,11 @@ struct AddExercise: View {
     @EnvironmentObject var appSettings: AppSettings
     @Binding var shouldPresentAddNewExercise: Bool
     @Environment(\.managedObjectContext) var managedObjectContext
-    
     @ObservedObject var selectedWorkout: Workout
     @State var name: String = ""
     @State var notes: String = ""
     @State var referenceLinks: [String] = []
-    @State private var shouldShowPasteButton = false
     var selectedExercise: Exercise?
-    var copiedUrl = UIPasteboard.general.url
 
     @State private var errorMessage = ""
     @State private var shouldShowValidationAlert = false
@@ -42,6 +39,7 @@ struct AddExercise: View {
                                 }) {
                                     Text("Add Reference")
                                 }
+                                .deleteDisabled(true)
                             } else {
                                 HStack {
                                     TextField("Enter reference link...", text: Binding<String>(get: {
@@ -51,14 +49,6 @@ struct AddExercise: View {
                                     }))
                                     .font(kPrimaryBodyFont)
                                     .foregroundColor(self.canOpenURL(self.referenceLinks[linkIndex]) ? nil : .red)
-                                    if self.shouldShowPasteButton {
-                                        Button("Paste") {
-                                            if let urlString = self.copiedUrl?.absoluteString {
-                                                self.referenceLinks[linkIndex] = urlString
-                                            }
-                                        }
-                                        .foregroundColor(self.appSettings.themeColorView())
-                                    }
                                 }
                             }
                         }
@@ -66,12 +56,13 @@ struct AddExercise: View {
                         if let index = indexSet.first, index < self.selectedExercise?.wReferences.count ?? 0 {
                             self.deleteIndex = index
                             self.shouldShowDeleteConfirmation.toggle()
+                        } else if let index = indexSet.first, index < self.referenceLinks.count {
+                            self.referenceLinks.remove(at: index)
                         }
                     }
                 }
             }
                 .onAppear(perform: {
-                    self.shouldShowPasteButton = (self.copiedUrl != nil) ? true : false
                     kAppDelegate.addSeparatorLineAppearance()
                 })
                 .alert(isPresented: $shouldShowValidationAlert, content: { () -> Alert in
