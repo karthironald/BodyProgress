@@ -42,6 +42,7 @@
 "kButtonTitleDelete" = "Delete";
 "kButtonTitleUnfavourite" = "Unfavourite";
 "kButtonTitleFavourite" = "Favourite";
+"kButtonTitleDone" = "Done";
 
 // Header titles
 "kHeaderName" = "Name";

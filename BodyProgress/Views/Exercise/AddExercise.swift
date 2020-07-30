@@ -47,7 +47,7 @@ struct AddExercise: View {
                                     TextField("Enter reference link...", text: Binding<String>(get: {
                                         self.referenceLinks[linkIndex]
                                     }, set: {
-                                        self.referenceLinks[linkIndex] = $0.lowercased()
+                                        self.referenceLinks[linkIndex] = $0
                                     }))
                                     .font(kPrimaryBodyFont)
                                     .foregroundColor(self.canOpenURL(self.referenceLinks[linkIndex]) ? nil : .red)

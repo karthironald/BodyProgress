@@ -112,6 +112,7 @@ struct WorkoutRow: View {
             exerciseHistory.id = UUID()
             exerciseHistory.createdAt = Date()
             exerciseHistory.updatedAt = Date()
+            exerciseHistory.references = exercise.references
             
             for exerciseSet in exercise.wExerciseSets {
                 let newExerciseSetHistory = ExerciseSetHistory(context: managedObjectContext)

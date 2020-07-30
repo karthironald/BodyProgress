@@ -13,6 +13,8 @@ struct TodayExcerciseRow: View {
     @Environment(\.managedObjectContext) var managedObjectContext
     @EnvironmentObject var appSettings: AppSettings
     @ObservedObject var exercise: ExerciseHistory
+    @State private var shouldPresentReferences = false
+    
     var isViewOnly = false
     
     var body: some View {
@@ -24,6 +26,15 @@ struct TodayExcerciseRow: View {
                         .font(kPrimaryHeadlineFont)
                         .bold()
                     Spacer()
+                    if exercise.wReferences.count > 0 {
+                        Button(action: {
+                            self.shouldPresentReferences.toggle()
+                        }) {
+                            Image(systemName: "info.circle.fill")
+                                .imageScale(.large)
+                                .foregroundColor(.secondary)
+                        }
+                    }
                 }
                 Divider()
                 VStack(alignment: .leading) {
@@ -35,6 +46,9 @@ struct TodayExcerciseRow: View {
             .padding()
             Spacer()
         }
+        .sheet(isPresented: $shouldPresentReferences, content: {
+            ExerciseReferenceView(shouldPresentReferences: self.$shouldPresentReferences, referencesLinks: self.exercise.wReferences, exerciseName: self.exercise.wName).environmentObject(self.appSettings)
+        })
         .frame(height: 50.0 + CGFloat(exercise.wExerciseSets.count * 50))
         .cornerRadius(kCornerRadius)
     }

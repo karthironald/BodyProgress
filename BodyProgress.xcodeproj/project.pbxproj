@@ -46,6 +46,7 @@
 		77929A0124536DFB00C28A39 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77929A0024536DFB00C28A39 /* Constant.swift */; };
 		779614F8245EE31C00E0216C /* EmptyStateInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779614F7245EE31C00E0216C /* EmptyStateInfoView.swift */; };
 		779BE97D245AF3DD006FDAE8 /* CustomBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779BE97C245AF3DD006FDAE8 /* CustomBarButton.swift */; };
+		77A0A65024D207E500B7F088 /* ExerciseReferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A0A64F24D207E500B7F088 /* ExerciseReferenceView.swift */; };
 		77A3EC422483B314007A92B8 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A3EC412483B314007A92B8 /* Helper.swift */; };
 		77B18BC924B992060016124A /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B18BC824B992060016124A /* SummaryView.swift */; };
 		77B34C9C24C8BF2E0076CBF3 /* CelebrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B34C9B24C8BF2E0076CBF3 /* CelebrationView.swift */; };
@@ -121,6 +122,7 @@
 		77929A0024536DFB00C28A39 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		779614F7245EE31C00E0216C /* EmptyStateInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateInfoView.swift; sourceTree = "<group>"; };
 		779BE97C245AF3DD006FDAE8 /* CustomBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBarButton.swift; sourceTree = "<group>"; };
+		77A0A64F24D207E500B7F088 /* ExerciseReferenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseReferenceView.swift; sourceTree = "<group>"; };
 		77A3EC412483B314007A92B8 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		77B18BC824B992060016124A /* SummaryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
 		77B34C9B24C8BF2E0076CBF3 /* CelebrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelebrationView.swift; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 				7709039F245F2551003F7EDD /* ExercisesList.swift */,
 				770903A1245F27F3003F7EDD /* ExerciseRow.swift */,
 				770903A3245F280D003F7EDD /* AddExercise.swift */,
+				77A0A64F24D207E500B7F088 /* ExerciseReferenceView.swift */,
 			);
 			path = Exercise;
 			sourceTree = "<group>";
@@ -622,6 +625,7 @@
 				7766E54224575BDF008627D9 /* AddWorkout.swift in Sources */,
 				77B18BC924B992060016124A /* SummaryView.swift in Sources */,
 				77B34C9C24C8BF2E0076CBF3 /* CelebrationView.swift in Sources */,
+				77A0A65024D207E500B7F088 /* ExerciseReferenceView.swift in Sources */,
 				77181010245EBFF3005D6E9F /* Workout+CoreDataProperties.swift in Sources */,
 				7707C18424B496C7001837E1 /* AppSettings.swift in Sources */,
 				7724460824CC27C600B1E0C0 /* ReferenceLinksListView.swift in Sources */,

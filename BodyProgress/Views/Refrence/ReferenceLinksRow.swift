@@ -36,7 +36,7 @@ struct LinkRow : UIViewRepresentable {
                     } else if error != nil {
                         DispatchQueue.main.async {
                             let metaData = LPLinkMetadata()
-                            metaData.title = "Refernce link"
+                            metaData.title = "Couldn't load reference link"
                             view.metadata = metaData
                             view.sizeToFit()
                             self.redraw.toggle()
@@ -54,7 +54,6 @@ struct LinkRow : UIViewRepresentable {
         // New instance for each update
     }
     
-    
     func cache(metadata: LPLinkMetadata) {
         do {
             let data = try NSKeyedArchiver.archivedData(withRootObject: metadata, requiringSecureCoding: true)
@@ -68,4 +67,5 @@ struct LinkRow : UIViewRepresentable {
             print(error.localizedDescription)
         }
     }
+    
 }
