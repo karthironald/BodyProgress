@@ -13,7 +13,7 @@ struct WorkoutFilterView: View {
     @EnvironmentObject var appSettings: AppSettings
     @Environment(\.managedObjectContext) var managedObjectContext
     @State private var onlyFavourite = false
-    @State var shouldPresentAddNewWorkout: Bool = false
+    @State private var shouldPresentAddNewWorkout: Bool = false
     
     var body: some View {
         NavigationView {

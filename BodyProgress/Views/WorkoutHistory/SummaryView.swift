@@ -99,7 +99,7 @@ struct PieChart: View {
         return durations.reduce(0.0, +)
     }
     var segments: [SegmentData] = []
-    @State var shouldShowChart = false
+    @State private var shouldShowChart = false
     
     var body: some View {
         GeometryReader { geoProxy in

@@ -15,8 +15,8 @@ struct WorkoutHistoryView: View {
     @Environment(\.managedObjectContext) var managedObjectContext
     @FetchRequest(entity: WorkoutHistory.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \WorkoutHistory.createdAt, ascending: false)]) var workoutHistory: FetchedResults<WorkoutHistory>
     
-    @State var shouldShowDeleteConfirmation = false
-    @State var deleteIndex = kCommonListIndex
+    @State private var shouldShowDeleteConfirmation = false
+    @State private var deleteIndex = kCommonListIndex
     
     init(predicate: NSPredicate?, sortDescriptor: NSSortDescriptor) {
         let fetchRequest = NSFetchRequest<WorkoutHistory>(entityName: WorkoutHistory.entity().name ?? "WorkoutHistory")

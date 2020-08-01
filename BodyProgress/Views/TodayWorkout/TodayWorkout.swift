@@ -12,16 +12,16 @@ import Combine
 
 struct TodayWorkout: View {
     
-    @State var startDate = Date()
+    @State private var startDate = Date()
     @State var duration: Int16 = 0
-    @State var showIncompleteAlert = false
-    @State var showCompleteInfoAlert = false
-    @State var shouldPauseTimer = false {
+    @State private var showIncompleteAlert = false
+    @State private var showCompleteInfoAlert = false
+    @State private var shouldPauseTimer = false {
         didSet {
             shouldPauseTimer ? pauseTimer() : resumeTimer()
         }
     }
-    @State var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    @State private var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     @EnvironmentObject var appSettings: AppSettings
     @Environment(\.managedObjectContext) var managedObjectContext
@@ -156,10 +156,10 @@ struct TodayWorkout_Previews: PreviewProvider {
 struct TimerView: View {
     
     @Binding var startDate: Date
-    @State var displayDuration = ""
+    @State private var displayDuration = ""
     @Binding var duration: Int16
     @Binding var shouldPauseTimer: Bool
-    @State var shouldPause = false
+    @State private var shouldPause = false
     @Binding var timer: Publishers.Autoconnect<Timer.TimerPublisher>
     
     @Environment(\.managedObjectContext) var managedObjectContext

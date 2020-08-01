@@ -13,7 +13,7 @@ struct WorkoutHistroyDetails: View {
     @Environment(\.managedObjectContext) var managedObjectContext
     @EnvironmentObject var appSettings: AppSettings
     var selectedWorkout: WorkoutHistory
-    @State var resumeButtonSelected: Bool = false
+    @State private var resumeButtonSelected: Bool = false
     
     var body: some View {
         List(selectedWorkout.wExercises, id: \.self) { exercise in

@@ -12,13 +12,13 @@ struct ExerciseSetsList: View {
     
     @EnvironmentObject var appSettings: AppSettings
     @ObservedObject var selectedExercise: Exercise
-    @State var shouldPresentAddNewExerciseSet = false
+    @State private var shouldPresentAddNewExerciseSet = false
     @Environment(\.managedObjectContext) var managedObjectContext
-    @State var shouldPresentEditExerciseSet: Bool = false
-    @State var editExerciseSetIndex: Int = kCommonListIndex
+    @State private var shouldPresentEditExerciseSet: Bool = false
+    @State private var editExerciseSetIndex: Int = kCommonListIndex
     
-    @State var shouldShowDeleteConfirmation = false
-    @State var deleteIndex = kCommonListIndex
+    @State private var shouldShowDeleteConfirmation = false
+    @State private var deleteIndex = kCommonListIndex
     
     var body: some View {
         ZStack {

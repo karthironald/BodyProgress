@@ -13,8 +13,8 @@ struct ReferenceLinkFilterView: View {
     @EnvironmentObject var appSettings: AppSettings
     @Environment(\.managedObjectContext) var managedObjectContext
     
-    @State var shouldPresentAddNewReference = false
-    @State var shouldPresentBodyParts = false
+    @State private var shouldPresentAddNewReference = false
+    @State private var shouldPresentBodyParts = false
     
     var body: some View {
         NavigationView {

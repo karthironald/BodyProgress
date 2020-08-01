@@ -15,11 +15,11 @@ struct WorkoutsList: View {
     @EnvironmentObject var appSettings: AppSettings
     @Environment(\.managedObjectContext) var managedObjectContext
     @FetchRequest(entity: Workout.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Workout.createdAt, ascending: true)]) var workouts: FetchedResults<Workout>
-    @State var shouldPresentEditWorkout: Bool = false
-    @State var editWorkoutIndex: Int = kCommonListIndex
+    @State private var shouldPresentEditWorkout: Bool = false
+    @State private var editWorkoutIndex: Int = kCommonListIndex
     
-    @State var shouldShowDeleteConfirmation = false
-    @State var deleteIndex = kCommonListIndex
+    @State private var shouldShowDeleteConfirmation = false
+    @State private var deleteIndex = kCommonListIndex
     
     init(predicate: NSPredicate?, sortDescriptor: NSSortDescriptor) {
         let fetchRequest = NSFetchRequest<Workout>(entityName: Workout.entity().name ?? "Workout")

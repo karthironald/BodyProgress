@@ -14,7 +14,7 @@ struct BodyPartSummary: View {
     @EnvironmentObject var appSettings: AppSettings
     @Environment(\.managedObjectContext) var managedObjectContext
     
-    @State var data: [(sum: Double, min: Double, max: Double, average: Double, count: Double, workout: String)] = []
+    @State private var data: [(sum: Double, min: Double, max: Double, average: Double, count: Double, workout: String)] = []
     
     var bodyPart: BodyParts
     var total: Double {

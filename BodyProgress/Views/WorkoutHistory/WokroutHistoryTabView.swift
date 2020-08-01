@@ -27,7 +27,7 @@ enum WorkoutHistoryStatusSort: String, CaseIterable {
 
 struct WokroutHistoryTabView: View {
     
-    @State var shouldPresentBodyParts = false
+    @State private var shouldPresentBodyParts = false
     @EnvironmentObject var appSettings: AppSettings
     
     var body: some View {

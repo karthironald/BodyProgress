@@ -21,8 +21,8 @@ struct AddExercise: View {
 
     @State private var errorMessage = ""
     @State private var shouldShowValidationAlert = false
-    @State var shouldShowDeleteConfirmation = false
-    @State var deleteIndex = kCommonListIndex
+    @State private var shouldShowDeleteConfirmation = false
+    @State private var deleteIndex = kCommonListIndex
     
     var body: some View {
         

@@ -15,7 +15,7 @@ struct WorkoutRow: View {
     @Environment(\.managedObjectContext) var managedObjectContext
     @ObservedObject var workout: Workout
     @State private var shouldShowStartWorkoutAlert = false
-    @State var startButtonSelected: Bool = false
+    @State private var startButtonSelected: Bool = false
     
     var body: some View {
         ZStack {

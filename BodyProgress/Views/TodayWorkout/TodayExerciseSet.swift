@@ -14,7 +14,7 @@ struct TodayExerciseSet: View {
     @Environment(\.managedObjectContext) var managedObjectContext
     @EnvironmentObject var appSettings: AppSettings
     @ObservedObject var exerciseSet: ExerciseSetHistory
-    @State var status: Bool = false
+    @State private var status: Bool = false
     var isViewOnly = false
     
     var body: some View {

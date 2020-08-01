@@ -14,10 +14,10 @@ struct ReferenceLinksListView: View {
     @EnvironmentObject var appSettings: AppSettings
     @Environment(\.managedObjectContext) var managedObjectContext
     
-    @State var redrawPreview = false
-    @State var shouldShowDeleteConfirmation = false
-    @State var deleteIndex = kCommonListIndex
-    @State var editMode: Bool = false
+    @State private var redrawPreview = false
+    @State private var shouldShowDeleteConfirmation = false
+    @State private var deleteIndex = kCommonListIndex
+    @State private var editMode: Bool = false
     
     @FetchRequest(entity: ReferenceLinks.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \ReferenceLinks.createdAt, ascending: false)]) var referencesLinks: FetchedResults<ReferenceLinks>
     
@@ -114,9 +114,9 @@ struct AddNewReferenceLinkView: View {
     @EnvironmentObject var appSettings: AppSettings
     @Environment(\.managedObjectContext) var managedObjectContext
     
-    @State var newLink: String = ""
+    @State private var newLink: String = ""
     @Binding var shouldPresentAddNewReference: Bool
-    @State var bodyPartIndex = 0
+    @State private var bodyPartIndex = 0
     @State private var shouldShowPasteButton = false
     
     @State private var errorMessage = ""
