@@ -76,7 +76,7 @@ struct ExercisesList: View {
                 }
                 .padding([.top, .bottom], 10)
                 .sheet(isPresented: $shouldPresentEditExercise, content: {
-                    AddExercise(shouldPresentAddNewExercise: self.$shouldPresentEditExercise, selectedWorkout: self.selectedWorkout, name: self.selectedWorkout.wExercises[self.editExerciseIndex].wName, notes: self.selectedWorkout.wExercises[self.editExerciseIndex].wNotes, referenceLinks: self.selectedWorkout.wExercises[self.editExerciseIndex].wReferences.map({ $0.wUrl }), selectedExercise: self.selectedWorkout.wExercises[self.editExerciseIndex]).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
+                    AddExercise(shouldPresentAddNewExercise: self.$shouldPresentEditExercise, selectedWorkout: self.selectedWorkout, name: self.selectedWorkout.wExercises[self.editExerciseIndex].wName, notes: self.selectedWorkout.wExercises[self.editExerciseIndex].wNotes, referenceLinks: self.selectedWorkout.wExercises[self.editExerciseIndex].wReferences.map({ ($0.wUrl, true) }), selectedExercise: self.selectedWorkout.wExercises[self.editExerciseIndex]).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
                 })
                     .navigationBarItems(trailing:
                         HStack(spacing: 20) {

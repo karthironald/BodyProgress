@@ -16,7 +16,7 @@ struct AddExercise: View {
     @ObservedObject var selectedWorkout: Workout
     @State var name: String = ""
     @State var notes: String = ""
-    @State var referenceLinks: [String] = []
+    @State var referenceLinks: [(String, Bool)] = []
     var selectedExercise: Exercise?
 
     @State private var errorMessage = ""
@@ -35,21 +35,20 @@ struct AddExercise: View {
                         Group {
                             if linkIndex == self.referenceLinks.count {
                                 Button(action: {
-                                    self.referenceLinks.append("")
+                                    self.referenceLinks.append(("", false))
                                 }) {
                                     Text("Add Reference")
                                 }
                                 .deleteDisabled(true)
                             } else {
-                                HStack {
-                                    TextField("Enter reference link...", text: Binding<String>(get: {
-                                        self.referenceLinks[linkIndex]
-                                    }, set: {
-                                        self.referenceLinks[linkIndex] = $0
-                                    }))
-                                    .font(kPrimaryBodyFont)
-                                    .foregroundColor(self.canOpenURL(self.referenceLinks[linkIndex]) ? nil : .red)
-                                }
+                                TextField("Enter reference link...", text: Binding<String>(get: {
+                                    self.referenceLinks[linkIndex].0
+                                }, set: {
+                                    self.referenceLinks[linkIndex].0 = $0
+                                }))
+                                .font(kPrimaryBodyFont)
+                                .foregroundColor(self.canOpenURL(self.referenceLinks[linkIndex].0) ? nil : .red)
+                                .disabled(self.referenceLinks[linkIndex].1)
                             }
                         }
                     }.onDelete { (indexSet) in
@@ -145,12 +144,12 @@ struct AddExercise: View {
     
     func createNewReference() -> [ReferenceLinks] {
         var links: [ReferenceLinks] = []
-        for link in referenceLinks where canOpenURL(link) && !(selectedExercise?.wReferences.map({ $0.url }).contains(link) ?? false) {
+        for link in referenceLinks where canOpenURL(link.0) && !(selectedExercise?.wReferences.map({ $0.url }).contains(link.0) ?? false) {
             let reference = ReferenceLinks(context: managedObjectContext)
             reference.id = UUID()
             reference.createdAt = Date()
             reference.updatedAt = Date()
-            reference.url = link.trimmingCharacters(in: .whitespacesAndNewlines)
+            reference.url = link.0.trimmingCharacters(in: .whitespacesAndNewlines)
             reference.bodyPart = selectedWorkout.wBodyPart.rawValue
             
             links.append(reference)
@@ -166,7 +165,7 @@ struct AddExercise: View {
                 do {
                     try managedObjectContext.save()
                     if let selectedExercise = selectedExercise {
-                        referenceLinks = selectedExercise.wReferences.map { $0.wUrl }
+                        referenceLinks = selectedExercise.wReferences.map { ($0.wUrl, true) }
                     }
                 } catch {
                     print(error)
