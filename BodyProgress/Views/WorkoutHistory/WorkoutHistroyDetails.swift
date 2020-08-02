@@ -20,7 +20,7 @@ struct WorkoutHistroyDetails: View {
             TodayExcerciseRow(exercise: exercise, isViewOnly: true)
         }
         .sheet(isPresented: $resumeButtonSelected, content: {
-            TodayWorkout(duration: self.selectedWorkout.wDuration, selectedWorkout: self.selectedWorkout, workout: self.selectedWorkout.workout!).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
+            TodayWorkout(duration: self.selectedWorkout.wDuration, selectedWorkout: self.selectedWorkout).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
         })
         .padding([.top, .bottom], 10)
         .navigationBarTitle(Text("\(selectedWorkout.wName)").font(kPrimaryBodyFont))

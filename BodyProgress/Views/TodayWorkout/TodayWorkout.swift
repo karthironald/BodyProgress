@@ -28,7 +28,6 @@ struct TodayWorkout: View {
     @Environment(\.presentationMode) var presentation
     
     var selectedWorkout: WorkoutHistory
-    var workout: Workout
     
     var body: some View {
         NavigationView {
@@ -38,7 +37,7 @@ struct TodayWorkout: View {
             .padding([.top, .bottom], 10)
             .navigationBarTitle(Text("\(selectedWorkout.wName)").font(kPrimaryBodyFont), displayMode: .inline)
             .navigationBarItems(
-                leading: TimerView(startDate: $startDate, duration: $duration, shouldPauseTimer: $shouldPauseTimer, timer: $timer, selectedWorkout: selectedWorkout, workout: workout).environment(\.managedObjectContext, managedObjectContext),
+                leading: TimerView(startDate: $startDate, duration: $duration, shouldPauseTimer: $shouldPauseTimer, timer: $timer, selectedWorkout: selectedWorkout).environment(\.managedObjectContext, managedObjectContext),
                 trailing: Button(action: {
                     self.shouldPauseTimer = true
                     if !self.selectedWorkout.isAllSetCompleted() {
@@ -55,7 +54,7 @@ struct TodayWorkout: View {
                     return Alert(title: Text("Few exercise sets are pending. Are you sure to finish?"), primaryButton: Alert.Button.cancel({
                         self.shouldPauseTimer = false
                     }), secondaryButton: Alert.Button.default(Text("Finish"), action: {
-                        self.showCompleteInfoAlert.toggle()
+                        self.updateWorkout()
                     }))
             }
             .onDisappear {
@@ -67,7 +66,6 @@ struct TodayWorkout: View {
             return Alert(title:
                 Text("Today workout has been saved successfully"), message: nil, dismissButton: Alert.Button.cancel(Text("Okay"), action: {
                     self.presentation.wrappedValue.dismiss()
-                    self.updateWorkout()
                 }))
         })
     }
@@ -89,14 +87,13 @@ struct TodayWorkout: View {
     func updateWorkout() {
         selectedWorkout.duration = self.duration
         selectedWorkout.status = selectedWorkout.isAllSetCompleted()
-        workout.lastTrainedAt = Date()
-        selectedWorkout.workout = self.workout
+        selectedWorkout.workout?.lastTrainedAt = Date()
         if managedObjectContext.hasChanges {
             do {
                 try managedObjectContext.save()
+                self.showCompleteInfoAlert.toggle()
             } catch {
-                #warning("We are showing workout saved alert before saving it. There could be posibility to face error when saving the workout. Need to handle it")
-                print(error)
+                print(error.localizedDescription)
             }
         }
     }
@@ -108,7 +105,7 @@ struct TodayWorkout_Previews: PreviewProvider {
     
     static var previews: some View {
         let previewData = createWorkoutHistory()
-        return TodayWorkout(selectedWorkout: previewData.1, workout: previewData.0).environment(\.managedObjectContext, moc).environmentObject(AppSettings())
+        return TodayWorkout(selectedWorkout: previewData.1).environment(\.managedObjectContext, moc).environmentObject(AppSettings())
     }
     
     
@@ -164,7 +161,6 @@ struct TimerView: View {
     
     @Environment(\.managedObjectContext) var managedObjectContext
     var selectedWorkout: WorkoutHistory
-    var workout: Workout
     
     var body: some View {
         Text("\(displayDuration)")
@@ -210,8 +206,7 @@ struct TimerView: View {
             do {
                 try managedObjectContext.save()
             } catch {
-                #warning("We are showing workout saved alert before saving it. There could be posibility to face error when saving the workout. Need to handle it")
-                print(error)
+                print(error.localizedDescription)
             }
         }
     }

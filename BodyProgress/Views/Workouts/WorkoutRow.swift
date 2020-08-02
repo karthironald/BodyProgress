@@ -16,6 +16,7 @@ struct WorkoutRow: View {
     @ObservedObject var workout: Workout
     @State private var shouldShowStartWorkoutAlert = false
     @State private var startButtonSelected: Bool = false
+    var moc = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType) // Sheet block calling multiple time and duplicates records are being created in todayworkout. So we are using separate managed object context to fetch and handle today wrokout separately.
     
     var body: some View {
         ZStack {
@@ -88,7 +89,7 @@ struct WorkoutRow: View {
             }))
         })
         .sheet(isPresented: $startButtonSelected, content: {
-            TodayWorkout(selectedWorkout: self.createWorkoutHistory(), workout: self.workout).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
+            TodayWorkout(selectedWorkout: self.createWorkoutHistory()).environment(\.managedObjectContext, self.moc).environmentObject(self.appSettings)
         })
         .frame(height: 80)
         .cornerRadius(kCornerRadius)
@@ -96,7 +97,7 @@ struct WorkoutRow: View {
     
     /**Creates workout history entry for start today workout*/
     func createWorkoutHistory() -> WorkoutHistory {
-        let workoutHistory = WorkoutHistory(context: managedObjectContext)
+        let workoutHistory = WorkoutHistory(context: moc)
         workoutHistory.name = workout.name
         workoutHistory.notes = workout.notes
         workoutHistory.bodyPart = workout.bodyPart
@@ -104,30 +105,51 @@ struct WorkoutRow: View {
         workoutHistory.createdAt = Date()
         workoutHistory.updatedAt = Date()
         
-        for exercise in workout.wExercises {
-            let exerciseHistory = ExerciseHistory(context: managedObjectContext)
-            exerciseHistory.name = exercise.name
-            exerciseHistory.notes = exercise.notes
-            exerciseHistory.bodyPart = workout.bodyPart
-            exerciseHistory.id = UUID()
-            exerciseHistory.createdAt = Date()
-            exerciseHistory.updatedAt = Date()
-            exerciseHistory.references = exercise.references
+        let req: NSFetchRequest<Workout> = Workout.fetchRequest()
+        let predicate = NSPredicate(format: "id == %@", workout.wId as CVarArg)
+        req.predicate = predicate
+        moc.persistentStoreCoordinator = kAppDelegate.persistentContainer.persistentStoreCoordinator
+        do {
+            let w = try moc.fetch(req) as [Workout]
+            let fetchedWorkout = w.first
+               workoutHistory.workout = fetchedWorkout
+               
+               for exercise in fetchedWorkout?.wExercises ?? [] {
+                   let exerciseHistory = ExerciseHistory(context: self.moc)
+                   exerciseHistory.name = exercise.name
+                   exerciseHistory.notes = exercise.notes
+                   exerciseHistory.bodyPart = fetchedWorkout?.bodyPart
+                   exerciseHistory.id = UUID()
+                   exerciseHistory.createdAt = Date()
+                   exerciseHistory.updatedAt = Date()
+                   exerciseHistory.references = exercise.references
+                   
+                   for exerciseSet in exercise.wExerciseSets {
+                       let newExerciseSetHistory = ExerciseSetHistory(context: self.moc)
+                       newExerciseSetHistory.name = exerciseSet.name
+                       newExerciseSetHistory.notes = exerciseSet.notes
+                       newExerciseSetHistory.id = UUID()
+                       newExerciseSetHistory.createdAt = Date()
+                       newExerciseSetHistory.updatedAt = Date()
+                       newExerciseSetHistory.weight = exerciseSet.wWeight
+                       newExerciseSetHistory.reputation = exerciseSet.wReputation
+                       
+                       exerciseHistory.addToExerciseSets(newExerciseSetHistory)
+                   }
+                   
+                   workoutHistory.addToExercises(exerciseHistory)
+               }
             
-            for exerciseSet in exercise.wExerciseSets {
-                let newExerciseSetHistory = ExerciseSetHistory(context: managedObjectContext)
-                newExerciseSetHistory.name = exerciseSet.name
-                newExerciseSetHistory.notes = exerciseSet.notes
-                newExerciseSetHistory.id = UUID()
-                newExerciseSetHistory.createdAt = Date()
-                newExerciseSetHistory.updatedAt = Date()
-                newExerciseSetHistory.weight = exerciseSet.wWeight
-                newExerciseSetHistory.reputation = exerciseSet.wReputation
-                
-                exerciseHistory.addToExerciseSets(newExerciseSetHistory)
-            }
-            
-            workoutHistory.addToExercises(exerciseHistory)
+               if self.moc.hasChanges {
+                   do {
+                       try self.moc.save()
+                   } catch {
+                       print(error.localizedDescription)
+                   }
+               }
+               return workoutHistory
+        } catch {
+            print(error.localizedDescription)
         }
         
         return workoutHistory
