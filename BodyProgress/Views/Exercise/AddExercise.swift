@@ -35,7 +35,7 @@ struct AddExercise: View {
                         Group {
                             if linkIndex == self.referenceLinks.count {
                                 Button(action: {
-                                    self.referenceLinks.append(("", false))
+                                    self.referenceLinks.insert(("", false), at: 0)
                                 }) {
                                     Text("Add Reference")
                                 }
@@ -52,7 +52,7 @@ struct AddExercise: View {
                             }
                         }
                     }.onDelete { (indexSet) in
-                        if let index = indexSet.first, index < self.selectedExercise?.wReferences.count ?? 0 {
+                        if let index = indexSet.first, index < self.selectedExercise?.wReferences.count ?? 0, self.referenceLinks[index].1 {
                             self.deleteIndex = index
                             self.shouldShowDeleteConfirmation.toggle()
                         } else if let index = indexSet.first, index < self.referenceLinks.count {
