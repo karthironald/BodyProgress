@@ -129,6 +129,7 @@ struct PieChart: View {
                                 .padding([.leading, .trailing])
                             Text("\(Int64(self.totalSessions)) sessions")
                                 .font(kPrimaryFootnoteFont)
+                                .padding([.leading, .trailing])
                                 .foregroundColor(.secondary)
                         }
                         .rotationEffect(.degrees(90))
