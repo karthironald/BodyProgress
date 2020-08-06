@@ -210,7 +210,6 @@ struct TimerView: View {
             do {
                 try managedObjectContext.save()
             } catch {
-                #warning("We are showing workout saved alert before saving it. There could be posibility to face error when saving the workout. Need to handle it")
                 print(error)
             }
         }

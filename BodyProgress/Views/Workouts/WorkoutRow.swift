@@ -16,6 +16,7 @@ struct WorkoutRow: View {
     @ObservedObject var workout: Workout
     @State private var shouldShowStartWorkoutAlert = false
     @State private var startButtonSelected: Bool = false
+    @State private var todayWorkout = WorkoutHistory()
     
     var body: some View {
         ZStack {
@@ -84,11 +85,12 @@ struct WorkoutRow: View {
         }
         .alert(isPresented: $shouldShowStartWorkoutAlert, content: { () -> Alert in
             Alert(title: Text("Ready to start \(workout.wName)?"), message: (!workout.wNotes.isEmpty && workout.wNotes != kDefaultValue) ? Text("Notes: \(workout.wNotes)") : nil, primaryButton: .cancel(Text("kButtonTitleCancel")), secondaryButton: .default(Text("kButtonTitleStart"), action: {
+                self.todayWorkout = self.createWorkoutHistory()
                 self.startButtonSelected.toggle()
             }))
         })
         .sheet(isPresented: $startButtonSelected, content: {
-            TodayWorkout(selectedWorkout: self.createWorkoutHistory(), workout: self.workout).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
+            TodayWorkout(selectedWorkout: self.todayWorkout, workout: self.workout).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
         })
         .frame(height: 80)
         .cornerRadius(kCornerRadius)
@@ -129,6 +131,8 @@ struct WorkoutRow: View {
             
             workoutHistory.addToExercises(exerciseHistory)
         }
+        
+        workoutHistory.workout = workout
         
         return workoutHistory
     }
