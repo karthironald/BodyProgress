@@ -85,7 +85,7 @@ extension WorkoutHistory {
 
 extension WorkoutHistory {
     
-    static func fetchSummary(context: NSManagedObjectContext, completion: @escaping ([(sum: Double, bodyPart: BodyParts)]) -> ()) {
+    static func fetchSummary(context: NSManagedObjectContext, completion: @escaping ([(sum: Double, bodyPart: BodyParts, count: Double)]) -> ()) {
         
         let keypathDuration = NSExpression(forKeyPath: \WorkoutHistory.duration)
         let expression = NSExpression(forFunction: "sum:", arguments: [keypathDuration])
@@ -95,19 +95,26 @@ extension WorkoutHistory {
         sumDesc.name = "sum"
         sumDesc.expressionResultType = .integer16AttributeType
         
+        let countExpression = NSExpression(forFunction: "count:", arguments: [keypathDuration])
+        
+        let countDesc = NSExpressionDescription()
+        countDesc.expression = countExpression
+        countDesc.name = "count"
+        countDesc.expressionResultType = .integer64AttributeType
+        
         let req = NSFetchRequest<NSFetchRequestResult>(entityName: WorkoutHistory.entity().name ?? "WorkoutHistory")
         req.returnsObjectsAsFaults = false
         req.propertiesToGroupBy = ["bodyPart"]
-        req.propertiesToFetch = [sumDesc, "bodyPart"]
+        req.propertiesToFetch = [sumDesc, countDesc, "bodyPart"]
         req.resultType = .dictionaryResultType
         
         context.perform {
             do {
                 let results = try req.execute()
-                let data = results.map { (result) -> (Double, BodyParts)? in
-                    guard let resultDict = result as? [String: Any], let sum = resultDict["sum"] as? Double, sum > 0.0, let bodyPart = resultDict["bodyPart"] as? String else { return nil }
+                let data = results.map { (result) -> (Double, BodyParts, Double)? in
+                    guard let resultDict = result as? [String: Any], let sum = resultDict["sum"] as? Double, sum > 0.0, let bodyPart = resultDict["bodyPart"] as? String, let count = resultDict["count"] as? Double else { return nil }
                     let part = BodyParts(rawValue: bodyPart) ?? BodyParts.others
-                    return (sum, part)
+                    return (sum, part, count)
                 }.compactMap { $0 }
                 completion(data.sorted { $0.0 > $1.0 })
             } catch {
