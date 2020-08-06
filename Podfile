@@ -7,6 +7,6 @@ target 'BodyProgress' do
 
   # Pods for BodyProgress
 
-  pod 'Firebase/Analytics'
+pod 'Firebase/Analytics'
 
 end
