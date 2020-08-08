@@ -99,7 +99,7 @@ struct WorkoutRow: View {
     func alertMessageView() -> Text? {
         var message: String = ""
         if !workout.wNotes.isEmpty && workout.wNotes != kDefaultValue {
-            message = "Notes: \(workout.wNotes)"
+            message = "\(workout.wNotes)"
         }
         
         let req: NSFetchRequest<WorkoutHistory> = WorkoutHistory.fetchRequest()
