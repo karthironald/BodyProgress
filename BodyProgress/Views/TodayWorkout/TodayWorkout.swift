@@ -64,11 +64,16 @@ struct TodayWorkout: View {
         }
         .alert(isPresented: $showCompleteInfoAlert, content: { () -> Alert in
             Helper.hapticFeedback()
-            return Alert(title:
-                Text("Today workout has been saved successfully"), message: nil, dismissButton: Alert.Button.cancel(Text("Okay"), action: {
-                    self.presentation.wrappedValue.dismiss()
-                    self.updateWorkout()
-                }))
+            return Alert(title: Text("Today workout has been saved successfully"), primaryButton: Alert.Button.default(Text("Check history"), action: {
+                self.presentation.wrappedValue.dismiss()
+                self.updateWorkout()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.appSettings.selectedTab = 1
+                }
+            }), secondaryButton: Alert.Button.default(Text("Okay"), action: {
+                self.presentation.wrappedValue.dismiss()
+                self.updateWorkout()
+            }))
         })
     }
     
