@@ -20,6 +20,7 @@ struct WorkoutsList: View {
     
     @State private var shouldShowDeleteConfirmation = false
     @State private var deleteIndex = kCommonListIndex
+    @State var shouldShow: Bool = false
     
     init(predicate: NSPredicate?, sortDescriptor: NSSortDescriptor) {
         let fetchRequest = NSFetchRequest<Workout>(entityName: Workout.entity().name ?? "Workout")
@@ -41,7 +42,7 @@ struct WorkoutsList: View {
                 List {
                     ForEach(0..<workouts.count, id: \.self) { workoutIndex in
                         ZStack {
-                            WorkoutRow(workout: self.workouts[workoutIndex]).environment(\.managedObjectContext, self.managedObjectContext)
+                            WorkoutRow(workout: self.workouts[workoutIndex], shouldShow: self.$shouldShow).environment(\.managedObjectContext, self.managedObjectContext)
                                 .contextMenu {
                                     Button(action: {
                                         self.editWorkoutIndex = workoutIndex
@@ -82,6 +83,9 @@ struct WorkoutsList: View {
                     AddWorkout(shouldPresentAddNewWorkout: self.$shouldPresentEditWorkout, name: self.workouts[self.editWorkoutIndex].wName, notes: self.workouts[self.editWorkoutIndex].wNotes, bodyPartIndex: BodyParts.allCases.firstIndex(of: self.workouts[self.editWorkoutIndex].wBodyPart) ?? 0, workoutToEdit: self.workouts[self.editWorkoutIndex]).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
                 })
             }
+            TodayWorkoutConfirmationView().environmentObject(appSettings)
+                .offset(y: shouldShow ? 0 : 2000)
+                .animation(Animation.spring())
         }
         .onAppear {
             kAppDelegate.removeSeparatorLineAppearance()
