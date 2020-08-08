@@ -84,7 +84,7 @@ struct WorkoutRow: View {
             .padding()
         }
         .alert(isPresented: $shouldShowStartWorkoutAlert, content: { () -> Alert in
-            Alert(title: Text("Ready to start \(workout.wName)?"), message: (!workout.wNotes.isEmpty && workout.wNotes != kDefaultValue) ? Text("Notes: \(workout.wNotes)") : nil, primaryButton: .cancel(Text("kButtonTitleCancel")), secondaryButton: .default(Text("kButtonTitleStart"), action: {
+            Alert(title: Text("Ready to start \(workout.wName)?"), message: self.alertMessageView(), primaryButton: .cancel(Text("kButtonTitleCancel")), secondaryButton: .default(Text("kButtonTitleStart"), action: {
                 self.todayWorkout = self.createWorkoutHistory()
                 self.startButtonSelected.toggle()
             }))
@@ -94,6 +94,38 @@ struct WorkoutRow: View {
         })
         .frame(height: 80)
         .cornerRadius(kCornerRadius)
+    }
+    
+    func alertMessageView() -> Text? {
+        var message: String = ""
+        if !workout.wNotes.isEmpty && workout.wNotes != kDefaultValue {
+            message = "\(workout.wNotes)"
+        }
+        
+        let req: NSFetchRequest<WorkoutHistory> = WorkoutHistory.fetchRequest()
+        let predicate = NSPredicate(format: "workout.id == %@", workout.wId as CVarArg)
+        let sortDescriptor = NSSortDescriptor(keyPath: \WorkoutHistory.createdAt, ascending: false)
+        
+        req.predicate = predicate
+        req.sortDescriptors = [sortDescriptor]
+        
+        do {
+            if let lastWorkoutSession = try managedObjectContext.fetch(req).first, lastWorkoutSession.wDuration > 0 {
+                let duration = lastWorkoutSession.wDuration.detailedDisplayDuration()
+                if !message.isEmpty { message.append("\n") }
+                message.append("\nLast session: \(duration)")
+                
+                let eta = Date().addingTimeInterval(TimeInterval(lastWorkoutSession.wDuration))
+                let formatter = DateFormatter()
+                formatter.timeStyle = .short
+                
+                let timeString = formatter.string(from: eta)
+                message.append("\n\nYou might finish the workout at \(timeString)")
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+        return !message.isEmpty ? Text(message) : nil
     }
     
     /**Creates workout history entry for start today workout*/

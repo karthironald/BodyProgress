@@ -42,6 +42,12 @@ enum AppThemeColours: String, CaseIterable {
 }
 class AppSettings: ObservableObject {
         
+    @Published var selectedTab: Int {
+        didSet {
+            UserDefaults.standard.set(selectedTab, forKey: "selectedTab")
+        }
+    }
+    
     @Published var userName: String {
         didSet {
             UserDefaults.standard.set(userName, forKey: "userName")
@@ -119,6 +125,7 @@ class AppSettings: ObservableObject {
         
         let selectionRawValue = UserDefaults.standard.value(forKey: "historySelectedCompletionStatus") as? String ?? WorkoutHistoryStatusSort.Both.rawValue
         self.historySelectedCompletionStatus = WorkoutHistoryStatusSort(rawValue: selectionRawValue) ?? WorkoutHistoryStatusSort.Both
+        self.selectedTab = UserDefaults.standard.value(forKey: "selectedTab") as? Int ?? 0
     }
     
     

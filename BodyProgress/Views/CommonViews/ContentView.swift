@@ -10,11 +10,10 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State private var selectedTab = 0 // Sets workout tab as selected tab
     @EnvironmentObject var appSettings: AppSettings
     
     var body: some View {
-        TabView(selection: $selectedTab) {
+        TabView(selection: $appSettings.selectedTab) {
             WorkoutFilterView().environmentObject(self.appSettings).tabItem {
                 Image(systemName: "flame")
                     .imageScale(.large)

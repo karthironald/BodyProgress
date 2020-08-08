@@ -15,7 +15,7 @@ struct SummaryView: View {
     @Environment(\.managedObjectContext) var managedObjectContext
     
     @State var totalWorkoutTime: Int16 = 0
-    @State var progress: [(Double, BodyParts)] = []
+    @State var progress: [(Double, BodyParts, Double)] = []
     var total : Double {
         let durations = progress.map { $0.0 }
         return durations.reduce(0.0, +)
@@ -87,17 +87,22 @@ struct SummaryView_Previews: PreviewProvider {
     static let moc = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
     
     static var previews: some View {
-        return SummaryView(totalWorkoutTime: 100, progress: [(70, BodyParts.arms), (30, BodyParts.chest)], segments: [SegmentData(percentage: 70, startAngle: 0, endAngle: 252), SegmentData(percentage: 30, startAngle: 252, endAngle: 360)]).environment(\.managedObjectContext, moc).environmentObject(AppSettings())
+        return SummaryView(totalWorkoutTime: 100, progress: [(70, BodyParts.arms, 10), (30, BodyParts.chest, 10)], segments: [SegmentData(percentage: 70, startAngle: 0, endAngle: 252), SegmentData(percentage: 30, startAngle: 252, endAngle: 360)]).environment(\.managedObjectContext, moc).environmentObject(AppSettings())
     }
 }
 
 struct PieChart: View {
     
-    var progress: [(Double, BodyParts)] = []
+    var progress: [(Double, BodyParts, Double)] = []
     var total : Double {
         let durations = progress.map { $0.0 }
         return durations.reduce(0.0, +)
     }
+    var totalSessions: Double {
+        let durations = progress.map { $0.2 }
+        return durations.reduce(0.0, +)
+    }
+    
     var segments: [SegmentData] = []
     @State private var shouldShowChart = false
     
@@ -113,12 +118,21 @@ struct PieChart: View {
                         .fill(Color(UIColor.systemBackground))
                         .frame(width: geoProxy.size.width / 2, height: geoProxy.size.width / 2)
                     .overlay(
-                        Text("\(self.total.detailedDisplayDuration())")
-                            .font(kPrimaryBodyFont)
-                            .bold()
-                            .padding()
-                            .multilineTextAlignment(.center)
-                            .rotationEffect(.degrees(90))
+                        VStack {
+                            Text("\(self.total.detailedDisplayDuration())")
+                                .font(kPrimaryBodyFont)
+                                .bold()
+                                .padding([.leading, .trailing, .top])
+                                .multilineTextAlignment(.center)
+                            Divider()
+                                .frame(width: 50)
+                                .padding([.leading, .trailing])
+                            Text("\(Int64(self.totalSessions)) sessions")
+                                .font(kPrimaryFootnoteFont)
+                                .padding([.leading, .trailing])
+                                .foregroundColor(.secondary)
+                        }
+                        .rotationEffect(.degrees(90))
                     )
                 }
                 .transition(.scale)
