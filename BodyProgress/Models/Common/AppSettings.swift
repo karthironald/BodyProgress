@@ -52,7 +52,7 @@ class AppSettings: ObservableObject {
         didSet {
             UserDefaults.standard.set(userName, forKey: "userName")
             if enabledReminder {
-                NotificationHelper.addLocalNoification(at: notificationTime)
+                NotificationHelper.addLocalNoification(type: .date(notificationTime))
             }
         }
     }
@@ -71,7 +71,7 @@ class AppSettings: ObservableObject {
     @Published var notificationTime: Date {
         didSet {
             UserDefaults.standard.set(notificationTime, forKey: "notificationTime")
-            NotificationHelper.addLocalNoification(at: notificationTime)
+            NotificationHelper.addLocalNoification(type: .date(notificationTime))
         }
     }
     

@@ -9,6 +9,12 @@
 import UIKit
 
 private let kLocalNotificationIdentifier = "kLocalNotificationIdentifier"
+private let kLocalTimerNotificationIdentifier = "kLocalTimerNotificationIdentifier"
+
+enum LocalNotificationType {
+    case date(Date)
+    case interval(TimeInterval)
+}
 
 class NotificationHelper: NSObject {
 
@@ -49,30 +55,57 @@ class NotificationHelper: NSObject {
         invalidateLocalNotification(with: [kLocalNotificationIdentifier])
     }
     
-    static func addLocalNoification(at date: Date?) {
-        if let date = date {
-            let hour = Calendar.current.component(.hour, from: date)
-            let minute = Calendar.current.component(.minute, from: date)
-            
-            let userNotification = UNUserNotificationCenter.current()
-            userNotification.getNotificationSettings { (setting) in
-                if setting.authorizationStatus == .authorized {
-                    NotificationHelper.configureLocalNotification(at: hour, minute: minute)
-                } else {
-                    registerForPushNotification(at: date)
+    static func addLocalNoification(type: LocalNotificationType) {
+        let userNotification = UNUserNotificationCenter.current()
+        userNotification.getNotificationSettings { (setting) in
+            if setting.authorizationStatus == .authorized {
+                switch type {
+                case .date(let date):
+                    let hour = Calendar.current.component(.hour, from: date)
+                    let minute = Calendar.current.component(.minute, from: date)
+                    configureLocalNotification(at: hour, minute: minute)
+                case .interval(let interval):
+                    scheduleNotification(with: interval)
                 }
+            } else {
+                registerForPushNotification(type: type)
             }
-            
         }
+        
     }
     
-    static private func registerForPushNotification(at date: Date?) {
+    static private func registerForPushNotification(type: LocalNotificationType) {
         let userNotification = UNUserNotificationCenter.current()
         userNotification.requestAuthorization(options: [.sound, .badge, .alert]) { (status, error) in
             if status && error == nil {
-                addLocalNoification(at: date)
+                addLocalNoification(type: type)
             }
         }
+    }
+    
+    static func scheduleNotification(with interval: TimeInterval) {
+        print("🔴⭐️ \(interval)")
+        invalidateLocalNotification(with: [kLocalTimerNotificationIdentifier])
+        
+        let centre = UNUserNotificationCenter.current()
+        
+        let notificationContent = UNMutableNotificationContent()
+        notificationContent.title = "Timeout"
+        
+        notificationContent.sound = UNNotificationSound.default
+        
+        let triggerAt = UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: false)
+        let request = UNNotificationRequest(identifier: kLocalTimerNotificationIdentifier, content: notificationContent, trigger: triggerAt)
+        centre.add(request) { (error) in
+            print("🔴⭐️ \(error)")
+            if error != nil {
+                print(error ?? "")
+            }
+        }
+    }
+    
+    static func resetTimerNotification() {
+        invalidateLocalNotification(with: [kLocalTimerNotificationIdentifier])
     }
     
 }

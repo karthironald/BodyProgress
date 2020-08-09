@@ -32,11 +32,14 @@ struct TodayWorkout: View {
     
     var body: some View {
         NavigationView {
-            List(selectedWorkout.wExercises, id: \.self) { exercise in
-                TodayExcerciseRow(exercise: exercise).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
+            ZStack(alignment: .bottomLeading) {
+                List(selectedWorkout.wExercises, id: \.self) { exercise in
+                    TodayExcerciseRow(exercise: exercise).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
+                }
+                RestTimerView().environmentObject(appSettings)
             }
             .padding([.top, .bottom], 10)
-            .navigationBarTitle(Text("\(selectedWorkout.wName)").font(kPrimaryBodyFont), displayMode: .inline)
+            .navigationBarTitle(Text("\(selectedWorkout.wName)"), displayMode: .inline)
             .navigationBarItems(
                 leading: TimerView(startDate: $startDate, duration: $duration, shouldPauseTimer: $shouldPauseTimer, timer: $timer, selectedWorkout: selectedWorkout, workout: workout).environment(\.managedObjectContext, managedObjectContext),
                 trailing: Button(action: {
