@@ -29,18 +29,24 @@ struct RestTimerView: View {
     
     var body: some View {
         ZStack {
+            
+            
+            
             Button(action: {
                 self.shouldShowMenus.toggle()
             }) {
                 Image(systemName: shouldShowMenus ? "xmark" : "timer")
                     .font(kPrimaryTitleFont)
                     .frame(width: 50, height: 50)
-                    .background(shouldShowMenus ? Color.secondary : appSettings.themeColorView())
+                    .background(shouldShowMenus ? Color(.lightGray) : appSettings.themeColorView())
                     .foregroundColor(shouldShowMenus ? .secondary : .white)
                     .clipShape(Circle())
             }
             .shadow(radius: 5)
-            .zIndex(10)
+            .zIndex((status == .playing || status == .paused) ? 0 : 10)
+            
+            
+            
             
             Button(action: {
                 if self.totalTime > 5 {
@@ -55,8 +61,10 @@ struct RestTimerView: View {
                     .clipShape(Circle())
             }
             .shadow(radius: shouldShowMenus ? 5 : 0)
-            .offset(y: shouldShowMenus ? offset : 0)
+            .offset(x: shouldShowMenus ? offset * 2 : 0)
             .animation(.spring())
+           
+            
             
             Button(action: {
                 self.totalTime += 5
@@ -69,11 +77,28 @@ struct RestTimerView: View {
                     .clipShape(Circle())
             }
             .shadow(radius: shouldShowMenus ? 5 : 0)
-            .offset(y: shouldShowMenus ? -offset : 0)
+            .offset(x: shouldShowMenus ? offset * 3: 0)
             .animation(.spring())
+
             
             Button(action: {
-                // Do nothing
+                self.resetDetails()
+            }) {
+                Image(systemName: "stop")
+                    .font(kPrimaryTitleFont)
+                    .frame(width: 50, height: 50)
+                    .background(Color.red)
+                    .foregroundColor(.white)
+                    .clipShape(Circle())
+            }
+            .shadow(radius: shouldShowMenus ? 5 : 0)
+            .offset(x: shouldShowMenus ? offset : 0)
+            .animation(.spring())
+            
+            
+            
+            Button(action: {
+                self.shouldShowMenus.toggle()
             }) {
                 Text("\(Int(totalTime - completedTime))s")
                     .font(kPrimaryBodyFont)
@@ -88,13 +113,15 @@ struct RestTimerView: View {
             .overlay(
                 Circle()
                     .trim(from: 0, to: progress)
-                    .stroke(Color.green, style: StrokeStyle(lineWidth: (status == .playing || status == .paused) ? 5 : 0, lineCap: .round))
+                    .stroke(Color.green, style: StrokeStyle(lineWidth: (status == .playing || status == .paused) ? 7 : 0, lineCap: .round))
                     .rotationEffect(.degrees(-90))
                     .animation(.linear)
             )
             .shadow(radius: shouldShowMenus ? 5 : 0)
-            .offset(x: shouldShowMenus ? offset : 0)
+            .offset(y: shouldShowMenus ? -offset * 2 : 0)
             .animation(.spring())
+            .zIndex((status == .playing || status == .paused) ? 10 : 0)
+            
             
             Button(action: {
                 if self.status == .playing {
@@ -120,10 +147,15 @@ struct RestTimerView: View {
                     .animation(nil)
             }
             .shadow(radius: shouldShowMenus ? 5 : 0)
-            .offset(x: shouldShowMenus ? offset * 2 : 0)
+            .offset(y: shouldShowMenus ? -offset : 0)
             .animation(.spring())
+            
+            
+            
+            
         }
         .padding(.leading, (status == .playing || status == .paused) ? 20 : 0)
+        .animation(.spring())
         .onReceive(timer, perform: { (_) in
             if self.status == .playing {
                 self.completedTime += 1
