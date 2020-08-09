@@ -30,6 +30,7 @@ struct RestTimerView: View {
         ZStack {
             
             Button(action: {
+                Helper.hapticFeedback()
                 self.shouldShowMenus.toggle()
             }) {
                 Image(systemName: shouldShowMenus ? "xmark" : "timer")
@@ -44,6 +45,7 @@ struct RestTimerView: View {
             
             
             Button(action: {
+                Helper.hapticFeedback(style: .soft)
                 if self.appSettings.workoutTimerInterval > 5 {
                     self.appSettings.workoutTimerInterval -= 5
                 }
@@ -60,6 +62,7 @@ struct RestTimerView: View {
             .animation(.spring())
             
             Button(action: {
+                Helper.hapticFeedback(style: .soft)
                 self.appSettings.workoutTimerInterval += 5
             }) {
                 Image(systemName: "plus")
@@ -75,6 +78,7 @@ struct RestTimerView: View {
 
             
             Button(action: {
+                Helper.hapticFeedback()
                 self.resetDetails()
                 NotificationHelper.resetTimerNotification()
             }) {
@@ -91,6 +95,7 @@ struct RestTimerView: View {
             
             
             Button(action: {
+                Helper.hapticFeedback()
                 self.shouldShowMenus.toggle()
             }) {
                 Text("\(Int(appSettings.workoutTimerInterval - completedTime))s")
@@ -117,6 +122,7 @@ struct RestTimerView: View {
             
             
             Button(action: {
+                Helper.hapticFeedback()
                 if self.status == .playing {
                     self.status = .paused
                 } else if self.status == .paused || self.status == .notStarted {
