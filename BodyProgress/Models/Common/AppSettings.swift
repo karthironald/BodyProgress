@@ -42,6 +42,12 @@ enum AppThemeColours: String, CaseIterable {
 }
 class AppSettings: ObservableObject {
         
+    @Published var workoutTimerInterval: TimeInterval {
+        didSet {
+            UserDefaults.standard.set(workoutTimerInterval, forKey: "workoutTimerInterval")
+        }
+    }
+    
     @Published var selectedTab: Int {
         didSet {
             UserDefaults.standard.set(selectedTab, forKey: "selectedTab")
@@ -126,6 +132,7 @@ class AppSettings: ObservableObject {
         let selectionRawValue = UserDefaults.standard.value(forKey: "historySelectedCompletionStatus") as? String ?? WorkoutHistoryStatusSort.Both.rawValue
         self.historySelectedCompletionStatus = WorkoutHistoryStatusSort(rawValue: selectionRawValue) ?? WorkoutHistoryStatusSort.Both
         self.selectedTab = UserDefaults.standard.value(forKey: "selectedTab") as? Int ?? 0
+        self.workoutTimerInterval = UserDefaults.standard.value(forKey: "workoutTimerInterval") as? TimeInterval ?? 15
     }
     
     

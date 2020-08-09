@@ -17,20 +17,17 @@ struct RestTimerView: View {
     
     @EnvironmentObject var appSettings: AppSettings
     @State private var offset: CGFloat = 70
-    @State private var totalTime: TimeInterval = 5
     @State private var completedTime: TimeInterval = 0
     @State private var shouldShowMenus = false
     @State private var status: RestTimerStatus = .notStarted
     @State private var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     var progress: CGFloat {
-        CGFloat((totalTime - completedTime) / totalTime)
+        CGFloat((appSettings.workoutTimerInterval - completedTime) / appSettings.workoutTimerInterval)
     }
     
     var body: some View {
         ZStack {
-            
-            
             
             Button(action: {
                 self.shouldShowMenus.toggle()
@@ -46,11 +43,9 @@ struct RestTimerView: View {
             .zIndex((status == .playing || status == .paused) ? 0 : 10)
             
             
-            
-            
             Button(action: {
-                if self.totalTime > 5 {
-                    self.totalTime -= 5
+                if self.appSettings.workoutTimerInterval > 5 {
+                    self.appSettings.workoutTimerInterval -= 5
                 }
             }) {
                 Image(systemName: "minus")
@@ -63,11 +58,9 @@ struct RestTimerView: View {
             .shadow(radius: shouldShowMenus ? 5 : 0)
             .offset(x: shouldShowMenus ? offset * 2 : 0)
             .animation(.spring())
-           
-            
             
             Button(action: {
-                self.totalTime += 5
+                self.appSettings.workoutTimerInterval += 5
             }) {
                 Image(systemName: "plus")
                     .font(kPrimaryTitleFont)
@@ -97,11 +90,10 @@ struct RestTimerView: View {
             .animation(.spring())
             
             
-            
             Button(action: {
                 self.shouldShowMenus.toggle()
             }) {
-                Text("\(Int(totalTime - completedTime))s")
+                Text("\(Int(appSettings.workoutTimerInterval - completedTime))s")
                     .font(kPrimaryBodyFont)
                     .bold()
                     .frame(width: 50, height: 50)
@@ -132,7 +124,7 @@ struct RestTimerView: View {
                 }
                 if self.status == .playing {
                     self.timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-                    NotificationHelper.addLocalNoification(type: .interval(TimeInterval(self.totalTime - self.completedTime)))
+                    NotificationHelper.addLocalNoification(type: .interval(TimeInterval(self.appSettings.workoutTimerInterval - self.completedTime)))
                 } else if self.status == .paused {
                     self.timer.upstream.connect().cancel()
                     NotificationHelper.resetTimerNotification()
@@ -151,16 +143,13 @@ struct RestTimerView: View {
             .offset(y: shouldShowMenus ? -offset : 0)
             .animation(.spring())
             
-            
-            
-            
         }
-        .padding(.leading, (status == .playing || status == .paused) ? 20 : 0)
+        .padding(.leading, (status == .playing || status == .paused) ? 20 : 10)
         .animation(.spring())
         .onReceive(timer, perform: { (_) in
             if self.status == .playing {
                 self.completedTime += 1
-                if self.completedTime == self.totalTime {
+                if self.completedTime == self.appSettings.workoutTimerInterval {
                     self.resetDetails()
                 }
             }
@@ -171,7 +160,6 @@ struct RestTimerView: View {
         self.status = .notStarted
         self.timer.upstream.connect().cancel()
         self.completedTime = 0
-        self.totalTime = 5
         self.shouldShowMenus = false
     }
     
