@@ -83,6 +83,7 @@ struct RestTimerView: View {
             
             Button(action: {
                 self.resetDetails()
+                NotificationHelper.resetTimerNotification()
             }) {
                 Image(systemName: "stop")
                     .font(kPrimaryTitleFont)
