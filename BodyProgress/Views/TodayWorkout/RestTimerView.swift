@@ -172,7 +172,6 @@ struct RestTimerView: View {
         self.completedTime = 0
         self.totalTime = 5
         self.shouldShowMenus = false
-        NotificationHelper.resetTimerNotification()
     }
     
 }
