@@ -106,9 +106,9 @@ struct RestTimerView: View {
             .overlay(
                 Circle()
                     .trim(from: 0, to: progress)
-                    .stroke(Color.green, style: StrokeStyle(lineWidth: (status == .playing || status == .paused) ? 7 : 0, lineCap: .round))
+                    .stroke(appSettings.themeColorView(), style: StrokeStyle(lineWidth: (status == .playing || status == .paused) ? 7 : 0, lineCap: .round))
                     .rotationEffect(.degrees(-90))
-                    .animation(.linear)
+                    .animation(Animation.linear(duration: 1))
             )
             .shadow(radius: shouldShowMenus ? 5 : 0)
             .offset(y: shouldShowMenus ? -offset * 2 : 0)
@@ -150,7 +150,9 @@ struct RestTimerView: View {
             if self.status == .playing {
                 self.completedTime += 1
                 if self.completedTime == self.appSettings.workoutTimerInterval {
-                    self.resetDetails()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        self.resetDetails()
+                    }
                 }
             }
         })
