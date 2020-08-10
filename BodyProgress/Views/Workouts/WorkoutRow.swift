@@ -61,7 +61,7 @@ struct WorkoutRow: View {
                             .bold()
                             .padding(10)
                             .frame(height: 30)
-                            .background(Color.green)
+                            .background(Color(AppThemeColours.green.uiColor()))
                             .clipShape(RoundedRectangle(cornerRadius: 15))
                     }
                     .buttonStyle(BorderlessButtonStyle())
