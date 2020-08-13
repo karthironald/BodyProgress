@@ -63,7 +63,7 @@ struct RestTimerView: View {
             Button(action: {
                 Helper.hapticFeedback(style: .soft)
                 if self.appSettings.workoutTimerInterval > 5 {
-                    self.appSettings.workoutTimerInterval -= 5
+                    self.appSettings.workoutTimerInterval = self.appSettings.workoutTimerInterval - 5
                 }
             }) {
                 Image(systemName: "minus")
@@ -79,7 +79,7 @@ struct RestTimerView: View {
             
             Button(action: {
                 Helper.hapticFeedback(style: .soft)
-                self.appSettings.workoutTimerInterval += 5
+                self.appSettings.workoutTimerInterval = self.appSettings.workoutTimerInterval + 5
             }) {
                 Image(systemName: "plus")
                     .font(kPrimaryTitleFont)

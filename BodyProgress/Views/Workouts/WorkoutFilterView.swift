@@ -17,7 +17,7 @@ struct WorkoutFilterView: View {
     
     var body: some View {
         NavigationView {
-            WorkoutsList(predicate: self.customPredicate(), sortDescriptor: NSSortDescriptor(keyPath: \Workout.createdAt, ascending: true))
+            WorkoutsList(predicate: self.customPredicate(), sortDescriptor: NSSortDescriptor(keyPath: \Workout.createdAt, ascending: true)).environmentObject(appSettings)
                 .navigationBarTitle(Text("kScreenTitleWorkouts"))
                 .navigationBarItems(leading:
                     Button(action: {
