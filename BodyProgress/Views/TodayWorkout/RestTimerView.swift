@@ -59,38 +59,39 @@ struct RestTimerView: View {
                 }
             }
 
-            
-            Button(action: {
-                Helper.hapticFeedback(style: .soft)
-                if self.appSettings.workoutTimerInterval > 5 {
-                    self.appSettings.workoutTimerInterval = self.appSettings.workoutTimerInterval - 5
+            if status != .playing {
+                Button(action: {
+                    Helper.hapticFeedback(style: .soft)
+                    if self.appSettings.workoutTimerInterval > 5 {
+                        self.appSettings.workoutTimerInterval = self.appSettings.workoutTimerInterval - 5
+                    }
+                }) {
+                    Image(systemName: "minus")
+                        .font(kPrimaryTitleFont)
+                        .frame(width: 50, height: 50)
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .clipShape(Circle())
                 }
-            }) {
-                Image(systemName: "minus")
-                    .font(kPrimaryTitleFont)
-                    .frame(width: 50, height: 50)
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .clipShape(Circle())
+                .shadow(radius: shouldShowMenus ? 5 : 0)
+                .offset(x: shouldShowMenus ? (status == .playing ? offset * 2 : offset) : 0)
+                .animation(.spring())
+                
+                Button(action: {
+                    Helper.hapticFeedback(style: .soft)
+                    self.appSettings.workoutTimerInterval = self.appSettings.workoutTimerInterval + 5
+                }) {
+                    Image(systemName: "plus")
+                        .font(kPrimaryTitleFont)
+                        .frame(width: 50, height: 50)
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .clipShape(Circle())
+                }
+                .shadow(radius: shouldShowMenus ? 5 : 0)
+                .offset(x: shouldShowMenus ? (status == .playing ? offset * 3 : offset * 2) : 0)
+                .animation(.spring())
             }
-            .shadow(radius: shouldShowMenus ? 5 : 0)
-            .offset(x: shouldShowMenus ? (status == .playing ? offset * 2 : offset) : 0)
-            .animation(.spring())
-            
-            Button(action: {
-                Helper.hapticFeedback(style: .soft)
-                self.appSettings.workoutTimerInterval = self.appSettings.workoutTimerInterval + 5
-            }) {
-                Image(systemName: "plus")
-                    .font(kPrimaryTitleFont)
-                    .frame(width: 50, height: 50)
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .clipShape(Circle())
-            }
-            .shadow(radius: shouldShowMenus ? 5 : 0)
-            .offset(x: shouldShowMenus ? (status == .playing ? offset * 3 : offset * 2) : 0)
-            .animation(.spring())
 
             if status == .playing {
                 Button(action: {
@@ -152,7 +153,6 @@ struct RestTimerView: View {
                     self.stopTimer()
                     NotificationHelper.resetTimerNotification()
                 }
-                self.shouldShowMenus = false
             }) {
                 Image(systemName: (status == .playing) ? "pause" : "play")
                     .imageScale(.large)
