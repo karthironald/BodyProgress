@@ -48,14 +48,15 @@ struct RestTimerView: View {
                 self.backgroundAt = Date()
             }
             .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { (_) in
-                let backgroundInterval = TimeInterval(Int(Date().timeIntervalSince(self.backgroundAt) + 1))
-                self.completedTime += backgroundInterval
-                if self.completedTime >= self.appSettings.workoutTimerInterval - 1 {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                if self.status == .playing {
+                    let backgroundInterval = TimeInterval(Int(Date().timeIntervalSince(self.backgroundAt) + 1))
+                    
+                    if (self.completedTime + backgroundInterval) >= (self.appSettings.workoutTimerInterval - 1) {
                         self.resetDetails()
+                    } else {
+                        self.completedTime += backgroundInterval
+                        self.startTimer()
                     }
-                } else {
-                    self.startTimer()
                 }
             }
 
