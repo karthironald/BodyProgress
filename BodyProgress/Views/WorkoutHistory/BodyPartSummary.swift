@@ -24,7 +24,7 @@ struct BodyPartSummary: View {
     var body: some View {
         ZStack {
             if data.count == 0 {
-                EmptyStateInfoView(message: "No summary was available. Start your workout.")
+                EmptyStateInfoView(title: "No summary was available. Start your workout.")
             } else {
                 List(0..<data.count, id: \.self) { index in
                     BodyPartSummaryRow(summary: self.data[index], bodyPart: self.bodyPart, total: self.total).environmentObject(self.appSettings)

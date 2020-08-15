@@ -38,37 +38,39 @@ class Helper: NSObject {
     }
  
     class func createDefaultWorkouts() {
-    
         let appSettings = AppSettings()
         if !appSettings.addedDefaultWorkouts {
-            let exampleWorkouts = ["Bicpes", "Chest"]
-            let exampleExercises = [["Concentration curls", "Hammer curls", "Barbell curls", "Dumbbell curls"], ["BB incline bench press", "Barbell bench press", "Dumbbell fly", "Dumbbell bench press"]]
+            let exampleWorkouts = ["Sample workout"]
+            let exampleExercises = [["Sample exercise"]]
             
             let moc = kAppDelegate.persistentContainer.viewContext
             
             for (index, eWorkout) in exampleWorkouts.enumerated() {
                 let workout = Workout(context: moc)
                 workout.name = eWorkout
-                workout.notes = "\"This is the example workout\"."
-                workout.bodyPart = (index == 0) ? BodyParts.arms.rawValue : BodyParts.chest.rawValue
+                workout.notes = "\"This is the sample workout to get the taste of this tracker app. Delete this workout and configure your workouts and exercises to get started.\""
+                workout.bodyPart = BodyParts.arms.rawValue
                 workout.id = UUID()
-                workout.createdAt = Date().advanced(by: TimeInterval.random(in: 10...100))
-                workout.updatedAt = Date().advanced(by: TimeInterval.random(in: 10...100))
+                workout.createdAt = Date()
+                if index == 0 {
+                    workout.isFavourite = true
+                }
+                workout.updatedAt = Date()
                 
                 for (_, name) in exampleExercises[index].enumerated() {
                     let exercise = Exercise(context: moc)
                     exercise.name = name
                     exercise.bodyPart = workout.bodyPart
                     exercise.id = UUID()
-                    exercise.createdAt = Date().advanced(by: TimeInterval.random(in: 10...100))
-                    exercise.updatedAt = Date().advanced(by: TimeInterval.random(in: 10...100))
+                    exercise.createdAt = Date()
+                    exercise.updatedAt = Date()
                     
                     for j in 1...3 {
                         let newExerciseSet = ExerciseSet(context: moc)
                         newExerciseSet.name = "Set \(j)"
                         newExerciseSet.id = UUID()
-                        newExerciseSet.createdAt = Date().advanced(by: TimeInterval.random(in: 10...100))
-                        newExerciseSet.updatedAt = Date().advanced(by: TimeInterval.random(in: 10...100))
+                        newExerciseSet.createdAt = Date()
+                        newExerciseSet.updatedAt = Date()
                         newExerciseSet.weight = Double(5 * j)
                         newExerciseSet.reputation = 12
                         

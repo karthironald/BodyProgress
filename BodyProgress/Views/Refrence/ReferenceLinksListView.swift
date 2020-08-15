@@ -34,7 +34,7 @@ struct ReferenceLinksListView: View {
     var body: some View {
         ZStack {
             if referencesLinks.count == 0 {
-                EmptyStateInfoView(message: NSLocalizedString("kInfoMsgNoReferenceLinksAdded", comment: "Info message"))
+                EmptyStateInfoView(title: NSLocalizedString("kInfoMsgNoReferenceLinksAdded", comment: "Info message"))
             }
             ScrollView(.vertical) {
                 VStack {

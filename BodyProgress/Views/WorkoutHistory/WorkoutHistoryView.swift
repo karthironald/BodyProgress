@@ -31,7 +31,7 @@ struct WorkoutHistoryView: View {
     var body: some View {
         ZStack {
             if workoutHistory.count == 0 {
-                EmptyStateInfoView(message: "No workouts histories")
+                EmptyStateInfoView(title: "No workouts histories")
             }
             VStack {
                 List{

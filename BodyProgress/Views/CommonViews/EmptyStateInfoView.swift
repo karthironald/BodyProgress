@@ -11,7 +11,8 @@ import SwiftUI
 struct EmptyStateInfoView: View {
     
     var image: Image = Image(systemName: "exclamationmark.triangle.fill")
-    var message: String = "No data to show"
+    var title: String = "No data to show"
+    var message: String = ""
     
     var body: some View {
         VStack {
@@ -21,11 +22,18 @@ struct EmptyStateInfoView: View {
                 .frame(width: 50, height: 50)
                 .foregroundColor(.secondary)
                 .shadow(radius: 10)
-            Text(message)
+            Text(title)
                 .font(kPrimaryBodyFont)
+                .bold()
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+                .padding(.bottom)
+            Text(message)
+                .font(kPrimaryCalloutFont)
+                .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
         }
-        .padding()
+        .padding(40)
         .zIndex(1)
     }
 }

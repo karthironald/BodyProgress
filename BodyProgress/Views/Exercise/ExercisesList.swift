@@ -26,7 +26,7 @@ struct ExercisesList: View {
     var body: some View {
         ZStack {
             if selectedWorkout.wExercises.count == 0 {
-                EmptyStateInfoView(message: NSLocalizedString("kInfoMsgNoExercisesAdded", comment: "Info messages"))
+                EmptyStateInfoView(title: NSLocalizedString("kInfoMsgNoExercisesAddedTitle", comment: "Info messages"), message: NSLocalizedString("kInfoMsgNoExercisesAddedMessage", comment: "Info messages"))
             }
             VStack {
                 List {

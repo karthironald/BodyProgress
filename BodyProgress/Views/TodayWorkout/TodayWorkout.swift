@@ -32,12 +32,18 @@ struct TodayWorkout: View {
     
     var body: some View {
         NavigationView {
-            ZStack(alignment: .bottomLeading) {
-                List(selectedWorkout.wExercises, id: \.self) { exercise in
-                    TodayExcerciseRow(exercise: exercise).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
+            ZStack {
+                if selectedWorkout.wExercises.count == 0 {
+                    EmptyStateInfoView(image: Image(systemName: "flame"), title: "No exercises and sets added", message: "Go to the workouts list and select the '\(selectedWorkout.wName)' to configure its exercises and sets.")
                 }
-                RestTimerView().environmentObject(appSettings)
+                ZStack(alignment: .bottomLeading) {
+                    List(selectedWorkout.wExercises, id: \.self) { exercise in
+                        TodayExcerciseRow(exercise: exercise).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
+                    }
+                    RestTimerView().environmentObject(appSettings)
+                }
             }
+            
             .padding([.top, .bottom], 10)
             .navigationBarTitle(Text("\(selectedWorkout.wName)"), displayMode: .inline)
             .navigationBarItems(

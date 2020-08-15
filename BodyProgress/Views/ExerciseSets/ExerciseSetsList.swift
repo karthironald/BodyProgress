@@ -23,7 +23,7 @@ struct ExerciseSetsList: View {
     var body: some View {
         ZStack {
             if selectedExercise.wExerciseSets.count == 0 {
-                EmptyStateInfoView(message: NSLocalizedString("kInfoMsgNoExercisesSetsAdded", comment: "Info message"))
+                EmptyStateInfoView(title: NSLocalizedString("kInfoMsgNoExercisesSetsAddedTitle", comment: "Info message"), message: NSLocalizedString("kInfoMsgNoExercisesSetsAddedMessage", comment: "Info message"))
             }
             VStack {
                 List{
