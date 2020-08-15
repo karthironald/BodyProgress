@@ -69,7 +69,7 @@ enum BodyParts: String, CaseIterable {
         case .fullBody: return Color(.systemIndigo)
         case .others: return Color(.systemGray)
         case .core: return Color(.systemTeal)
-        case .cardio: return Color(.systemGray2)
+        case .cardio: return Color(.systemPink)
         }
     }
 }
