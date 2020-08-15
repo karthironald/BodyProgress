@@ -90,7 +90,7 @@ class NotificationHelper: NSObject {
         let centre = UNUserNotificationCenter.current()
         
         let notificationContent = UNMutableNotificationContent()
-        notificationContent.title = "\(Int(interval)) seconds timeout!"
+        notificationContent.title = "Timer completed!"
         
         notificationContent.sound = UNNotificationSound.default
         

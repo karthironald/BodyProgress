@@ -37,7 +37,7 @@ struct WokroutHistoryRow: View {
                 Spacer()
                 Image(systemName: workoutHistory.isAllSetCompleted() ? "checkmark.seal.fill" : "xmark.seal.fill")
                     .imageScale(.large)
-                    .foregroundColor(workoutHistory.isAllSetCompleted() ? .green : .orange)
+                    .foregroundColor(workoutHistory.isAllSetCompleted() ? Color(AppThemeColours.green.uiColor()) : Color(AppThemeColours.orange.uiColor()))
                     .font(kPrimaryBodyFont)
                     .padding(.trailing, 10)
                 Image(systemName: "arrowtriangle.right.fill")

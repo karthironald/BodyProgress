@@ -41,7 +41,7 @@ struct WorkoutsList: View {
                 List {
                     ForEach(0..<workouts.count, id: \.self) { workoutIndex in
                         ZStack {
-                            WorkoutRow(workout: self.workouts[workoutIndex]).environment(\.managedObjectContext, self.managedObjectContext)
+                            WorkoutRow(workout: self.workouts[workoutIndex]).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
                                 .contextMenu {
                                     Button(action: {
                                         self.editWorkoutIndex = workoutIndex
