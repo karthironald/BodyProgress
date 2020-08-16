@@ -137,6 +137,7 @@ struct WorkoutRow: View {
         workoutHistory.id = UUID()
         workoutHistory.createdAt = Date()
         workoutHistory.updatedAt = Date()
+        workoutHistory.startedAt = Date()
         
         for exercise in workout.wExercises {
             let exerciseHistory = ExerciseHistory(context: managedObjectContext)

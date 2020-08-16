@@ -67,9 +67,6 @@ struct TodayWorkout: View {
                         self.showCompleteInfoAlert.toggle()
                     }))
             }
-            .onDisappear {
-                self.updateWorkout()
-            }
         }
         .alert(isPresented: $showCompleteInfoAlert, content: { () -> Alert in
             Helper.hapticFeedback()
@@ -105,6 +102,7 @@ struct TodayWorkout: View {
         selectedWorkout.status = selectedWorkout.isAllSetCompleted()
         workout.lastTrainedAt = Date()
         selectedWorkout.workout = self.workout
+        selectedWorkout.finishedAt = Date()
         if managedObjectContext.hasChanges {
             do {
                 try managedObjectContext.save()

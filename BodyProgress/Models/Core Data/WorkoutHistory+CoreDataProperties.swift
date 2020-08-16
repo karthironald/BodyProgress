@@ -20,6 +20,8 @@ extension WorkoutHistory {
     @NSManaged public var bodyPart: String?
     @NSManaged public var createdAt: Date?
     @NSManaged public var deletedAt: Date?
+    @NSManaged public var startedAt: Date?
+    @NSManaged public var finishedAt: Date?
     @NSManaged public var id: UUID?
     @NSManaged public var imagePath: String?
     @NSManaged public var isFavourite: Bool
@@ -36,6 +38,8 @@ extension WorkoutHistory {
     var wNotes: String { notes ?? kDefaultValue }
     var wCreatedAt: Date { createdAt ?? Date() }
     var wUpdatedAt: Date { updatedAt ?? Date() }
+    var wStartedAt: Date { startedAt ?? Date() }
+    var wFinishedAt: Date { finishedAt ?? Date() }
     var wId: UUID { id ?? UUID() }
     var wLastTrainedAt: Date { lastTrainedAt ?? Date() }
     var wImagePath: String { imagePath ?? kDefaultValue }
