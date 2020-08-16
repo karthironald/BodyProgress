@@ -186,7 +186,11 @@ struct TimerView: View {
             .padding([.trailing, .top, .bottom])
             .frame(width: 100)
             .onReceive(timer) { date in
-                self.duration = Int16(date.timeIntervalSince(self.startDate))
+                if self.selectedWorkout.wBodyPart == .cardio { // Cardio is time based workout. So we are taking duration from workout started time.
+                    self.duration = Int16(date.timeIntervalSince(self.selectedWorkout.wStartedAt))
+                } else {
+                    self.duration = Int16(date.timeIntervalSince(self.startDate))
+                }
                 self.displayDuration = self.duration.displayDuration()
                 self.updateWorkout()
         }

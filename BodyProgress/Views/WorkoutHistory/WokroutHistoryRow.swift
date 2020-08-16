@@ -31,14 +31,6 @@ struct WokroutHistoryRow: View {
                         Text("\(workoutHistory.wCreatedAt, formatter: DateFormatter().appDormatter)")
                             .font(kPrimarySubheadlineFont)
                             .foregroundColor(.secondary)
-                        if workoutHistory.startedAt != nil && workoutHistory.finishedAt != nil {
-                            Circle()
-                                .fill(Color.secondary)
-                                .frame(width: 5, height: 5)
-                            Text(durationBetweenStartandFinished())
-                                .font(kPrimarySubheadlineFont)
-                                .foregroundColor(.secondary)
-                        }
                     }
                 }
                 .padding()
@@ -56,11 +48,6 @@ struct WokroutHistoryRow: View {
         }
         .frame(height: 80)
         .cornerRadius(kCornerRadius)
-    }
-    
-    func durationBetweenStartandFinished() -> String {
-        let duration = workoutHistory.wFinishedAt.timeIntervalSince(workoutHistory.wStartedAt)
-        return duration.detailedDisplayDuration()
     }
     
 }
