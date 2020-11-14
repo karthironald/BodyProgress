@@ -78,28 +78,11 @@
 		77CFAAF524B1CC2B003BA128 /* RedIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 77CFAAF324B1CC2B003BA128 /* RedIcon@2x.png */; };
 		77CFAAF824B1CC59003BA128 /* YellowIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 77CFAAF624B1CC58003BA128 /* YellowIcon@3x.png */; };
 		77CFAAF924B1CC59003BA128 /* YellowIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 77CFAAF724B1CC59003BA128 /* YellowIcon@2x.png */; };
-		77CFCE1B255E92F10022D25E /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77CFCE1A255E92F10022D25E /* WidgetKit.framework */; };
-		77CFCE1D255E92F10022D25E /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77CFCE1C255E92F10022D25E /* SwiftUI.framework */; };
-		77CFCE20255E92F10022D25E /* WorkProWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CFCE1F255E92F10022D25E /* WorkProWidget.swift */; };
-		77CFCE23255E92F40022D25E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77CFCE22255E92F40022D25E /* Assets.xcassets */; };
-		77CFCE25255E92F40022D25E /* WorkProWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 77CFCE21255E92F10022D25E /* WorkProWidget.intentdefinition */; };
-		77CFCE26255E92F40022D25E /* WorkProWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 77CFCE21255E92F10022D25E /* WorkProWidget.intentdefinition */; };
-		77CFCE29255E92F40022D25E /* WorkProWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 77CFCE19255E92F10022D25E /* WorkProWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		77E5076024BBFD3F0083BE10 /* BodyPartSummaryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E5075F24BBFD3F0083BE10 /* BodyPartSummaryRow.swift */; };
 		77F4C4FB244A21B70048E3CB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77F4C4FA244A21B70048E3CB /* Preview Assets.xcassets */; };
 		77F8AC4024B0676D00A5ABB5 /* NotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F8AC3F24B0676D00A5ABB5 /* NotificationHelper.swift */; };
 		77F8AC4324B06B7500A5ABB5 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F8AC4224B06B7500A5ABB5 /* SettingsView.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		77CFCE27255E92F40022D25E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 77F4C4E3244A21B40048E3CB /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 77CFCE18255E92F10022D25E;
-			remoteInfo = WorkProWidgetExtension;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		77CFCE2A255E92F40022D25E /* Embed App Extensions */ = {
@@ -108,7 +91,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				77CFCE29255E92F40022D25E /* WorkProWidgetExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -187,13 +169,8 @@
 		77CFAAF324B1CC2B003BA128 /* RedIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RedIcon@2x.png"; sourceTree = "<group>"; };
 		77CFAAF624B1CC58003BA128 /* YellowIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "YellowIcon@3x.png"; sourceTree = "<group>"; };
 		77CFAAF724B1CC59003BA128 /* YellowIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "YellowIcon@2x.png"; sourceTree = "<group>"; };
-		77CFCE19255E92F10022D25E /* WorkProWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WorkProWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		77CFCE1A255E92F10022D25E /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		77CFCE1C255E92F10022D25E /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
-		77CFCE1F255E92F10022D25E /* WorkProWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkProWidget.swift; sourceTree = "<group>"; };
-		77CFCE21255E92F10022D25E /* WorkProWidget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = WorkProWidget.intentdefinition; sourceTree = "<group>"; };
-		77CFCE22255E92F40022D25E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		77CFCE24255E92F40022D25E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		77E5075F24BBFD3F0083BE10 /* BodyPartSummaryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyPartSummaryRow.swift; sourceTree = "<group>"; };
 		77F4C4EB244A21B40048E3CB /* WorkoutPro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkoutPro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77F4C4FA244A21B70048E3CB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -205,15 +182,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		77CFCE16255E92F10022D25E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				77CFCE1D255E92F10022D25E /* SwiftUI.framework in Frameworks */,
-				77CFCE1B255E92F10022D25E /* WidgetKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		77F4C4E8244A21B40048E3CB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -458,22 +426,10 @@
 			path = "App Icons";
 			sourceTree = "<group>";
 		};
-		77CFCE1E255E92F10022D25E /* WorkProWidget */ = {
-			isa = PBXGroup;
-			children = (
-				77CFCE1F255E92F10022D25E /* WorkProWidget.swift */,
-				77CFCE21255E92F10022D25E /* WorkProWidget.intentdefinition */,
-				77CFCE22255E92F40022D25E /* Assets.xcassets */,
-				77CFCE24255E92F40022D25E /* Info.plist */,
-			);
-			path = WorkProWidget;
-			sourceTree = "<group>";
-		};
 		77F4C4E2244A21B40048E3CB = {
 			isa = PBXGroup;
 			children = (
 				77F4C4ED244A21B40048E3CB /* BodyProgress */,
-				77CFCE1E255E92F10022D25E /* WorkProWidget */,
 				77F4C4EC244A21B40048E3CB /* Products */,
 				2FEC74F87748713AB9621D49 /* Pods */,
 				6BFE0494139F4A0F16907FC7 /* Frameworks */,
@@ -484,7 +440,6 @@
 			isa = PBXGroup;
 			children = (
 				77F4C4EB244A21B40048E3CB /* WorkoutPro.app */,
-				77CFCE19255E92F10022D25E /* WorkProWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -544,23 +499,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		77CFCE18255E92F10022D25E /* WorkProWidgetExtension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 77CFCE2D255E92F40022D25E /* Build configuration list for PBXNativeTarget "WorkProWidgetExtension" */;
-			buildPhases = (
-				77CFCE15255E92F10022D25E /* Sources */,
-				77CFCE16255E92F10022D25E /* Frameworks */,
-				77CFCE17255E92F10022D25E /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = WorkProWidgetExtension;
-			productName = WorkProWidgetExtension;
-			productReference = 77CFCE19255E92F10022D25E /* WorkProWidgetExtension.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
 		77F4C4EA244A21B40048E3CB /* BodyProgress */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 77F4C502244A21B70048E3CB /* Build configuration list for PBXNativeTarget "BodyProgress" */;
@@ -575,7 +513,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				77CFCE28255E92F40022D25E /* PBXTargetDependency */,
 			);
 			name = BodyProgress;
 			productName = BodyProgress;
@@ -592,9 +529,6 @@
 				LastUpgradeCheck = 1110;
 				ORGANIZATIONNAME = "Mallow Technologies Private Limited";
 				TargetAttributes = {
-					77CFCE18255E92F10022D25E = {
-						CreatedOnToolsVersion = 12.1;
-					};
 					77F4C4EA244A21B40048E3CB = {
 						CreatedOnToolsVersion = 11.1;
 					};
@@ -614,20 +548,11 @@
 			projectRoot = "";
 			targets = (
 				77F4C4EA244A21B40048E3CB /* BodyProgress */,
-				77CFCE18255E92F10022D25E /* WorkProWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		77CFCE17255E92F10022D25E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				77CFCE23255E92F40022D25E /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		77F4C4E9244A21B40048E3CB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -698,15 +623,6 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		77CFCE15255E92F10022D25E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				77CFCE20255E92F10022D25E /* WorkProWidget.swift in Sources */,
-				77CFCE25255E92F40022D25E /* WorkProWidget.intentdefinition in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		77F4C4E7244A21B40048E3CB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -743,7 +659,6 @@
 				7718100F245EBFF3005D6E9F /* Workout+CoreDataClass.swift in Sources */,
 				77B6B52924521A90004B9F89 /* AppDelegate.swift in Sources */,
 				77B6B51C24521A2D004B9F89 /* WorkoutRow.swift in Sources */,
-				77CFCE26255E92F40022D25E /* WorkProWidget.intentdefinition in Sources */,
 				770903A2245F27F3003F7EDD /* ExerciseRow.swift in Sources */,
 				77E5076024BBFD3F0083BE10 /* BodyPartSummaryRow.swift in Sources */,
 				77181016245EBFF3005D6E9F /* ExerciseSet+CoreDataProperties.swift in Sources */,
@@ -773,14 +688,6 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		77CFCE28255E92F40022D25E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 77CFCE18255E92F10022D25E /* WorkProWidgetExtension */;
-			targetProxy = 77CFCE27255E92F40022D25E /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin PBXVariantGroup section */
 		77B6B52324521A90004B9F89 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -793,54 +700,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		77CFCE2B255E92F40022D25E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3RHR7K3FP7;
-				INFOPLIST_FILE = WorkProWidget/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mallow-tech.BodyProgress.WorkProWidget";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		77CFCE2C255E92F40022D25E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3RHR7K3FP7;
-				INFOPLIST_FILE = WorkProWidget/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mallow-tech.BodyProgress.WorkProWidget";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 		77F4C500244A21B70048E3CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1010,15 +869,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		77CFCE2D255E92F40022D25E /* Build configuration list for PBXNativeTarget "WorkProWidgetExtension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				77CFCE2B255E92F40022D25E /* Debug */,
-				77CFCE2C255E92F40022D25E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		77F4C4E6244A21B40048E3CB /* Build configuration list for PBXProject "BodyProgress" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
