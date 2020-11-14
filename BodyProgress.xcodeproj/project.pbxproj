@@ -45,6 +45,11 @@
 		7766E54224575BDF008627D9 /* AddWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7766E54124575BDF008627D9 /* AddWorkout.swift */; };
 		776AE34A2465DB140050DD9A /* TodayExerciseSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776AE3492465DB140050DD9A /* TodayExerciseSet.swift */; };
 		778E10A5246E3FEE00C0A477 /* WokroutHistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778E10A4246E3FEE00C0A477 /* WokroutHistoryRow.swift */; };
+		77917626255FEB30005F5F07 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77CFCE1A255E92F10022D25E /* WidgetKit.framework */; };
+		77917627255FEB30005F5F07 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77CFCE1C255E92F10022D25E /* SwiftUI.framework */; };
+		7791762A255FEB30005F5F07 /* ProgressWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77917629255FEB30005F5F07 /* ProgressWidget.swift */; };
+		7791762C255FEB32005F5F07 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7791762B255FEB32005F5F07 /* Assets.xcassets */; };
+		77917630255FEB32005F5F07 /* ProgressWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 77917625255FEB30005F5F07 /* ProgressWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		77929A0124536DFB00C28A39 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77929A0024536DFB00C28A39 /* Constant.swift */; };
 		779614F8245EE31C00E0216C /* EmptyStateInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779614F7245EE31C00E0216C /* EmptyStateInfoView.swift */; };
 		779BE97D245AF3DD006FDAE8 /* CustomBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779BE97C245AF3DD006FDAE8 /* CustomBarButton.swift */; };
@@ -84,6 +89,16 @@
 		77F8AC4324B06B7500A5ABB5 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F8AC4224B06B7500A5ABB5 /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		7791762E255FEB32005F5F07 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 77F4C4E3244A21B40048E3CB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 77917624255FEB30005F5F07;
+			remoteInfo = ProgressWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		77CFCE2A255E92F40022D25E /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -91,6 +106,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				77917630255FEB32005F5F07 /* ProgressWidgetExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -136,6 +152,10 @@
 		7766E54124575BDF008627D9 /* AddWorkout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWorkout.swift; sourceTree = "<group>"; };
 		776AE3492465DB140050DD9A /* TodayExerciseSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayExerciseSet.swift; sourceTree = "<group>"; };
 		778E10A4246E3FEE00C0A477 /* WokroutHistoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WokroutHistoryRow.swift; sourceTree = "<group>"; };
+		77917625255FEB30005F5F07 /* ProgressWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ProgressWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		77917629255FEB30005F5F07 /* ProgressWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressWidget.swift; sourceTree = "<group>"; };
+		7791762B255FEB32005F5F07 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7791762D255FEB32005F5F07 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		77929A0024536DFB00C28A39 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		779614F7245EE31C00E0216C /* EmptyStateInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateInfoView.swift; sourceTree = "<group>"; };
 		779BE97C245AF3DD006FDAE8 /* CustomBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBarButton.swift; sourceTree = "<group>"; };
@@ -182,6 +202,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		77917622255FEB30005F5F07 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				77917627255FEB30005F5F07 /* SwiftUI.framework in Frameworks */,
+				77917626255FEB30005F5F07 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		77F4C4E8244A21B40048E3CB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -272,6 +301,16 @@
 				77201C4624CD713100890DF8 /* ReferenceLinkFilterView.swift */,
 			);
 			path = Refrence;
+			sourceTree = "<group>";
+		};
+		77917628255FEB30005F5F07 /* ProgressWidget */ = {
+			isa = PBXGroup;
+			children = (
+				77917629255FEB30005F5F07 /* ProgressWidget.swift */,
+				7791762B255FEB32005F5F07 /* Assets.xcassets */,
+				7791762D255FEB32005F5F07 /* Info.plist */,
+			);
+			path = ProgressWidget;
 			sourceTree = "<group>";
 		};
 		779BE97B245AF2FC006FDAE8 /* CommonViews */ = {
@@ -430,6 +469,7 @@
 			isa = PBXGroup;
 			children = (
 				77F4C4ED244A21B40048E3CB /* BodyProgress */,
+				77917628255FEB30005F5F07 /* ProgressWidget */,
 				77F4C4EC244A21B40048E3CB /* Products */,
 				2FEC74F87748713AB9621D49 /* Pods */,
 				6BFE0494139F4A0F16907FC7 /* Frameworks */,
@@ -440,6 +480,7 @@
 			isa = PBXGroup;
 			children = (
 				77F4C4EB244A21B40048E3CB /* WorkoutPro.app */,
+				77917625255FEB30005F5F07 /* ProgressWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -499,6 +540,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		77917624255FEB30005F5F07 /* ProgressWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 77917631255FEB32005F5F07 /* Build configuration list for PBXNativeTarget "ProgressWidgetExtension" */;
+			buildPhases = (
+				77917621255FEB30005F5F07 /* Sources */,
+				77917622255FEB30005F5F07 /* Frameworks */,
+				77917623255FEB30005F5F07 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ProgressWidgetExtension;
+			productName = ProgressWidgetExtension;
+			productReference = 77917625255FEB30005F5F07 /* ProgressWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		77F4C4EA244A21B40048E3CB /* BodyProgress */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 77F4C502244A21B70048E3CB /* Build configuration list for PBXNativeTarget "BodyProgress" */;
@@ -513,6 +571,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				7791762F255FEB32005F5F07 /* PBXTargetDependency */,
 			);
 			name = BodyProgress;
 			productName = BodyProgress;
@@ -529,6 +588,9 @@
 				LastUpgradeCheck = 1110;
 				ORGANIZATIONNAME = "Mallow Technologies Private Limited";
 				TargetAttributes = {
+					77917624255FEB30005F5F07 = {
+						CreatedOnToolsVersion = 12.1;
+					};
 					77F4C4EA244A21B40048E3CB = {
 						CreatedOnToolsVersion = 11.1;
 					};
@@ -548,11 +610,20 @@
 			projectRoot = "";
 			targets = (
 				77F4C4EA244A21B40048E3CB /* BodyProgress */,
+				77917624255FEB30005F5F07 /* ProgressWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		77917623255FEB30005F5F07 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7791762C255FEB32005F5F07 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		77F4C4E9244A21B40048E3CB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -623,6 +694,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		77917621255FEB30005F5F07 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7791762A255FEB30005F5F07 /* ProgressWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		77F4C4E7244A21B40048E3CB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -688,6 +767,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		7791762F255FEB32005F5F07 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 77917624255FEB30005F5F07 /* ProgressWidgetExtension */;
+			targetProxy = 7791762E255FEB32005F5F07 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		77B6B52324521A90004B9F89 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -700,6 +787,54 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		77917632255FEB32005F5F07 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3RHR7K3FP7;
+				INFOPLIST_FILE = ProgressWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mallow-tech.BodyProgress.ProgressWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		77917633255FEB32005F5F07 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3RHR7K3FP7;
+				INFOPLIST_FILE = ProgressWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mallow-tech.BodyProgress.ProgressWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		77F4C500244A21B70048E3CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -869,6 +1004,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		77917631255FEB32005F5F07 /* Build configuration list for PBXNativeTarget "ProgressWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				77917632255FEB32005F5F07 /* Debug */,
+				77917633255FEB32005F5F07 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		77F4C4E6244A21B40048E3CB /* Build configuration list for PBXProject "BodyProgress" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
