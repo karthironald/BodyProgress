@@ -8,8 +8,6 @@
 
 import SwiftUI
 
-let kAppDelegate = UIApplication.shared.delegate as! AppDelegate
-
 let kShadowRadius: CGFloat = 3.0
 let kCornerRadius: CGFloat = 15.0
 let kDefaultValue = "-"

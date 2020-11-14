@@ -8,42 +8,47 @@
 
 import WidgetKit
 import SwiftUI
+import CoreData
+
+let moc = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+
+let placeholderSummary = WidgetSummaryContent(totalWorkoutTime: 100, progress: [(70, BodyParts.arms, 10), (30, BodyParts.chest, 10)], segments: [WidgetSegmentData(percentage: 70, startAngle: 0, endAngle: 252), WidgetSegmentData(percentage: 30, startAngle: 252, endAngle: 360)])
 
 struct Provider: TimelineProvider {
-    func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date())
+    func placeholder(in context: Context) -> WidgetSummaryContent {
+        placeholderSummary
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date())
+    func getSnapshot(in context: Context, completion: @escaping (WidgetSummaryContent) -> ()) {
+        let entry = placeholderSummary
         completion(entry)
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        var entries: [SimpleEntry] = []
+        var progress: [(Double, BodyParts, Double)] = []
+        var segments: [WidgetSegmentData] = []
+        
+        WorkoutHistory.fetchSummary(context: moc) { (data) in
+            progress = data
+            var lastEndAngle = 0.0
+            var total : Double {
+                let durations = progress.map { $0.0 }
+                return durations.reduce(0.0, +)
+            }
+            for pro in progress {
+                let percent = (pro.0 / total) * 100.0
+                let angle = (360 / 100) * (percent)
+                let segmentData = WidgetSegmentData(percentage: percent, startAngle: lastEndAngle, endAngle: lastEndAngle + angle)
+                
+                segments.append(segmentData)
+                lastEndAngle += angle
+            }
+            
+            let summary = WidgetSummaryContent(progress: progress, segments: segments)
 
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-        let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate)
-            entries.append(entry)
+            let timeline = Timeline(entries: [summary], policy: .atEnd)
+            completion(timeline)
         }
-
-        let timeline = Timeline(entries: entries, policy: .atEnd)
-        completion(timeline)
-    }
-}
-
-struct SimpleEntry: TimelineEntry {
-    let date: Date
-}
-
-struct ProgressWidgetEntryView : View {
-    var entry: Provider.Entry
-
-    var body: some View {
-        Text(entry.date, style: .time)
     }
 }
 
@@ -53,16 +58,16 @@ struct ProgressWidget: Widget {
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            ProgressWidgetEntryView(entry: entry)
+            WidgetPieChart(content: entry)
         }
-        .configurationDisplayName("My Widget")
-        .description("This is an example widget.")
+        .configurationDisplayName("Workout Summary")
+        .description("Get your workout history summary at glance.")
     }
 }
 
 struct ProgressWidget_Previews: PreviewProvider {
     static var previews: some View {
-        ProgressWidgetEntryView(entry: SimpleEntry(date: Date()))
-            .previewContext(WidgetPreviewContext(family: .systemSmall))
+        WidgetPieChart(content: placeholderSummary)
+            .previewContext(WidgetPreviewContext(family: .systemLarge))
     }
 }
