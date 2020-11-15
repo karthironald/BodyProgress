@@ -40,6 +40,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Core Data stack
     
     lazy var persistentContainer: NSPersistentContainer = {
+        let storeURL = AppGroup.group.containerURL.appendingPathComponent("BodyProgress.sqlite")
+        let description = NSPersistentStoreDescription(url: storeURL)
+
+        
         /*
          The persistent container for the application. This implementation
          creates and returns a container, having loaded the store for the
@@ -47,6 +51,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          error conditions that could cause the creation of the store to fail.
          */
         let container = NSPersistentContainer(name: "BodyProgress")
+        container.persistentStoreDescriptions = [description]
+        
+        
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 // Replace this implementation with code to handle the error appropriately.
