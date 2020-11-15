@@ -25,7 +25,6 @@ struct Provider: TimelineProvider {
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         
-        
         func data() {
             var progress: [(Double, BodyParts, Double)] = []
             var segments: [WidgetSegmentData] = []
@@ -53,11 +52,11 @@ struct Provider: TimelineProvider {
             }
         }
         
-//        let storeURL = AppGroup.group.containerURL.appendingPathComponent("BodyProgress.sqlite")
-//        let description = NSPersistentStoreDescription(url: storeURL)
+        let storeURL = AppGroup.group.containerURL.appendingPathComponent("BodyProgress.sqlite")
+        let description = NSPersistentStoreDescription(url: storeURL)
 
         let container = NSPersistentContainer(name: "BodyProgress")
-//        container.persistentStoreDescriptions = [description]
+        container.persistentStoreDescriptions = [description]
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
@@ -79,6 +78,7 @@ struct ProgressWidget: Widget {
         }
         .configurationDisplayName("Workout Summary")
         .description("Get your workout history summary at glance.")
+        .supportedFamilies([.systemLarge])
     }
 }
 
