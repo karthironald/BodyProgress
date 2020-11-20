@@ -16,10 +16,23 @@ let kAppDelegate = UIApplication.shared.delegate as! AppDelegate
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
+    var appSettings = AppSettings()
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
         configureFirebase()
+        
         Helper.createDefaultWorkouts()
+        
         UNUserNotificationCenter.current().delegate = self
+        
+        _ = persistentContainer
+        
+        // Check whether DB is migrated or not.
+        if !appSettings.isDBLocationMigrated {
+            migrateCoreData()
+        }
+        
         return true
     }
     
@@ -40,10 +53,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Core Data stack
     
     lazy var persistentContainer: NSPersistentContainer = {
-        let storeURL = AppGroup.group.containerURL.appendingPathComponent("BodyProgress.sqlite")
-        let description = NSPersistentStoreDescription(url: storeURL)
-
-        
         /*
          The persistent container for the application. This implementation
          creates and returns a container, having loaded the store for the
@@ -51,8 +60,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          error conditions that could cause the creation of the store to fail.
          */
         let container = NSPersistentContainer(name: "BodyProgress")
-        container.persistentStoreDescriptions = [description]
         
+        if appSettings.isDBLocationMigrated {
+            let newStoreURL = AppGroup.group.containerURL.appendingPathComponent("BodyProgress.sqlite")
+            let description = NSPersistentStoreDescription(url: newStoreURL)
+            container.persistentStoreDescriptions = [description]
+        }
         
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
@@ -92,6 +105,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
+    /**Migrate the core data from app to shared app group*/
+    func migrateCoreData() {
+        let oldStoreURL = NSPersistentContainer.defaultDirectoryURL().appendingPathComponent("BodyProgress.sqlite")
+        let newStoreURL = AppGroup.group.containerURL.appendingPathComponent("BodyProgress.sqlite")
+        
+        let coordinator = persistentContainer.persistentStoreCoordinator
+        if let oldStore = coordinator.persistentStore(for: oldStoreURL) {
+            do {
+                try coordinator.migratePersistentStore(oldStore, to: newStoreURL, options: nil, withType: NSSQLiteStoreType)
+                appSettings.isDBLocationMigrated.toggle()
+            } catch {
+                print(error)
+            }
+        }
+    }
     
     // MARK: - Custom methods
     

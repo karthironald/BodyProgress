@@ -62,7 +62,7 @@ struct WidgetPieChart: View {
             }
             .rotationEffect(.degrees(-90))
         }
-        .background(Color.blue)
+        .background(Color.white)
     }
     
 }
