@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import CoreData
 
 class Helper: NSObject {
     
@@ -38,7 +39,11 @@ class Helper: NSObject {
     }
  
     class func createDefaultWorkouts() {
+        if let count = checkWorkoutsCount(), count > 0 {
+            return
+        }
         let appSettings = AppSettings()
+        
         if !appSettings.addedDefaultWorkouts {
             let exampleWorkouts = ["Sample workout"]
             let exampleExercises = [["Sample exercise"]]
@@ -90,4 +95,16 @@ class Helper: NSObject {
             }
         }
     }
+    
+    /**Check and sends count of workouts count*/
+    class func checkWorkoutsCount() -> Int? {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Workout.entity().name ?? "Workout")
+        do {
+            let count = try kAppDelegate.persistentContainer.viewContext.count(for: fetchRequest)
+            return count
+        } catch {
+            return nil
+        }
+    }
+    
 }

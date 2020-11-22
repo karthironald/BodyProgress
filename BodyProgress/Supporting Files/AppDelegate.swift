@@ -22,8 +22,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         configureFirebase()
         
-        Helper.createDefaultWorkouts()
-        
         UNUserNotificationCenter.current().delegate = self
         
         _ = persistentContainer
@@ -33,6 +31,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             migrateCoreData()
         }
         
+        Helper.createDefaultWorkouts()
+
         return true
     }
     
