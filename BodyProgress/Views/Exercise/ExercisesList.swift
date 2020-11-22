@@ -15,7 +15,6 @@ struct ExercisesList: View {
     @State private var shouldPresentAddNewExercise = false
     @Environment(\.managedObjectContext) var managedObjectContext
     @State private var shouldPresentEditExercise: Bool = false
-    @State private var editExerciseIndex: Int = kCommonListIndex
     
     @State private var shouldPresentReferences = false
     @State private var referenceViewIndex: Int = kCommonListIndex
@@ -30,39 +29,45 @@ struct ExercisesList: View {
             }
             VStack {
                 List {
-                    ForEach(0..<selectedWorkout.wExercises.count, id: \.self) { exerciseIndex in
+                    ForEach(selectedWorkout.wExercises) { exercise in
                         ZStack {
-                            ExerciseRow(exercise: self.selectedWorkout.wExercises[exerciseIndex])
+                            ExerciseRow(exercise: exercise)
                                 .sheet(isPresented: self.$shouldPresentReferences, content: {
-                                    ExerciseReferenceView(shouldPresentReferences: self.$shouldPresentReferences, referencesLinks: self.selectedWorkout.wExercises[self.referenceViewIndex].wReferences, exerciseName: self.selectedWorkout.wExercises[self.referenceViewIndex].wName).environmentObject(self.appSettings)
+                                    ExerciseReferenceView(shouldPresentReferences: self.$shouldPresentReferences, referencesLinks: exercise.wReferences, exerciseName: exercise.wName).environmentObject(self.appSettings)
                                 })
                                 .contextMenu {
                                     Button(action: {
-                                        self.referenceViewIndex = exerciseIndex
+                                        if let index = self.selectedWorkout.wExercises.firstIndex(where: { $0.id == exercise.id }) {
+                                            self.referenceViewIndex = index
+                                        }
                                         self.shouldPresentReferences = true
                                     }) {
                                         Image(systemName: "info.circle.fill")
                                         Text("kButtonTitleReferences")
                                     }
                                     Button(action: {
-                                        self.editExerciseIndex = exerciseIndex
                                         self.shouldPresentEditExercise = true
                                     }) {
                                         Image(systemName: "square.and.pencil")
                                         Text("kButtonTitleEdit")
                                     }
                                     Button(action: {
-                                        self.deleteIndex = exerciseIndex
+                                        if let index = self.selectedWorkout.wExercises.firstIndex(where: { $0.id == exercise.id }) {
+                                            self.deleteIndex = index
+                                        }
                                         self.shouldShowDeleteConfirmation.toggle()
                                     }) {
                                         Image(systemName: "trash")
                                         Text("kButtonTitleDelete")
                                     }
                             }
-                            NavigationLink(destination: ExerciseSetsList(selectedExercise: self.selectedWorkout.wExercises[exerciseIndex])) {
+                            NavigationLink(destination: ExerciseSetsList(selectedExercise: exercise)) {
                                 EmptyView()
                             }
                         }
+                        .sheet(isPresented: $shouldPresentEditExercise, content: {
+                            AddExercise(shouldPresentAddNewExercise: self.$shouldPresentEditExercise, selectedWorkout: self.selectedWorkout, name: exercise.wName, notes: exercise.wNotes, referenceLinks: exercise.wReferences.map({ ($0.wUrl, true) }), selectedExercise: exercise).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
+                        })
                     }
                     .onDelete { (indexSet) in
                         if let index = indexSet.first, index < self.selectedWorkout.wExercises.count {
@@ -75,9 +80,6 @@ struct ExercisesList: View {
                     }
                 }
                 .padding([.top, .bottom], 10)
-                .sheet(isPresented: $shouldPresentEditExercise, content: {
-                    AddExercise(shouldPresentAddNewExercise: self.$shouldPresentEditExercise, selectedWorkout: self.selectedWorkout, name: self.selectedWorkout.wExercises[self.editExerciseIndex].wName, notes: self.selectedWorkout.wExercises[self.editExerciseIndex].wNotes, referenceLinks: self.selectedWorkout.wExercises[self.editExerciseIndex].wReferences.map({ ($0.wUrl, true) }), selectedExercise: self.selectedWorkout.wExercises[self.editExerciseIndex]).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
-                })
                     .navigationBarItems(trailing:
                         HStack(spacing: 20) {
                             EditButton()

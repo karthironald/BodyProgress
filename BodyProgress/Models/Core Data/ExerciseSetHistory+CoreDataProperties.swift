@@ -11,7 +11,7 @@ import Foundation
 import CoreData
 
 
-extension ExerciseSetHistory {
+extension ExerciseSetHistory: Identifiable {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<ExerciseSetHistory> {
         return NSFetchRequest<ExerciseSetHistory>(entityName: "ExerciseSetHistory")

@@ -70,7 +70,7 @@ struct WorkoutsList: View {
                                 EmptyView()
                             }
                         }
-                        .fullScreenCover(isPresented: $shouldPresentEditWorkout, content: {
+                        .sheet(isPresented: $shouldPresentEditWorkout, content: {
                             AddWorkout(shouldPresentAddNewWorkout: self.$shouldPresentEditWorkout, name: workout.wName, notes: workout.wNotes, bodyPartIndex: BodyParts.allCases.firstIndex(of: workout.wBodyPart) ?? 0, workoutToEdit: workout).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
                         })
                     }
