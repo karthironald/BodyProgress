@@ -16,7 +16,6 @@ struct WorkoutsList: View {
     @Environment(\.managedObjectContext) var managedObjectContext
     @FetchRequest(entity: Workout.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Workout.createdAt, ascending: true)]) var workouts: FetchedResults<Workout>
     @State private var shouldPresentEditWorkout: Bool = false
-    @State private var editWorkoutIndex: Int = kCommonListIndex
     
     @State private var shouldShowDeleteConfirmation = false
     @State private var deleteIndex = kCommonListIndex
@@ -39,12 +38,11 @@ struct WorkoutsList: View {
             }
             VStack {
                 List {
-                    ForEach(0..<workouts.count, id: \.self) { workoutIndex in
+                    ForEach(workouts) { workout in
                         ZStack {
-                            WorkoutRow(workout: self.workouts[workoutIndex]).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
+                            WorkoutRow(workout: workout).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
                                 .contextMenu {
                                     Button(action: {
-                                        self.editWorkoutIndex = workoutIndex
                                         self.shouldPresentEditWorkout.toggle()
                                     }) {
                                         Image(systemName: "square.and.pencil")
@@ -52,24 +50,29 @@ struct WorkoutsList: View {
                                     }
                                     Button(action: {
                                         withAnimation {
-                                            self.toggleFav(workout: self.workouts[workoutIndex])
+                                            self.toggleFav(workout: workout)
                                         }
                                     }) {
-                                        Image(systemName: self.workouts[workoutIndex].wIsFavourite  ? "star.fill" : "star")
-                                        Text(self.workouts[workoutIndex].wIsFavourite  ? "kButtonTitleUnfavourite" : "kButtonTitleFavourite")
+                                        Image(systemName: workout.wIsFavourite  ? "star.fill" : "star")
+                                        Text(workout.wIsFavourite  ? "kButtonTitleUnfavourite" : "kButtonTitleFavourite")
                                     }
                                     Button(action: {
-                                        self.deleteIndex = workoutIndex
+                                        if let index = self.workouts.firstIndex(where: { $0.id == workout.id }) {
+                                            self.deleteIndex = index
+                                        }
                                         self.shouldShowDeleteConfirmation.toggle()
                                     }) {
                                         Image(systemName: "trash")
                                         Text("kButtonTitleDelete")
                                     }
                             }
-                            NavigationLink(destination: ExercisesList(selectedWorkout: self.workouts[workoutIndex])) {
+                            NavigationLink(destination: ExercisesList(selectedWorkout: workout)) {
                                 EmptyView()
                             }
                         }
+                        .sheet(isPresented: $shouldPresentEditWorkout, content: {
+                            AddWorkout(shouldPresentAddNewWorkout: self.$shouldPresentEditWorkout, name: workout.wName, notes: workout.wNotes, bodyPartIndex: BodyParts.allCases.firstIndex(of: workout.wBodyPart) ?? 0, workoutToEdit: workout).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
+                        })
                     }
                     .onDelete { (indexSet) in
                         if let index = indexSet.first, index < self.workouts.count {
@@ -78,9 +81,7 @@ struct WorkoutsList: View {
                         }
                     }
                 }
-                .sheet(isPresented: $shouldPresentEditWorkout, content: {
-                    AddWorkout(shouldPresentAddNewWorkout: self.$shouldPresentEditWorkout, name: self.workouts[self.editWorkoutIndex].wName, notes: self.workouts[self.editWorkoutIndex].wNotes, bodyPartIndex: BodyParts.allCases.firstIndex(of: self.workouts[self.editWorkoutIndex].wBodyPart) ?? 0, workoutToEdit: self.workouts[self.editWorkoutIndex]).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
-                })
+                .listStyle(InsetListStyle())
             }
         }
         .onAppear {

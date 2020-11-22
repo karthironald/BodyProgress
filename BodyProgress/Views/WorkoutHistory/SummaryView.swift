@@ -51,6 +51,7 @@ struct SummaryView: View {
                         }
                     }
                 }
+                .listStyle(InsetListStyle())
             }
         }
         .onAppear {

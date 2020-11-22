@@ -40,6 +40,7 @@ struct TodayWorkout: View {
                     List(selectedWorkout.wExercises, id: \.self) { exercise in
                         TodayExcerciseRow(exercise: exercise).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
                     }
+                    .listStyle(InsetListStyle())
                     RestTimerView().environmentObject(appSettings)
                 }
             }
