@@ -42,11 +42,11 @@ struct WidgetPieChart: View {
                 }
                 Circle()
                     .fill(Color(UIColor.systemBackground))
-                    .frame(width: geoProxy.size.width / 2, height: geoProxy.size.width / 2)
+                    .frame(width: geoProxy.size.width / 1.5, height: geoProxy.size.width / 1.5)
                 .overlay(
                     VStack {
                         Text("\(self.total.detailedDisplayDuration())")
-                            .font(kPrimaryBodyFont)
+                            .font(kPrimaryTitleFont)
                             .bold()
                             .padding([.leading, .trailing, .top])
                             .multilineTextAlignment(.center)
@@ -54,7 +54,7 @@ struct WidgetPieChart: View {
                             .frame(width: 50)
                             .padding([.leading, .trailing])
                         Text("\(Int64(self.totalSessions)) sessions")
-                            .font(kPrimaryFootnoteFont)
+                            .font(kPrimaryHeadlineFont)
                             .padding([.leading, .trailing])
                     }
                     .rotationEffect(.degrees(90))
@@ -62,7 +62,7 @@ struct WidgetPieChart: View {
             }
             .rotationEffect(.degrees(-90))
         }
-        .background(Color.white)
+        .background(Color.green)
     }
     
 }
