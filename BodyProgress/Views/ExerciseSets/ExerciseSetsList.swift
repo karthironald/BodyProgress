@@ -15,7 +15,6 @@ struct ExerciseSetsList: View {
     @State private var shouldPresentAddNewExerciseSet = false
     @Environment(\.managedObjectContext) var managedObjectContext
     @State private var shouldPresentEditExerciseSet: Bool = false
-    @State private var editExerciseSetIndex: Int = kCommonListIndex
     
     @State private var shouldShowDeleteConfirmation = false
     @State private var deleteIndex = kCommonListIndex
@@ -27,19 +26,20 @@ struct ExerciseSetsList: View {
             }
             VStack {
                 List{
-                    ForEach(0..<selectedExercise.wExerciseSets.count, id: \.self) { exerciseSetIndex in
+                    ForEach(selectedExercise.wExerciseSets) { exerciseSet in
                         ZStack {
-                            ExerciseSetRow(exerciseSet: self.selectedExercise.wExerciseSets[exerciseSetIndex])
+                            ExerciseSetRow(exerciseSet: exerciseSet)
                                 .contextMenu {
                                     Button(action: {
-                                        self.editExerciseSetIndex = exerciseSetIndex
                                         self.shouldPresentEditExerciseSet.toggle()
                                     }) {
                                         Image(systemName: "square.and.pencil")
                                         Text("kButtonTitleEdit")
                                     }
                                     Button(action: {
-                                        self.deleteIndex = exerciseSetIndex
+                                        if let index = self.selectedExercise.wExerciseSets.firstIndex(where: { $0.id == exerciseSet.id }) {
+                                            self.deleteIndex = index
+                                        }
                                         self.shouldShowDeleteConfirmation.toggle()
                                     }) {
                                         Image(systemName: "trash")
@@ -47,6 +47,17 @@ struct ExerciseSetsList: View {
                                     }
                             }
                         }
+                        .sheet(isPresented: $shouldPresentEditExerciseSet, content: {
+                            AddExerciseSet(
+                                shouldPresentAddNewExerciseSet: self.$shouldPresentEditExerciseSet,
+                                selectedExercise: self.selectedExercise,
+                                name: exerciseSet.wName,
+                                notes: exerciseSet.wNotes,
+                                weight: exerciseSet.wWeight,
+                                reputation: Double(exerciseSet.wReputation),
+                                selectedExerciseSet: exerciseSet
+                            ).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
+                        })
                     }
                     .onDelete { (indexSet) in
                         if let index = indexSet.first, index < self.selectedExercise.wExerciseSets.count {
@@ -56,17 +67,6 @@ struct ExerciseSetsList: View {
                     }
                 }
                 .padding([.top, .bottom], 10)
-                .sheet(isPresented: $shouldPresentEditExerciseSet, content: {
-                    AddExerciseSet(
-                        shouldPresentAddNewExerciseSet: self.$shouldPresentEditExerciseSet,
-                        selectedExercise: self.selectedExercise,
-                        name: self.selectedExercise.wExerciseSets[self.editExerciseSetIndex].wName,
-                        notes: self.selectedExercise.wExerciseSets[self.editExerciseSetIndex].wNotes,
-                        weight: self.selectedExercise.wExerciseSets[self.editExerciseSetIndex].wWeight,
-                        reputation: Double(self.selectedExercise.wExerciseSets[self.editExerciseSetIndex].wReputation),
-                        selectedExerciseSet: self.selectedExercise.wExerciseSets[self.editExerciseSetIndex]
-                    ).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
-                })
                     .navigationBarTitle(selectedExercise.wName)
                     .navigationBarItems(trailing:
                         Button(action: {
