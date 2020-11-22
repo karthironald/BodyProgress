@@ -34,7 +34,7 @@ struct WorkoutHistoryView: View {
                 EmptyStateInfoView(title: "No workouts histories")
             }
             VStack {
-                List{
+                List {
                     ForEach(0..<workoutHistory.count, id: \.self) { workoutIndex in
                         ZStack {
                             WokroutHistoryRow(workoutHistory: self.workoutHistory[workoutIndex])
@@ -51,6 +51,7 @@ struct WorkoutHistoryView: View {
                         }
                     }
                 }
+                .listStyle(InsetListStyle())
             }
             .navigationBarTitle(Text("History"))
         }

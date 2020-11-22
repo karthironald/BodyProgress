@@ -79,6 +79,7 @@ struct ExercisesList: View {
                         self.move(from: indexSet, to: index)
                     }
                 }
+                .listStyle(InsetListStyle())
                 .padding([.top, .bottom], 10)
                     .navigationBarItems(trailing:
                         HStack(spacing: 20) {
