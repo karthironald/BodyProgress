@@ -121,6 +121,11 @@ class AppSettings: ObservableObject {
             UserDefaults.standard.set(rawValues, forKey: "historySelectedCompletionStatus")
         }
     }
+    var isDBLocationMigrated: Bool {
+        didSet {
+            UserDefaults.standard.set(isDBLocationMigrated, forKey: "isDBLocationMigrated")
+        }
+    }
     
     init() {
         self.userName = AppSettings.userName()
@@ -140,6 +145,7 @@ class AppSettings: ObservableObject {
         self.selectedTab = UserDefaults.standard.value(forKey: "selectedTab") as? Int ?? 0
         self.workoutTimerInterval = UserDefaults.standard.value(forKey: "workoutTimerInterval") as? TimeInterval ?? 30
         self.addedDefaultWorkouts = UserDefaults.standard.value(forKey: "addedDefaultWorkouts") as? Bool ?? false
+        self.isDBLocationMigrated = UserDefaults.standard.value(forKey: "isDBLocationMigrated") as? Bool ?? false
     }
     
     

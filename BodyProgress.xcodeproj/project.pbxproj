@@ -37,6 +37,7 @@
 		774958F4246C6C9F00CF99CF /* ExerciseSetHistory+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774958EE246C6C9F00CF99CF /* ExerciseSetHistory+CoreDataProperties.swift */; };
 		774E09A824ACFE9C005D39AB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 774E09A724ACFE9C005D39AB /* Localizable.strings */; };
 		7750E05424DDBCBD00B46BC8 /* TodayWorkoutConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7750E05324DDBCBD00B46BC8 /* TodayWorkoutConfirmationView.swift */; };
+		7753B33125618231000139F2 /* BodyProgress.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 77B6B52724521A90004B9F89 /* BodyProgress.xcdatamodeld */; };
 		77549D1724B03031002BBF21 /* WorkoutFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77549D1624B03031002BBF21 /* WorkoutFilterView.swift */; };
 		77585E242470F57900F4FF69 /* WokroutHistoryTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77585E232470F57900F4FF69 /* WokroutHistoryTabView.swift */; };
 		775E26C224BB1307006CF859 /* BodyPartSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775E26C124BB1307006CF859 /* BodyPartSummary.swift */; };
@@ -45,6 +46,11 @@
 		7766E54224575BDF008627D9 /* AddWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7766E54124575BDF008627D9 /* AddWorkout.swift */; };
 		776AE34A2465DB140050DD9A /* TodayExerciseSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776AE3492465DB140050DD9A /* TodayExerciseSet.swift */; };
 		778E10A5246E3FEE00C0A477 /* WokroutHistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778E10A4246E3FEE00C0A477 /* WokroutHistoryRow.swift */; };
+		77917626255FEB30005F5F07 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77CFCE1A255E92F10022D25E /* WidgetKit.framework */; };
+		77917627255FEB30005F5F07 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77CFCE1C255E92F10022D25E /* SwiftUI.framework */; };
+		7791762A255FEB30005F5F07 /* ProgressWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77917629255FEB30005F5F07 /* ProgressWidget.swift */; };
+		7791762C255FEB32005F5F07 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7791762B255FEB32005F5F07 /* Assets.xcassets */; };
+		77917630255FEB32005F5F07 /* ProgressWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 77917625255FEB30005F5F07 /* ProgressWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		77929A0124536DFB00C28A39 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77929A0024536DFB00C28A39 /* Constant.swift */; };
 		779614F8245EE31C00E0216C /* EmptyStateInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779614F7245EE31C00E0216C /* EmptyStateInfoView.swift */; };
 		779BE97D245AF3DD006FDAE8 /* CustomBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779BE97C245AF3DD006FDAE8 /* CustomBarButton.swift */; };
@@ -52,6 +58,26 @@
 		77A3EC422483B314007A92B8 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A3EC412483B314007A92B8 /* Helper.swift */; };
 		77B18BC924B992060016124A /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B18BC824B992060016124A /* SummaryView.swift */; };
 		77B34C9C24C8BF2E0076CBF3 /* CelebrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B34C9B24C8BF2E0076CBF3 /* CelebrationView.swift */; };
+		77B6AF1925603BFC00C30622 /* WidgetSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B6AEF525603B1000C30622 /* WidgetSummaryView.swift */; };
+		77B6AF2E25603C8E00C30622 /* ExerciseHistory+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774958EB246C6C9F00CF99CF /* ExerciseHistory+CoreDataClass.swift */; };
+		77B6AF2F25603C8E00C30622 /* ExerciseSet+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7718100E245EBFF3005D6E9F /* ExerciseSet+CoreDataProperties.swift */; };
+		77B6AF3025603C8E00C30622 /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77181009245EBFF3005D6E9F /* User+CoreDataClass.swift */; };
+		77B6AF3125603C8E00C30622 /* WorkoutHistory+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774958EA246C6C9F00CF99CF /* WorkoutHistory+CoreDataProperties.swift */; };
+		77B6AF3225603C8E00C30622 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7718100A245EBFF3005D6E9F /* User+CoreDataProperties.swift */; };
+		77B6AF3325603C8E00C30622 /* Exercise+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7718100B245EBFF3005D6E9F /* Exercise+CoreDataClass.swift */; };
+		77B6AF3425603C8E00C30622 /* ExerciseSet+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7718100D245EBFF3005D6E9F /* ExerciseSet+CoreDataClass.swift */; };
+		77B6AF3525603C8E00C30622 /* WorkoutHistory+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774958E9246C6C9F00CF99CF /* WorkoutHistory+CoreDataClass.swift */; };
+		77B6AF3625603C8E00C30622 /* ExerciseSetHistory+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774958ED246C6C9F00CF99CF /* ExerciseSetHistory+CoreDataClass.swift */; };
+		77B6AF3725603C8E00C30622 /* ExerciseHistory+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774958EC246C6C9F00CF99CF /* ExerciseHistory+CoreDataProperties.swift */; };
+		77B6AF3825603C8E00C30622 /* Exercise+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7718100C245EBFF3005D6E9F /* Exercise+CoreDataProperties.swift */; };
+		77B6AF3925603C8E00C30622 /* ExerciseSetHistory+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774958EE246C6C9F00CF99CF /* ExerciseSetHistory+CoreDataProperties.swift */; };
+		77B6AF4425603CBD00C30622 /* Workout+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77181008245EBFF3005D6E9F /* Workout+CoreDataProperties.swift */; };
+		77B6AF4525603CBD00C30622 /* ReferenceLinks+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772363EF24CC30E400A29C4D /* ReferenceLinks+CoreDataClass.swift */; };
+		77B6AF4625603CBD00C30622 /* ReferenceLinks+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772363F024CC30E500A29C4D /* ReferenceLinks+CoreDataProperties.swift */; };
+		77B6AF4725603CBD00C30622 /* Workout+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77181007245EBFF3005D6E9F /* Workout+CoreDataClass.swift */; };
+		77B6AF4A25603CDB00C30622 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77929A0024536DFB00C28A39 /* Constant.swift */; };
+		77B6AF4D25603D0700C30622 /* EmptyStateInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779614F7245EE31C00E0216C /* EmptyStateInfoView.swift */; };
+		77B6AF5025603D2C00C30622 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7766E53F24575361008627D9 /* Extensions.swift */; };
 		77B6B51A24521A2D004B9F89 /* WorkoutsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B6B51724521A2D004B9F89 /* WorkoutsList.swift */; };
 		77B6B51C24521A2D004B9F89 /* WorkoutRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B6B51924521A2D004B9F89 /* WorkoutRow.swift */; };
 		77B6B51E24521A36004B9F89 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B6B51D24521A36004B9F89 /* ContentView.swift */; };
@@ -84,6 +110,30 @@
 		77F8AC4324B06B7500A5ABB5 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F8AC4224B06B7500A5ABB5 /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		7791762E255FEB32005F5F07 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 77F4C4E3244A21B40048E3CB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 77917624255FEB30005F5F07;
+			remoteInfo = ProgressWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		77CFCE2A255E92F40022D25E /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				77917630255FEB32005F5F07 /* ProgressWidgetExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		765881E4F1A84356EBE7DFAB /* Pods_BodyProgress.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BodyProgress.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7707C18324B496C7001837E1 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
@@ -115,6 +165,8 @@
 		774958EE246C6C9F00CF99CF /* ExerciseSetHistory+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExerciseSetHistory+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		774E09A724ACFE9C005D39AB /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		7750E05324DDBCBD00B46BC8 /* TodayWorkoutConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWorkoutConfirmationView.swift; sourceTree = "<group>"; };
+		7753B32325616B3E000139F2 /* ProgressWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProgressWidgetExtension.entitlements; sourceTree = "<group>"; };
+		7753B32625616BB8000139F2 /* WorkoutPro.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WorkoutPro.entitlements; sourceTree = "<group>"; };
 		77549D1624B03031002BBF21 /* WorkoutFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutFilterView.swift; sourceTree = "<group>"; };
 		77585E232470F57900F4FF69 /* WokroutHistoryTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WokroutHistoryTabView.swift; sourceTree = "<group>"; };
 		775E26C124BB1307006CF859 /* BodyPartSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyPartSummary.swift; sourceTree = "<group>"; };
@@ -123,6 +175,10 @@
 		7766E54124575BDF008627D9 /* AddWorkout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWorkout.swift; sourceTree = "<group>"; };
 		776AE3492465DB140050DD9A /* TodayExerciseSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayExerciseSet.swift; sourceTree = "<group>"; };
 		778E10A4246E3FEE00C0A477 /* WokroutHistoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WokroutHistoryRow.swift; sourceTree = "<group>"; };
+		77917625255FEB30005F5F07 /* ProgressWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ProgressWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		77917629255FEB30005F5F07 /* ProgressWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressWidget.swift; sourceTree = "<group>"; };
+		7791762B255FEB32005F5F07 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7791762D255FEB32005F5F07 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		77929A0024536DFB00C28A39 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		779614F7245EE31C00E0216C /* EmptyStateInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateInfoView.swift; sourceTree = "<group>"; };
 		779BE97C245AF3DD006FDAE8 /* CustomBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBarButton.swift; sourceTree = "<group>"; };
@@ -130,6 +186,7 @@
 		77A3EC412483B314007A92B8 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		77B18BC824B992060016124A /* SummaryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
 		77B34C9B24C8BF2E0076CBF3 /* CelebrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelebrationView.swift; sourceTree = "<group>"; };
+		77B6AEF525603B1000C30622 /* WidgetSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetSummaryView.swift; sourceTree = "<group>"; };
 		77B6B51724521A2D004B9F89 /* WorkoutsList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutsList.swift; sourceTree = "<group>"; };
 		77B6B51924521A2D004B9F89 /* WorkoutRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutRow.swift; sourceTree = "<group>"; };
 		77B6B51D24521A36004B9F89 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -156,6 +213,8 @@
 		77CFAAF324B1CC2B003BA128 /* RedIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RedIcon@2x.png"; sourceTree = "<group>"; };
 		77CFAAF624B1CC58003BA128 /* YellowIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "YellowIcon@3x.png"; sourceTree = "<group>"; };
 		77CFAAF724B1CC59003BA128 /* YellowIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "YellowIcon@2x.png"; sourceTree = "<group>"; };
+		77CFCE1A255E92F10022D25E /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		77CFCE1C255E92F10022D25E /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		77E5075F24BBFD3F0083BE10 /* BodyPartSummaryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyPartSummaryRow.swift; sourceTree = "<group>"; };
 		77F4C4EB244A21B40048E3CB /* WorkoutPro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkoutPro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77F4C4FA244A21B70048E3CB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -167,6 +226,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		77917622255FEB30005F5F07 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				77917627255FEB30005F5F07 /* SwiftUI.framework in Frameworks */,
+				77917626255FEB30005F5F07 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		77F4C4E8244A21B40048E3CB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -191,6 +259,8 @@
 			isa = PBXGroup;
 			children = (
 				765881E4F1A84356EBE7DFAB /* Pods_BodyProgress.framework */,
+				77CFCE1A255E92F10022D25E /* WidgetKit.framework */,
+				77CFCE1C255E92F10022D25E /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -255,6 +325,17 @@
 				77201C4624CD713100890DF8 /* ReferenceLinkFilterView.swift */,
 			);
 			path = Refrence;
+			sourceTree = "<group>";
+		};
+		77917628255FEB30005F5F07 /* ProgressWidget */ = {
+			isa = PBXGroup;
+			children = (
+				77917629255FEB30005F5F07 /* ProgressWidget.swift */,
+				7791762B255FEB32005F5F07 /* Assets.xcassets */,
+				7791762D255FEB32005F5F07 /* Info.plist */,
+				77B6AEF525603B1000C30622 /* WidgetSummaryView.swift */,
+			);
+			path = ProgressWidget;
 			sourceTree = "<group>";
 		};
 		779BE97B245AF2FC006FDAE8 /* CommonViews */ = {
@@ -412,7 +493,9 @@
 		77F4C4E2244A21B40048E3CB = {
 			isa = PBXGroup;
 			children = (
+				7753B32325616B3E000139F2 /* ProgressWidgetExtension.entitlements */,
 				77F4C4ED244A21B40048E3CB /* BodyProgress */,
+				77917628255FEB30005F5F07 /* ProgressWidget */,
 				77F4C4EC244A21B40048E3CB /* Products */,
 				2FEC74F87748713AB9621D49 /* Pods */,
 				6BFE0494139F4A0F16907FC7 /* Frameworks */,
@@ -423,6 +506,7 @@
 			isa = PBXGroup;
 			children = (
 				77F4C4EB244A21B40048E3CB /* WorkoutPro.app */,
+				77917625255FEB30005F5F07 /* ProgressWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -430,6 +514,7 @@
 		77F4C4ED244A21B40048E3CB /* BodyProgress */ = {
 			isa = PBXGroup;
 			children = (
+				7753B32625616BB8000139F2 /* WorkoutPro.entitlements */,
 				77BABFEC24CB610A001D647A /* GoogleService-Info-Dev.plist */,
 				77BABFEB24CB610A001D647A /* GoogleService-Info-Prod.plist */,
 				77CFAAD924B1C19B003BA128 /* App Icons */,
@@ -482,6 +567,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		77917624255FEB30005F5F07 /* ProgressWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 77917631255FEB32005F5F07 /* Build configuration list for PBXNativeTarget "ProgressWidgetExtension" */;
+			buildPhases = (
+				77917621255FEB30005F5F07 /* Sources */,
+				77917622255FEB30005F5F07 /* Frameworks */,
+				77917623255FEB30005F5F07 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ProgressWidgetExtension;
+			productName = ProgressWidgetExtension;
+			productReference = 77917625255FEB30005F5F07 /* ProgressWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		77F4C4EA244A21B40048E3CB /* BodyProgress */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 77F4C502244A21B70048E3CB /* Build configuration list for PBXNativeTarget "BodyProgress" */;
@@ -491,10 +593,12 @@
 				77F4C4E8244A21B40048E3CB /* Frameworks */,
 				77F4C4E9244A21B40048E3CB /* Resources */,
 				9C6405A1B19C526C9A69FD8F /* [CP] Embed Pods Frameworks */,
+				77CFCE2A255E92F40022D25E /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				7791762F255FEB32005F5F07 /* PBXTargetDependency */,
 			);
 			name = BodyProgress;
 			productName = BodyProgress;
@@ -507,10 +611,13 @@
 		77F4C4E3244A21B40048E3CB /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1110;
+				LastSwiftUpdateCheck = 1210;
 				LastUpgradeCheck = 1110;
 				ORGANIZATIONNAME = "Mallow Technologies Private Limited";
 				TargetAttributes = {
+					77917624255FEB30005F5F07 = {
+						CreatedOnToolsVersion = 12.1;
+					};
 					77F4C4EA244A21B40048E3CB = {
 						CreatedOnToolsVersion = 11.1;
 					};
@@ -530,11 +637,20 @@
 			projectRoot = "";
 			targets = (
 				77F4C4EA244A21B40048E3CB /* BodyProgress */,
+				77917624255FEB30005F5F07 /* ProgressWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		77917623255FEB30005F5F07 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7791762C255FEB32005F5F07 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		77F4C4E9244A21B40048E3CB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -605,6 +721,35 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		77917621255FEB30005F5F07 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				77B6AF3725603C8E00C30622 /* ExerciseHistory+CoreDataProperties.swift in Sources */,
+				77B6AF2E25603C8E00C30622 /* ExerciseHistory+CoreDataClass.swift in Sources */,
+				7791762A255FEB30005F5F07 /* ProgressWidget.swift in Sources */,
+				77B6AF2F25603C8E00C30622 /* ExerciseSet+CoreDataProperties.swift in Sources */,
+				77B6AF3325603C8E00C30622 /* Exercise+CoreDataClass.swift in Sources */,
+				77B6AF4525603CBD00C30622 /* ReferenceLinks+CoreDataClass.swift in Sources */,
+				7753B33125618231000139F2 /* BodyProgress.xcdatamodeld in Sources */,
+				77B6AF3425603C8E00C30622 /* ExerciseSet+CoreDataClass.swift in Sources */,
+				77B6AF4425603CBD00C30622 /* Workout+CoreDataProperties.swift in Sources */,
+				77B6AF4A25603CDB00C30622 /* Constant.swift in Sources */,
+				77B6AF3225603C8E00C30622 /* User+CoreDataProperties.swift in Sources */,
+				77B6AF1925603BFC00C30622 /* WidgetSummaryView.swift in Sources */,
+				77B6AF3625603C8E00C30622 /* ExerciseSetHistory+CoreDataClass.swift in Sources */,
+				77B6AF3825603C8E00C30622 /* Exercise+CoreDataProperties.swift in Sources */,
+				77B6AF5025603D2C00C30622 /* Extensions.swift in Sources */,
+				77B6AF3125603C8E00C30622 /* WorkoutHistory+CoreDataProperties.swift in Sources */,
+				77B6AF4D25603D0700C30622 /* EmptyStateInfoView.swift in Sources */,
+				77B6AF4725603CBD00C30622 /* Workout+CoreDataClass.swift in Sources */,
+				77B6AF3925603C8E00C30622 /* ExerciseSetHistory+CoreDataProperties.swift in Sources */,
+				77B6AF3525603C8E00C30622 /* WorkoutHistory+CoreDataClass.swift in Sources */,
+				77B6AF4625603CBD00C30622 /* ReferenceLinks+CoreDataProperties.swift in Sources */,
+				77B6AF3025603C8E00C30622 /* User+CoreDataClass.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		77F4C4E7244A21B40048E3CB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -670,6 +815,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		7791762F255FEB32005F5F07 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 77917624255FEB30005F5F07 /* ProgressWidgetExtension */;
+			targetProxy = 7791762E255FEB32005F5F07 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		77B6B52324521A90004B9F89 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -682,6 +835,56 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		77917632255FEB32005F5F07 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_ENTITLEMENTS = ProgressWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3RHR7K3FP7;
+				INFOPLIST_FILE = ProgressWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mallow-tech.BodyProgress.ProgressWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		77917633255FEB32005F5F07 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_ENTITLEMENTS = ProgressWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3RHR7K3FP7;
+				INFOPLIST_FILE = ProgressWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mallow-tech.BodyProgress.ProgressWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
 		77F4C500244A21B70048E3CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -800,7 +1003,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = BA7C91A15A46B510B6DBDB80 /* Pods-BodyProgress.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = BodyProgress/WorkoutPro.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 2;
@@ -825,7 +1030,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7E0D7A872FC567579EEE6E96 /* Pods-BodyProgress.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = BodyProgress/WorkoutPro.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 2;
@@ -849,6 +1056,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		77917631255FEB32005F5F07 /* Build configuration list for PBXNativeTarget "ProgressWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				77917632255FEB32005F5F07 /* Debug */,
+				77917633255FEB32005F5F07 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		77F4C4E6244A21B40048E3CB /* Build configuration list for PBXProject "BodyProgress" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

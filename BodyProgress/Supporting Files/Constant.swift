@@ -8,8 +8,6 @@
 
 import SwiftUI
 
-let kAppDelegate = UIApplication.shared.delegate as! AppDelegate
-
 let kShadowRadius: CGFloat = 3.0
 let kCornerRadius: CGFloat = 15.0
 let kDefaultValue = "-"
@@ -72,4 +70,16 @@ enum BodyParts: String, CaseIterable {
         case .cardio: return Color(.systemPink)
         }
     }
+}
+
+enum AppGroup: String {
+  case group = "group.com.mallow-tech.BodyProgress"
+
+  public var containerURL: URL {
+    switch self {
+    case .group:
+      return FileManager.default.containerURL(
+      forSecurityApplicationGroupIdentifier: self.rawValue)!
+    }
+  }
 }
