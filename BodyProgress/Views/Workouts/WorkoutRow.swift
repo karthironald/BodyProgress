@@ -14,13 +14,10 @@ struct WorkoutRow: View {
     @EnvironmentObject var appSettings: AppSettings
     @Environment(\.managedObjectContext) var managedObjectContext
     @ObservedObject var workout: Workout
-    @State private var shouldShowStartWorkoutAlert = false
-    @State private var startButtonSelected: Bool = false
-    @State private var todayWorkout = WorkoutHistory()
+    @State private var shouldPresentEditWorkout: Bool = false
     
     var body: some View {
-        ZStack {
-            workout.wBodyPart.color()
+        NavigationLink(destination: ExercisesList(selectedWorkout: workout)) {
             HStack(spacing: 0) {
                 VStack(alignment: .leading, spacing: 7) {
                     HStack {
@@ -34,54 +31,103 @@ struct WorkoutRow: View {
                                 .foregroundColor(.yellow)
                         }
                     }
+                    .sheet(isPresented: $shouldPresentEditWorkout, content: {
+                        AddWorkout(shouldPresentAddNewWorkout: self.$shouldPresentEditWorkout, name: workout.wName, notes: workout.wNotes, bodyPartIndex: BodyParts.allCases.firstIndex(of: workout.wBodyPart) ?? 0, workoutToEdit: workout).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
+                    })
                     
-                    HStack {
-                        Text(workout.wBodyPart.rawValue)
-                            .font(kPrimarySubheadlineFont)
-                            .foregroundColor(.secondary)
-                        if workout.wExercises.count > 0 {
-                            Circle()
-                                .fill(Color.secondary)
-                                .frame(width: 5, height: 5)
+                    if workout.wExercises.count > 0 {
+                        HStack {
+                            Text("Exercise: ")
                             Text("\(workout.wExercises.count)")
-                                .font(kPrimarySubheadlineFont)
-                                .foregroundColor(.secondary)
                         }
+                        .font(kPrimarySubheadlineFont)
+                        .foregroundColor(.secondary)
                     }
                 }
                 Spacer()
-                VStack(spacing: 5) {
-                    Button(action: {
-                        Helper.hapticFeedback()
-                        self.shouldShowStartWorkoutAlert.toggle()
-                    }) {
-                        Text("Start workout")
-                            .font(kPrimarySubheadlineFont)
-                            .foregroundColor(.white)
-                            .bold()
-                            .padding(10)
-                            .frame(height: 30)
-                            .background(Color(AppThemeColours.green.uiColor()))
-                            .clipShape(RoundedRectangle(cornerRadius: 15))
-                    }
-                    .buttonStyle(BorderlessButtonStyle())
-                    if workout.lastTrainedAt != nil {
-                        Text("\(workout.lastTrainedAtString())")
-                            .font(kPrimaryFootnoteFont)
-                            .foregroundColor(.secondary)
-                    } else {
-                        Text("Not trained yet")
-                            .font(kPrimaryFootnoteFont)
-                            .foregroundColor(.secondary)
-                    }
-                }
-                Image(systemName: "arrowtriangle.right.fill")
-                    .foregroundColor(.secondary)
-                    .opacity(0.2)
-                    .padding(.leading)
-                .frame(width: 20)
+                StartWorkoutView(workout: workout).environment(\.managedObjectContext, managedObjectContext).environmentObject(appSettings)
             }
-            .padding()
+            .padding([.top, .bottom])
+            .contextMenu {
+                Button(action: {
+                    self.shouldPresentEditWorkout.toggle()
+                }) {
+                    Image(systemName: "square.and.pencil")
+                    Text("kButtonTitleEdit")
+                }
+                Button(action: {
+                    withAnimation {
+                        self.toggleFav(workout: workout)
+                    }
+                }) {
+                    Image(systemName: workout.wIsFavourite  ? "star.fill" : "star")
+                    Text(workout.wIsFavourite  ? "kButtonTitleUnfavourite" : "kButtonTitleFavourite")
+                }
+            }
+        }
+    }
+    
+    /**Toggles favourite status of the workout*/
+    func toggleFav(workout: Workout) {
+        workout.isFavourite.toggle()
+        if managedObjectContext.hasChanges {
+            do {
+                try managedObjectContext.save()
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
+    /**Deletes the workout*/
+    func deleteWorkout(workout: Workout) {
+        managedObjectContext.delete(workout)
+        if managedObjectContext.hasChanges {
+            do {
+                try managedObjectContext.save()
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
+}
+
+struct StartWorkoutView: View {
+    
+    @EnvironmentObject var appSettings: AppSettings
+    @Environment(\.managedObjectContext) var managedObjectContext
+    @ObservedObject var workout: Workout
+    
+    @State private var shouldShowStartWorkoutAlert = false
+    @State private var startButtonSelected: Bool = false
+    @State private var todayWorkout = WorkoutHistory(context: kAppDelegate.persistentContainer.viewContext)
+    
+    var body: some View {
+        VStack(spacing: 5) {
+            Button(action: {
+                Helper.hapticFeedback()
+                self.shouldShowStartWorkoutAlert.toggle()
+            }) {
+                Text("Start workout")
+                    .font(kPrimarySubheadlineFont)
+                    .foregroundColor(.white)
+                    .bold()
+                    .padding(10)
+                    .frame(height: 30)
+                    .background(Color(AppThemeColours.green.uiColor()))
+                    .clipShape(RoundedRectangle(cornerRadius: 15))
+            }
+            .buttonStyle(BorderlessButtonStyle())
+            if workout.lastTrainedAt != nil {
+                Text("\(workout.lastTrainedAtString())")
+                    .font(kPrimaryFootnoteFont)
+                    .foregroundColor(.secondary)
+            } else {
+                Text("Not trained yet")
+                    .font(kPrimaryFootnoteFont)
+                    .foregroundColor(.secondary)
+            }
         }
         .alert(isPresented: $shouldShowStartWorkoutAlert, content: { () -> Alert in
             Alert(title: Text("Ready to start \(workout.wName)?"), message: self.alertMessageView(), primaryButton: .cancel(Text("kButtonTitleCancel")), secondaryButton: .default(Text("kButtonTitleStart"), action: {
@@ -92,8 +138,6 @@ struct WorkoutRow: View {
         .sheet(isPresented: $startButtonSelected, content: {
             TodayWorkout(selectedWorkout: self.todayWorkout, workout: self.workout).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
         })
-        .frame(height: 80)
-        .cornerRadius(kCornerRadius)
     }
     
     func alertMessageView() -> Text? {
@@ -180,7 +224,7 @@ struct WorkoutRow_Previews: PreviewProvider {
         pWorkout.name = "My big biceps"
         pWorkout.notes = "Sample"
         pWorkout.isFavourite = true
-//        pWorkout.lastTrainedAt = Date().addingTimeInterval(-1000)
+        //        pWorkout.lastTrainedAt = Date().addingTimeInterval(-1000)
         pWorkout.bodyPart = BodyParts.fullBody.rawValue
         let exer1 = Exercise(context: moc)
         let exer2 = Exercise(context: moc)
