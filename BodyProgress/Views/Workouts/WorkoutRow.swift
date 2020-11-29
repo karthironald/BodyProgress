@@ -37,7 +37,7 @@ struct WorkoutRow: View {
                     
                     if workout.wExercises.count > 0 {
                         HStack {
-                            Text("Exercise: ")
+                            Text("Exercise:")
                             Text("\(workout.wExercises.count)")
                         }
                         .font(kPrimarySubheadlineFont)
