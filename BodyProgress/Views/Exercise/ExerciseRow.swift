@@ -11,51 +11,58 @@ import CoreData
 
 struct ExerciseRow: View {
     
+    @EnvironmentObject var appSettings: AppSettings
+    @Environment(\.managedObjectContext) var managedObjectContext
+    
     @ObservedObject var exercise: Exercise
+    @ObservedObject var selectedWorkout: Workout
+    
+    @State private var shouldPresentEditExercise: Bool = false
+    
+    @State private var shouldPresentReferences = false
+    @State private var referenceViewIndex: Int = kCommonListIndex
     
     var body: some View {
-        ZStack {
-            exercise.wBodyPart.color()
-            HStack(alignment: .center) {
-                VStack(alignment: .leading) {
+        NavigationLink(destination: ExerciseSetsList(selectedExercise: exercise)) {
+            VStack(alignment: .leading) {
+                Text(exercise.wName)
+                    .font(kPrimaryBodyFont)
+                    .fontWeight(.bold)
+                .sheet(isPresented: $shouldPresentEditExercise, content: {
+                    AddExercise(shouldPresentAddNewExercise: self.$shouldPresentEditExercise, selectedWorkout: self.selectedWorkout, name: exercise.wName, notes: exercise.wNotes, referenceLinks: exercise.wReferences.map({ ($0.wUrl, true) }), selectedExercise: exercise).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
+                })
+                
+                if (exercise.wExerciseSets.count > 0) {
                     HStack {
-                        Text(exercise.wName)
-                            .font(kPrimaryBodyFont)
-                            .fontWeight(.bold)
-                        if exercise.wIsFavourite {
-                            Image(systemName: "star.fill")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 15, height: 15)
-                                .foregroundColor(kFavStarColour)
-                        }
+                        Text("Set:")
+                        Text("\(exercise.wExerciseSets.count)")
                     }
-                    if (!exercise.wNotes.isEmpty) && (exercise.wNotes != kDefaultValue) {
-                        Text(exercise.wNotes)
-                            .font(kPrimarySubheadlineFont)
-                            .multilineTextAlignment(.leading)
-                            .foregroundColor(.secondary)
-                    }
-                }
-                .padding()
-                Spacer()
-                if exercise.wExerciseSets.count > 0 {
-                    Text("\(exercise.wExerciseSets.count)")
-                        .font(kPrimaryBodyFont)
-                        .bold()
-                        .frame(width: 30, height: 30)
-                        .padding([.top, .bottom], 5)
-                        .clipShape(Circle())
-                }
-                Image(systemName: "arrowtriangle.right.fill")
+                    .font(kPrimarySubheadlineFont)
                     .foregroundColor(.secondary)
-                    .opacity(0.2)
-                    .padding([.top, .bottom, .trailing])
+                }
+                // Adding empty view to show the sheet as sheet is not presenting if we try to show it anywhere else in the view.
+                EmptyView()
+                    .frame(width: 0, height: 0, alignment: .center)
+                    .sheet(isPresented: self.$shouldPresentReferences, content: {
+                        ExerciseReferenceView(shouldPresentReferences: self.$shouldPresentReferences, referencesLinks: exercise.wReferences, exerciseName: exercise.wName).environmentObject(self.appSettings)
+                    })
             }
-
+            .padding([.top, .bottom], 5)
+            .contextMenu {
+                Button(action: {
+                    self.shouldPresentReferences = true
+                }) {
+                    Image(systemName: "info.circle.fill")
+                    Text("kButtonTitleReferences")
+                }
+                Button(action: {
+                    self.shouldPresentEditExercise = true
+                }) {
+                    Image(systemName: "square.and.pencil")
+                    Text("kButtonTitleEdit")
+                }
         }
-        .frame(height: 60)
-        .cornerRadius(kCornerRadius)
+        }
     }
 }
 
@@ -63,9 +70,18 @@ struct ExerciseRow_Previews: PreviewProvider {
     static let moc = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
     
     static var previews: some View {
+        
+        let pWorkout = Workout(context: moc)
+        pWorkout.id = UUID()
+        pWorkout.name = "Bicpes"
+        
         let pExercise = Exercise(context: moc)
+        pExercise.id = UUID()
         pExercise.name = "Dummbells curl"
         pExercise.notes = "Keep dumbeels straight, lift up and down slowly and repeat"
-        return ExerciseRow(exercise: pExercise)
+        
+        pWorkout.exercises = [pExercise]
+        
+        return ExerciseRow(exercise: pExercise, selectedWorkout: pWorkout).environment(\.managedObjectContext, moc).environmentObject(AppSettings())
     }
 }

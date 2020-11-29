@@ -29,6 +29,7 @@ struct BodyPartSummary: View {
                 List(0..<data.count, id: \.self) { index in
                     BodyPartSummaryRow(summary: self.data[index], bodyPart: self.bodyPart, total: self.total).environmentObject(self.appSettings)
                 }
+                .listStyle(InsetGroupedListStyle())
             }
         }
         .navigationBarTitle(Text("\(bodyPart.rawValue)"))

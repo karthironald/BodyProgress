@@ -37,15 +37,17 @@ struct TodayWorkout: View {
                     EmptyStateInfoView(image: Image(systemName: "flame"), title: "No exercises and sets added", message: "Go to the workouts list and select the '\(selectedWorkout.wName)' to configure its exercises and sets.")
                 }
                 ZStack(alignment: .bottomLeading) {
-                    List(selectedWorkout.wExercises, id: \.self) { exercise in
-                        TodayExcerciseRow(exercise: exercise).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
+                    List {
+                        ForEach(selectedWorkout.wExercises, id: \.self) { exercise in
+                            Section {
+                                TodayExcerciseRow(exercise: exercise).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
+                            }
+                        }
                     }
-                    .listStyle(InsetListStyle())
+                    .listStyle(InsetGroupedListStyle())
                     RestTimerView().environmentObject(appSettings)
                 }
             }
-            
-            .padding([.top, .bottom], 10)
             .navigationBarTitle(Text("\(selectedWorkout.wName)"), displayMode: .inline)
             .navigationBarItems(
                 leading: TimerView(startDate: $startDate, duration: $duration, shouldPauseTimer: $shouldPauseTimer, timer: $timer, selectedWorkout: selectedWorkout, workout: workout).environment(\.managedObjectContext, managedObjectContext),

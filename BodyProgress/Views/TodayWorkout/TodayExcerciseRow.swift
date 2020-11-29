@@ -18,40 +18,35 @@ struct TodayExcerciseRow: View {
     var isViewOnly = false
     
     var body: some View {
-        ZStack {
-            kPrimaryBackgroundColour
-            VStack {
-                HStack() {
-                    Text(exercise.wName)
-                        .font(kPrimaryHeadlineFont)
-                        .bold()
-                    Spacer()
-                    if exercise.wReferences.count > 0 {
-                        Button(action: {
-                            self.shouldPresentReferences.toggle()
-                        }) {
-                            Image(systemName: "info.circle.fill")
-                                .imageScale(.large)
-                                .foregroundColor(.secondary)
-                        }
-                        .buttonStyle(BorderlessButtonStyle())
+        VStack {
+            HStack() {
+                Text(exercise.wName)
+                    .font(kPrimaryHeadlineFont)
+                    .bold()
+                Spacer()
+                if exercise.wReferences.count > 0 {
+                    Button(action: {
+                        self.shouldPresentReferences.toggle()
+                    }) {
+                        Image(systemName: "info.circle.fill")
+                            .imageScale(.large)
+                            .foregroundColor(.secondary)
                     }
-                }
-                Divider()
-                VStack(alignment: .leading) {
-                    ForEach(exercise.wExerciseSets, id: \.self) { exSet in
-                        TodayExerciseSet(exerciseSet: exSet, isViewOnly: self.isViewOnly).environmentObject(self.appSettings).environment(\.managedObjectContext, self.managedObjectContext)
-                    }
+                    .buttonStyle(BorderlessButtonStyle())
                 }
             }
-            .padding()
-            Spacer()
+            Divider()
+            VStack(alignment: .leading, spacing: 30) {
+                ForEach(exercise.wExerciseSets, id: \.self) { exSet in
+                    TodayExerciseSet(exerciseSet: exSet, isViewOnly: self.isViewOnly).environmentObject(self.appSettings).environment(\.managedObjectContext, self.managedObjectContext)
+                }
+            }
+            .padding([.top, .bottom])
         }
+        .padding([.top, .bottom])
         .sheet(isPresented: $shouldPresentReferences, content: {
             ExerciseReferenceView(shouldPresentReferences: self.$shouldPresentReferences, referencesLinks: self.exercise.wReferences, exerciseName: self.exercise.wName).environmentObject(self.appSettings)
         })
-        .frame(height: 50.0 + CGFloat(exercise.wExerciseSets.count * 50))
-        .cornerRadius(kCornerRadius)
     }
 }
 

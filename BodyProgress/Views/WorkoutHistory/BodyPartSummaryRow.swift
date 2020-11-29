@@ -36,6 +36,7 @@ struct BodyPartSummaryRow: View {
                     }
                     .font(kPrimaryFootnoteFont)
                 }
+                .padding(.top)
                 VStack(alignment: .leading, spacing: 10) {
                     HStack(spacing: 10) {
                         ZStack(alignment: .leading) {
@@ -104,7 +105,7 @@ struct BodyPartSummaryRow: View {
                 }
             }
         }
-        .frame(height: 135)
+        .frame(height: 150)
     }
 }
 

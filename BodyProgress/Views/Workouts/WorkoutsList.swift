@@ -15,7 +15,6 @@ struct WorkoutsList: View {
     @EnvironmentObject var appSettings: AppSettings
     @Environment(\.managedObjectContext) var managedObjectContext
     @FetchRequest(entity: Workout.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Workout.createdAt, ascending: true)]) var workouts: FetchedResults<Workout>
-    @State private var shouldPresentEditWorkout: Bool = false
     
     @State private var shouldShowDeleteConfirmation = false
     @State private var deleteIndex = kCommonListIndex
@@ -36,53 +35,28 @@ struct WorkoutsList: View {
             if workouts.count == 0 {
                 EmptyStateInfoView(title: NSLocalizedString("kInfoMsgNoWorkoutsAddedTitle", comment: "Info message"), message: NSLocalizedString("kInfoMsgNoWorkoutsAddedMessage", comment: "Info message"))
             }
-            VStack {
-                List {
-                    ForEach(workouts) { workout in
-                        ZStack {
-                            WorkoutRow(workout: workout).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
-                                .contextMenu {
-                                    Button(action: {
-                                        self.shouldPresentEditWorkout.toggle()
-                                    }) {
-                                        Image(systemName: "square.and.pencil")
-                                        Text("kButtonTitleEdit")
-                                    }
-                                    Button(action: {
-                                        withAnimation {
-                                            self.toggleFav(workout: workout)
-                                        }
-                                    }) {
-                                        Image(systemName: workout.wIsFavourite  ? "star.fill" : "star")
-                                        Text(workout.wIsFavourite  ? "kButtonTitleUnfavourite" : "kButtonTitleFavourite")
-                                    }
-                                    Button(action: {
-                                        if let index = self.workouts.firstIndex(where: { $0.id == workout.id }) {
-                                            self.deleteIndex = index
-                                        }
+            List {
+                ForEach(BodyParts.allCases, id: \.self) { part in
+                    let filteredWorkouts = workouts.filter { $0.wBodyPart == part }
+                    if filteredWorkouts.count > 0 {
+                        Section(header: Text(part.rawValue)) {
+                            ForEach(filteredWorkouts) { workout in
+                                WorkoutRow(workout: workout).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
+                            }
+                            .onDelete { (indexSet) in
+                                if let index = indexSet.first, index < filteredWorkouts.count {
+                                    let filteredWorkout = filteredWorkouts[index]
+                                    if let i = workouts.firstIndex(where: { $0.wId == filteredWorkout.wId }) {
+                                        self.deleteIndex = i
                                         self.shouldShowDeleteConfirmation.toggle()
-                                    }) {
-                                        Image(systemName: "trash")
-                                        Text("kButtonTitleDelete")
                                     }
+                                }
                             }
-                            NavigationLink(destination: ExercisesList(selectedWorkout: workout)) {
-                                EmptyView()
-                            }
-                        }
-                        .sheet(isPresented: $shouldPresentEditWorkout, content: {
-                            AddWorkout(shouldPresentAddNewWorkout: self.$shouldPresentEditWorkout, name: workout.wName, notes: workout.wNotes, bodyPartIndex: BodyParts.allCases.firstIndex(of: workout.wBodyPart) ?? 0, workoutToEdit: workout).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
-                        })
-                    }
-                    .onDelete { (indexSet) in
-                        if let index = indexSet.first, index < self.workouts.count {
-                            self.deleteIndex = index
-                            self.shouldShowDeleteConfirmation.toggle()
                         }
                     }
                 }
-                .listStyle(InsetListStyle())
             }
+            .listStyle(InsetGroupedListStyle())
         }
         .onAppear {
             kAppDelegate.removeSeparatorLineAppearance()
@@ -97,19 +71,7 @@ struct WorkoutsList: View {
             }))
         }
     }
-    
-    /**Toggles favourite status of the workout*/
-    func toggleFav(workout: Workout) {
-        workout.isFavourite.toggle()
-        if managedObjectContext.hasChanges {
-            do {
-                try managedObjectContext.save()
-            } catch {
-                print(error)
-            }
-        }
-    }
-    
+
     /**Deletes the workout*/
     func deleteWorkout(workout: Workout) {
         managedObjectContext.delete(workout)
