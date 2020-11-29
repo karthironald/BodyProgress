@@ -23,7 +23,7 @@ struct WorkoutHistroyDetails: View {
             TodayWorkout(duration: self.selectedWorkout.wDuration, selectedWorkout: self.selectedWorkout, workout: self.selectedWorkout.workout!).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
         })
         .padding([.top, .bottom], 10)
-        .navigationBarTitle(Text("\(selectedWorkout.wName)").font(kPrimaryBodyFont))
+        .navigationBarTitle(Text("\(selectedWorkout.wName)"))
         .navigationBarItems(trailing:
             HStack {
                 Spacer()
