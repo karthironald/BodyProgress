@@ -10,12 +10,13 @@ import SwiftUI
 
 struct WokroutHistoryRow: View {
     
-    @ObservedObject var workoutHistory: WorkoutHistory
+    @Environment(\.managedObjectContext) var managedObjectContext
     @EnvironmentObject var appSettings: AppSettings
     
+    @ObservedObject var workoutHistory: WorkoutHistory
+    
     var body: some View {
-        ZStack {
-            kPrimaryBackgroundColour
+        NavigationLink(destination: WorkoutHistroyDetails(selectedWorkout: workoutHistory).environmentObject(self.appSettings).environment(\.managedObjectContext, self.managedObjectContext)) {
             HStack(alignment: .center) {
                 VStack(alignment: .leading, spacing: 7) {
                     Text(workoutHistory.wName)
@@ -33,21 +34,15 @@ struct WokroutHistoryRow: View {
                             .foregroundColor(.secondary)
                     }
                 }
-                .padding()
+                .padding([.top, .bottom])
                 Spacer()
                 Image(systemName: workoutHistory.isAllSetCompleted() ? "checkmark.seal.fill" : "xmark.seal.fill")
                     .imageScale(.large)
                     .foregroundColor(workoutHistory.isAllSetCompleted() ? Color(AppThemeColours.green.uiColor()) : Color(AppThemeColours.orange.uiColor()))
                     .font(kPrimaryBodyFont)
                     .padding(.trailing, 10)
-                Image(systemName: "arrowtriangle.right.fill")
-                    .foregroundColor(.secondary)
-                    .opacity(0.2)
-                    .padding([.top, .bottom, .trailing])
             }
         }
-        .frame(height: 80)
-        .cornerRadius(kCornerRadius)
     }
     
 }

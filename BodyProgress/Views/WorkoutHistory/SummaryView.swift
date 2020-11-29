@@ -48,10 +48,11 @@ struct SummaryView: View {
                                     }
                                 }
                             }
+                            .padding([.top, .bottom])
                         }
                     }
                 }
-                .listStyle(InsetListStyle())
+                .listStyle(InsetGroupedListStyle())
             }
         }
         .onAppear {

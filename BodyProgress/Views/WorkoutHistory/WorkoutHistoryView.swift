@@ -33,26 +33,18 @@ struct WorkoutHistoryView: View {
             if workoutHistory.count == 0 {
                 EmptyStateInfoView(title: "No workouts histories")
             }
-            VStack {
-                List {
-                    ForEach(0..<workoutHistory.count, id: \.self) { workoutIndex in
-                        ZStack {
-                            WokroutHistoryRow(workoutHistory: self.workoutHistory[workoutIndex])
-                            NavigationLink(destination: WorkoutHistroyDetails(selectedWorkout: self.workoutHistory[workoutIndex]).environmentObject(self.appSettings).environment(\.managedObjectContext, self.managedObjectContext)) {
-                                EmptyView()
-                                    .zIndex(1)
-                            }
-                        }
-                    }
-                    .onDelete { (indexSet) in
-                        if let index = indexSet.first, index < self.workoutHistory.count {
-                            self.deleteIndex = index
-                            self.shouldShowDeleteConfirmation.toggle()
-                        }
+            List {
+                ForEach(0..<workoutHistory.count, id: \.self) { workoutIndex in
+                    WokroutHistoryRow(workoutHistory: self.workoutHistory[workoutIndex])
+                }
+                .onDelete { (indexSet) in
+                    if let index = indexSet.first, index < self.workoutHistory.count {
+                        self.deleteIndex = index
+                        self.shouldShowDeleteConfirmation.toggle()
                     }
                 }
-                .listStyle(InsetListStyle())
             }
+            .listStyle(InsetGroupedListStyle())
             .navigationBarTitle(Text("History"))
         }
         .alert(isPresented: $shouldShowDeleteConfirmation, content: { () -> Alert in

@@ -369,7 +369,6 @@
 			isa = PBXGroup;
 			children = (
 				77B6B51324521985004B9F89 /* Diets */,
-				77B6B51424521985004B9F89 /* Workouts */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -416,25 +415,11 @@
 			path = Diets;
 			sourceTree = "<group>";
 		};
-		77B6B51424521985004B9F89 /* Workouts */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Workouts;
-			sourceTree = "<group>";
-		};
 		77B6B5152452199E004B9F89 /* Diets */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			path = Diets;
-			sourceTree = "<group>";
-		};
-		77B6B5162452199E004B9F89 /* Workouts */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Workouts;
 			sourceTree = "<group>";
 		};
 		77B6B52224521A90004B9F89 /* Base.lproj */ = {
@@ -543,7 +528,6 @@
 				7707C18224B496B3001837E1 /* Common */,
 				77180FF6245EBE14005D6E9F /* Core Data */,
 				77B6B5152452199E004B9F89 /* Diets */,
-				77B6B5162452199E004B9F89 /* Workouts */,
 			);
 			path = Models;
 			sourceTree = "<group>";

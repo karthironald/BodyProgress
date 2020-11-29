@@ -16,13 +16,17 @@ struct WorkoutHistroyDetails: View {
     @State private var resumeButtonSelected: Bool = false
     
     var body: some View {
-        List(selectedWorkout.wExercises, id: \.self) { exercise in
-            TodayExcerciseRow(exercise: exercise, isViewOnly: true)
+        List {
+            ForEach(selectedWorkout.wExercises, id: \.self) { exercise in
+                Section {
+                    TodayExcerciseRow(exercise: exercise, isViewOnly: true)
+                }
+            }
         }
+        .listStyle(InsetGroupedListStyle())
         .sheet(isPresented: $resumeButtonSelected, content: {
             TodayWorkout(duration: self.selectedWorkout.wDuration, selectedWorkout: self.selectedWorkout, workout: self.selectedWorkout.workout!).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
         })
-        .padding([.top, .bottom], 10)
         .navigationBarTitle(Text("\(selectedWorkout.wName)"))
         .navigationBarItems(trailing:
             HStack {
