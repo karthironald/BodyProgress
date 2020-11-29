@@ -47,7 +47,7 @@ struct ExerciseRow: View {
                         ExerciseReferenceView(shouldPresentReferences: self.$shouldPresentReferences, referencesLinks: exercise.wReferences, exerciseName: exercise.wName).environmentObject(self.appSettings)
                     })
             }
-            .padding([.top, .bottom], 10)
+            .padding([.top, .bottom], 5)
             .contextMenu {
                 Button(action: {
                     self.shouldPresentReferences = true

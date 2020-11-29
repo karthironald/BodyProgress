@@ -49,7 +49,7 @@ struct ExerciseSetRow: View {
                 .font(kPrimarySubheadlineFont)
                 .foregroundColor(.secondary)
         }
-        .padding([.top, .bottom], 10)
+        .padding([.top, .bottom], 5)
         .contextMenu {
             Button(action: {
                 self.shouldPresentEditExerciseSet.toggle()

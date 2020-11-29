@@ -18,7 +18,7 @@ struct WokroutHistoryRow: View {
     var body: some View {
         NavigationLink(destination: WorkoutHistroyDetails(selectedWorkout: workoutHistory).environmentObject(self.appSettings).environment(\.managedObjectContext, self.managedObjectContext)) {
             HStack(alignment: .center) {
-                VStack(alignment: .leading, spacing: 7) {
+                VStack(alignment: .leading, spacing: 4) {
                     Text(workoutHistory.wName)
                         .font(kPrimaryHeadlineFont)
                         .fontWeight(.bold)
@@ -34,7 +34,7 @@ struct WokroutHistoryRow: View {
                             .foregroundColor(.secondary)
                     }
                 }
-                .padding([.top, .bottom])
+                .padding([.top, .bottom], 5)
                 Spacer()
                 Image(systemName: workoutHistory.isAllSetCompleted() ? "checkmark.seal.fill" : "xmark.seal.fill")
                     .imageScale(.large)

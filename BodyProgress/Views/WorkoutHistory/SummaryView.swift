@@ -48,7 +48,7 @@ struct SummaryView: View {
                                     }
                                 }
                             }
-                            .padding([.top, .bottom])
+                            .padding([.top, .bottom], 10)
                         }
                     }
                 }

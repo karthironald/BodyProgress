@@ -47,7 +47,7 @@ struct WorkoutRow: View {
                 Spacer()
                 StartWorkoutView(workout: workout).environment(\.managedObjectContext, managedObjectContext).environmentObject(appSettings)
             }
-            .padding([.top, .bottom])
+            .padding([.top, .bottom], 10)
             .contextMenu {
                 Button(action: {
                     self.shouldPresentEditWorkout.toggle()
