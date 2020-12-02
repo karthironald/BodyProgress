@@ -111,11 +111,11 @@ struct StartWorkoutView: View {
             }) {
                 Text("Start workout")
                     .font(kPrimarySubheadlineFont)
-                    .foregroundColor(.white)
+                    .foregroundColor(Color(AppThemeColours.green.uiColor()))
                     .bold()
                     .padding(10)
                     .frame(height: 30)
-                    .background(Color(AppThemeColours.green.uiColor()))
+                    .background(Color(AppThemeColours.green.uiColor()).opacity(0.1))
                     .clipShape(RoundedRectangle(cornerRadius: 15))
             }
             .buttonStyle(BorderlessButtonStyle())

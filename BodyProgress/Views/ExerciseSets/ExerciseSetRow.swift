@@ -25,13 +25,13 @@ struct ExerciseSetRow: View {
                 Text(exerciseSet.wName)
                     .font(kPrimaryBodyFont)
                     .fontWeight(.bold)
-                if exerciseSet.wIsFavourite {
-                    Image(systemName: "star.fill")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 15, height: 15)
-                        .foregroundColor(kFavStarColour)
-                }
+                    .padding([.top, .bottom], 10)
+                Spacer()
+                Text("\(exerciseSet.wWeight, specifier: "%.2f") kgs")
+                    .modifier(CustomInfoTextStyle(appSettings: appSettings))
+                
+                Text("\(exerciseSet.wReputation) rps")
+                    .modifier(CustomInfoTextStyle(appSettings: appSettings))
             }
             .sheet(isPresented: $shouldPresentEditExerciseSet, content: {
                 AddExerciseSet(
@@ -44,10 +44,6 @@ struct ExerciseSetRow: View {
                     selectedExerciseSet: exerciseSet
                 ).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
             })
-            
-            Text("\(exerciseSet.wWeight, specifier: "%.2f") kgs X \(exerciseSet.wReputation) rps")
-                .font(kPrimarySubheadlineFont)
-                .foregroundColor(.secondary)
         }
         .padding([.top, .bottom], 5)
         .contextMenu {
@@ -76,5 +72,21 @@ struct ExerciseSetRow_Previews: PreviewProvider {
         pExercise.exerciseSets = [pExerciseSet]
         
         return ExerciseSetRow(selectedExercise: pExercise, exerciseSet: pExerciseSet)
+    }
+}
+
+struct CustomInfoTextStyle: ViewModifier {
+    var appSettings: AppSettings
+    var opacity: Double = 0.2
+    var foregroundColor: Color = .secondary
+    
+    func body(content: Content) -> some View {
+        content
+            .font(kPrimaryCaptionFont)
+            .foregroundColor(foregroundColor)
+            .padding([.leading, .trailing], 10)
+            .padding([.top, .bottom], 5)
+            .background(appSettings.themeColorView().opacity(opacity))
+            .clipShape(RoundedRectangle(cornerRadius: 25.0))
     }
 }
