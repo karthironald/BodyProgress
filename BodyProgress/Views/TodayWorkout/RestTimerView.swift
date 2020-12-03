@@ -20,7 +20,7 @@ struct RestTimerView: View {
     @State private var completedTime: TimeInterval = 0
     @State private var shouldShowMenus = false
     @State private var status: RestTimerStatus = .notStarted
-    @State private var timer = Timer.publish(every: 5000, on: .main, in: .common).autoconnect() // Dummy initialiser with summy TimeInterval
+    @State private var timer = Timer.publish(every: 5000, on: .main, in: .common).autoconnect() // Dummy initialiser with dummy TimeInterval
     @State private var backgroundAt = Date()
     @Binding var alignment: Alignment
     
@@ -30,105 +30,7 @@ struct RestTimerView: View {
     
     var body: some View {
         ZStack {
-            
-            Button(action: {
-                Helper.hapticFeedback()
-                self.shouldShowMenus.toggle()
-                self.alignment = shouldShowMenus ? .center : .bottomLeading
-            }) {
-                Image(systemName: shouldShowMenus ? "xmark" : "timer")
-                    .font(kPrimaryTitleFont)
-                    .frame(width: 50, height: 50)
-                    .background(shouldShowMenus ? Color(.lightGray) : appSettings.themeColorView())
-                    .foregroundColor(shouldShowMenus ? .secondary : .white)
-                    .clipShape(Circle())
-            }
-            .shadow(radius: 5)
-            .zIndex((status == .playing || status == .paused) ? 0 : 10)
-            .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { (_) in
-                self.stopTimer()
-                self.backgroundAt = Date()
-            }
-            .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { (_) in
-                if self.status == .playing {
-                    let backgroundInterval = TimeInterval(Int(Date().timeIntervalSince(self.backgroundAt) + 1))
-                    
-                    if (self.completedTime + backgroundInterval) >= (self.appSettings.workoutTimerInterval - 1) {
-                        self.resetDetails()
-                    } else {
-                        self.completedTime += backgroundInterval
-                        self.startTimer()
-                    }
-                }
-            }
-
-            if status != .playing {
-                Button(action: {
-                    Helper.hapticFeedback(style: .soft)
-                    if self.appSettings.workoutTimerInterval > 5 {
-                        self.appSettings.workoutTimerInterval = self.appSettings.workoutTimerInterval - 5
-                    }
-                }) {
-                    Image(systemName: "minus")
-                        .timerControlStyle(backgroundColor: Color.blue)
-                }
-                .shadow(radius: shouldShowMenus ? 5 : 0)
-                .offset(x: shouldShowMenus ? offset : 0)
-                .animation(.spring())
-                
-                Button(action: {
-                    Helper.hapticFeedback(style: .soft)
-                    self.appSettings.workoutTimerInterval = self.appSettings.workoutTimerInterval + 5
-                }) {
-                    Image(systemName: "plus")
-                        .timerControlStyle(backgroundColor: Color.blue)
-                }
-                .shadow(radius: shouldShowMenus ? 5 : 0)
-                .offset(x: shouldShowMenus ? offset * 2 : 0)
-                .animation(.spring())
-            }
-
-            if status == .playing {
-                Button(action: {
-                    Helper.hapticFeedback()
-                    self.resetDetails()
-                    NotificationHelper.resetTimerNotification()
-                }) {
-                    Image(systemName: "stop")
-                        .timerControlStyle(backgroundColor: Color.red)
-                }
-                .shadow(radius: shouldShowMenus ? 5 : 0)
-                .offset(x: shouldShowMenus ? offset : 0)
-                .animation(.spring())
-            }
-            
-            
-            Button(action: {
-                Helper.hapticFeedback()
-                self.shouldShowMenus.toggle()
-            }) {
-                Text("\((Int(appSettings.workoutTimerInterval - completedTime) == 0) ? Int(appSettings.workoutTimerInterval) : Int(appSettings.workoutTimerInterval - completedTime))s")
-                    .font(kPrimaryBodyFont)
-                    .bold()
-                    .foregroundColor(.white)
-                    .frame(width: 50, height: 50)
-                    .background(appSettings.themeColorView())
-                    .clipShape(Circle())
-            }
-            .padding(10)
-            .overlay(
-                Circle()
-                    .trim(from: 0, to: progress)
-                    .stroke(appSettings.themeColorView(), style: StrokeStyle(lineWidth: (status == .playing || status == .paused) ? 7 : 0, lineCap: .round))
-                    .animation(Animation.linear(duration: 1))
-                    .rotationEffect(.degrees(-90))
-            )
-            .shadow(radius: shouldShowMenus ? 5 : 0)
-            .offset(y: shouldShowMenus ? -offset * 2 : 0)
-            .animation(.spring())
-            .zIndex((status == .playing || status == .paused) ? 10 : 0)
-            
-            
+            // Main timer view button
             Button(action: {
                 Helper.hapticFeedback()
                 if self.status == .playing {
@@ -144,17 +46,99 @@ struct RestTimerView: View {
                     NotificationHelper.resetTimerNotification()
                 }
             }) {
-                Image(systemName: (status == .playing) ? "pause" : "play")
-                    .imageScale(.large)
-                    .frame(width: 50, height: 50)
-                    .background(appSettings.themeColorView())
+                Text("\((Int(appSettings.workoutTimerInterval - completedTime) == 0) ? Int(appSettings.workoutTimerInterval) : Int(appSettings.workoutTimerInterval - completedTime))s")
+                    .font(shouldShowMenus ? kPrimaryLargeTitleFont : kPrimaryBodyFont)
+                    .bold()
                     .foregroundColor(.white)
+                    .frame(width: shouldShowMenus ? 200 : 50, height: shouldShowMenus ? 200 : 50)
+                    .background(appSettings.themeColorView())
                     .clipShape(Circle())
             }
+            .padding(10)
+            .overlay(
+                Circle()
+                    .trim(from: 0, to: progress)
+                    .stroke(appSettings.themeColorView(), style: StrokeStyle(lineWidth: (status == .playing || status == .paused) ? 7 : 0, lineCap: .round))
+                    .animation(Animation.linear(duration: 1))
+                    .rotationEffect(.degrees(-90))
+            )
             .shadow(radius: shouldShowMenus ? 5 : 0)
-            .offset(y: shouldShowMenus ? -offset : 0)
+            .offset(y: shouldShowMenus ? -150 : 0)
             .animation(.spring())
             
+            // Minus button
+            Button(action: {
+                Helper.hapticFeedback(style: .soft)
+                if self.appSettings.workoutTimerInterval > 5 {
+                    self.appSettings.workoutTimerInterval = self.appSettings.workoutTimerInterval - 5
+                }
+            }) {
+                Image(systemName: "minus")
+                    .timerControlStyle(backgroundColor: Color.blue)
+            }
+            .shadow(radius: shouldShowMenus ? 5 : 0)
+            .offset(x: shouldShowMenus ? -offset : 0)
+            .animation(.spring())
+            
+            // Plus button
+            Button(action: {
+                Helper.hapticFeedback(style: .soft)
+                self.appSettings.workoutTimerInterval = self.appSettings.workoutTimerInterval + 5
+            }) {
+                Image(systemName: "plus")
+                    .timerControlStyle(backgroundColor: Color.blue)
+            }
+            .shadow(radius: shouldShowMenus ? 5 : 0)
+            .offset(x: shouldShowMenus ? offset : 0)
+            .animation(.spring())
+
+            // Stop button
+            if status == .playing {
+                Button(action: {
+                    Helper.hapticFeedback()
+                    self.resetDetails()
+                    NotificationHelper.resetTimerNotification()
+                }) {
+                    Image(systemName: "stop")
+                        .timerControlStyle(backgroundColor: Color.red)
+                }
+                .shadow(radius: shouldShowMenus ? 5 : 0)
+                .zIndex((status == .playing || status == .paused) ? 10 : 0)
+            }
+            
+            // Menu/Close button
+            if (status == .notStarted) {
+                Button(action: {
+                    Helper.hapticFeedback()
+                    self.shouldShowMenus.toggle()
+                    self.alignment = shouldShowMenus ? .center : .bottomLeading
+                }) {
+                    Image(systemName: shouldShowMenus ? "xmark" : "timer")
+                        .font(kPrimaryTitleFont)
+                        .frame(width: 50, height: 50)
+                        .background(shouldShowMenus ? Color(.gray) : appSettings.themeColorView())
+                        .foregroundColor(shouldShowMenus ? .secondary : .white)
+                        .clipShape(Circle())
+                }
+                .shadow(radius: 5)
+                .zIndex((status == .playing || status == .paused) ? 0 : 10)
+                .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { (_) in
+                    self.stopTimer()
+                    self.backgroundAt = Date()
+                }
+                .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { (_) in
+                    if self.status == .playing {
+                        let backgroundInterval = TimeInterval(Int(Date().timeIntervalSince(self.backgroundAt) + 1))
+                        
+                        if (self.completedTime + backgroundInterval) >= (self.appSettings.workoutTimerInterval - 1) {
+                            self.resetDetails()
+                        } else {
+                            self.completedTime += backgroundInterval
+                            self.startTimer()
+                        }
+                    }
+                }
+            }
         }
         .padding(.leading, (status == .playing || status == .paused) ? 20 : 10)
         .onReceive(timer, perform: { (_) in
@@ -175,6 +159,7 @@ struct RestTimerView: View {
         self.stopTimer()
         self.completedTime = 0
         self.shouldShowMenus = false
+        self.alignment = .bottomLeading
     }
     
     func stopTimer() {
