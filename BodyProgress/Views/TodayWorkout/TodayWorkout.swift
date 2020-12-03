@@ -29,6 +29,7 @@ struct TodayWorkout: View {
     
     var selectedWorkout: WorkoutHistory
     var workout: Workout
+    @State var alignment = Alignment.bottomLeading
     
     var body: some View {
         NavigationView {
@@ -36,7 +37,7 @@ struct TodayWorkout: View {
                 if selectedWorkout.wExercises.count == 0 {
                     EmptyStateInfoView(image: Image(systemName: "flame"), title: "No exercises and sets added", message: "Go to the workouts list and select the '\(selectedWorkout.wName)' to configure its exercises and sets.")
                 }
-                ZStack(alignment: .bottomLeading) {
+                ZStack(alignment: alignment) {
                     List {
                         ForEach(selectedWorkout.wExercises, id: \.self) { exercise in
                             Section {
@@ -44,10 +45,13 @@ struct TodayWorkout: View {
                             }
                         }
                     }
+                    .animation(nil)
                     .listStyle(InsetGroupedListStyle())
-                    RestTimerView().environmentObject(appSettings)
+                    RestTimerView(alignment: $alignment).environmentObject(appSettings)
                 }
+                .animation(.spring())
             }
+            
             .navigationBarTitle(Text("\(selectedWorkout.wName)"), displayMode: .inline)
             .navigationBarItems(
                 leading: TimerView(startDate: $startDate, duration: $duration, shouldPauseTimer: $shouldPauseTimer, timer: $timer, selectedWorkout: selectedWorkout, workout: workout).environment(\.managedObjectContext, managedObjectContext),

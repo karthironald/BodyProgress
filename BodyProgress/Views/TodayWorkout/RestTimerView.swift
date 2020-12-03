@@ -22,6 +22,7 @@ struct RestTimerView: View {
     @State private var status: RestTimerStatus = .notStarted
     @State private var timer = Timer.publish(every: 5000, on: .main, in: .common).autoconnect() // Dummy initialiser with summy TimeInterval
     @State private var backgroundAt = Date()
+    @Binding var alignment: Alignment
     
     var progress: CGFloat {
         CGFloat((appSettings.workoutTimerInterval - completedTime) / appSettings.workoutTimerInterval)
@@ -33,6 +34,7 @@ struct RestTimerView: View {
             Button(action: {
                 Helper.hapticFeedback()
                 self.shouldShowMenus.toggle()
+                self.alignment = shouldShowMenus ? .center : .bottomLeading
             }) {
                 Image(systemName: shouldShowMenus ? "xmark" : "timer")
                     .font(kPrimaryTitleFont)
@@ -68,14 +70,10 @@ struct RestTimerView: View {
                     }
                 }) {
                     Image(systemName: "minus")
-                        .font(kPrimaryTitleFont)
-                        .frame(width: 50, height: 50)
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .clipShape(Circle())
+                        .timerControlStyle(backgroundColor: Color.blue)
                 }
                 .shadow(radius: shouldShowMenus ? 5 : 0)
-                .offset(x: shouldShowMenus ? (status == .playing ? offset * 2 : offset) : 0)
+                .offset(x: shouldShowMenus ? offset : 0)
                 .animation(.spring())
                 
                 Button(action: {
@@ -83,14 +81,10 @@ struct RestTimerView: View {
                     self.appSettings.workoutTimerInterval = self.appSettings.workoutTimerInterval + 5
                 }) {
                     Image(systemName: "plus")
-                        .font(kPrimaryTitleFont)
-                        .frame(width: 50, height: 50)
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .clipShape(Circle())
+                        .timerControlStyle(backgroundColor: Color.blue)
                 }
                 .shadow(radius: shouldShowMenus ? 5 : 0)
-                .offset(x: shouldShowMenus ? (status == .playing ? offset * 3 : offset * 2) : 0)
+                .offset(x: shouldShowMenus ? offset * 2 : 0)
                 .animation(.spring())
             }
 
@@ -101,11 +95,7 @@ struct RestTimerView: View {
                     NotificationHelper.resetTimerNotification()
                 }) {
                     Image(systemName: "stop")
-                        .font(kPrimaryTitleFont)
-                        .frame(width: 50, height: 50)
-                        .background(Color.red)
-                        .foregroundColor(.white)
-                        .clipShape(Circle())
+                        .timerControlStyle(backgroundColor: Color.red)
                 }
                 .shadow(radius: shouldShowMenus ? 5 : 0)
                 .offset(x: shouldShowMenus ? offset : 0)
@@ -120,19 +110,18 @@ struct RestTimerView: View {
                 Text("\((Int(appSettings.workoutTimerInterval - completedTime) == 0) ? Int(appSettings.workoutTimerInterval) : Int(appSettings.workoutTimerInterval - completedTime))s")
                     .font(kPrimaryBodyFont)
                     .bold()
+                    .foregroundColor(.white)
                     .frame(width: 50, height: 50)
                     .background(appSettings.themeColorView())
-                    .foregroundColor(.white)
                     .clipShape(Circle())
-                    .animation(nil)
             }
             .padding(10)
             .overlay(
                 Circle()
                     .trim(from: 0, to: progress)
                     .stroke(appSettings.themeColorView(), style: StrokeStyle(lineWidth: (status == .playing || status == .paused) ? 7 : 0, lineCap: .round))
-                    .rotationEffect(.degrees(-90))
                     .animation(Animation.linear(duration: 1))
+                    .rotationEffect(.degrees(-90))
             )
             .shadow(radius: shouldShowMenus ? 5 : 0)
             .offset(y: shouldShowMenus ? -offset * 2 : 0)
@@ -161,7 +150,6 @@ struct RestTimerView: View {
                     .background(appSettings.themeColorView())
                     .foregroundColor(.white)
                     .clipShape(Circle())
-                    .animation(nil)
             }
             .shadow(radius: shouldShowMenus ? 5 : 0)
             .offset(y: shouldShowMenus ? -offset : 0)
@@ -169,7 +157,6 @@ struct RestTimerView: View {
             
         }
         .padding(.leading, (status == .playing || status == .paused) ? 20 : 10)
-        .animation(.spring())
         .onReceive(timer, perform: { (_) in
             if self.status == .playing {
                 self.completedTime += 1
@@ -202,6 +189,28 @@ struct RestTimerView: View {
 
 struct TimerView_Previews: PreviewProvider {
     static var previews: some View {
-        RestTimerView().environmentObject(AppSettings())
+        RestTimerView(alignment: .constant(.bottomLeading)).environmentObject(AppSettings())
     }
+}
+
+struct TimerControlStyle: ViewModifier {
+    
+    var backgroundColor: Color
+    
+    func body(content: Content) -> some View {
+        content
+            .font(kPrimaryTitleFont)
+            .frame(width: 50, height: 50)
+            .background(backgroundColor)
+            .foregroundColor(.white)
+            .clipShape(Circle())
+    }
+}
+
+extension View {
+    
+    func timerControlStyle(backgroundColor: Color) -> some View {
+        self.modifier(TimerControlStyle(backgroundColor: backgroundColor))
+    }
+    
 }

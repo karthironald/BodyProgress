@@ -43,7 +43,7 @@ struct TodayExcerciseRow: View {
             }
             .padding([.top, .bottom])
         }
-        .padding([.top, .bottom])
+        .padding([.top, .bottom], 5)
         .sheet(isPresented: $shouldPresentReferences, content: {
             ExerciseReferenceView(shouldPresentReferences: self.$shouldPresentReferences, referencesLinks: self.exercise.wReferences, exerciseName: self.exercise.wName).environmentObject(self.appSettings)
         })
