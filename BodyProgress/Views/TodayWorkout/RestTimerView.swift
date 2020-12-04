@@ -30,6 +30,12 @@ struct RestTimerView: View {
     
     var body: some View {
         ZStack {
+            if shouldShowMenus {
+                Color.white
+                    .opacity(0.7)
+                    .edgesIgnoringSafeArea(.all)
+            }
+
             // Main timer view button
             Button(action: {
                 Helper.hapticFeedback()
@@ -59,11 +65,11 @@ struct RestTimerView: View {
                 Circle()
                     .trim(from: 0, to: progress)
                     .stroke(appSettings.themeColorView(), style: StrokeStyle(lineWidth: (status == .playing || status == .paused) ? 7 : 0, lineCap: .round))
-                    .animation(Animation.linear(duration: 1))
+                    .animation((status == .playing || status == .paused) ? Animation.linear(duration: 1) : nil)
                     .rotationEffect(.degrees(-90))
             )
             .shadow(radius: shouldShowMenus ? 5 : 0)
-            .offset(y: shouldShowMenus ? -150 : 0)
+            .offset(y: shouldShowMenus ? -(offset) : 0)
             .animation(.spring())
             
             // Minus button
@@ -77,7 +83,7 @@ struct RestTimerView: View {
                     .timerControlStyle(backgroundColor: Color.blue)
             }
             .shadow(radius: shouldShowMenus ? 5 : 0)
-            .offset(x: shouldShowMenus ? -offset : 0)
+            .offset(x: shouldShowMenus ? -offset : 0, y: shouldShowMenus ? (offset + 20) : 0)
             .animation(.spring())
             
             // Plus button
@@ -89,7 +95,7 @@ struct RestTimerView: View {
                     .timerControlStyle(backgroundColor: Color.blue)
             }
             .shadow(radius: shouldShowMenus ? 5 : 0)
-            .offset(x: shouldShowMenus ? offset : 0)
+            .offset(x: shouldShowMenus ? offset : 0, y: shouldShowMenus ? (offset + 20) : 0)
             .animation(.spring())
 
             // Stop button
@@ -103,6 +109,7 @@ struct RestTimerView: View {
                         .timerControlStyle(backgroundColor: Color.red)
                 }
                 .shadow(radius: shouldShowMenus ? 5 : 0)
+                .offset(y: shouldShowMenus ? (offset + 20) : 0)
                 .zIndex((status == .playing || status == .paused) ? 10 : 0)
             }
             
@@ -116,11 +123,12 @@ struct RestTimerView: View {
                     Image(systemName: shouldShowMenus ? "xmark" : "timer")
                         .font(kPrimaryTitleFont)
                         .frame(width: 50, height: 50)
-                        .background(shouldShowMenus ? Color(.gray) : appSettings.themeColorView())
-                        .foregroundColor(shouldShowMenus ? .secondary : .white)
+                        .background(shouldShowMenus ? Color.secondary.opacity(0.2) : appSettings.themeColorView())
+                        .foregroundColor(shouldShowMenus ? Color.secondary.opacity(0.5) : .white)
                         .clipShape(Circle())
                 }
                 .shadow(radius: 5)
+                .offset(y: shouldShowMenus ? (offset + 20) : 0)
                 .zIndex((status == .playing || status == .paused) ? 0 : 10)
                 .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { (_) in
                     self.stopTimer()
@@ -140,7 +148,7 @@ struct RestTimerView: View {
                 }
             }
         }
-        .padding(.leading, (status == .playing || status == .paused) ? 20 : 10)
+        .padding(.leading, shouldShowMenus ? 0 : 10)
         .onReceive(timer, perform: { (_) in
             if self.status == .playing {
                 self.completedTime += 1
