@@ -33,36 +33,71 @@ struct WidgetPieChart: View {
     var totalSessions: Double { content.totalSessions }
     var segments: [WidgetSegmentData] { content.segments }
     
+    var gridLayout = Array.init(repeating: GridItem(.fixed(100), spacing: 10, alignment: .leading), count: 3)
+    
     var body: some View {
-        GeometryReader { geoProxy in
-            ZStack {
-                ForEach(0..<self.segments.count, id: \.self) { segIndex in
-                    WidgetSegment(radius: geoProxy.size.width / 3, startAngle: self.segments[segIndex].startAngle, endAngle: self.segments[segIndex].endAngle)
-                        .fill(self.progress[segIndex].1.piechartColor())
-                }
-                Circle()
-                    .fill(Color(UIColor.systemBackground))
-                    .frame(width: geoProxy.size.width / 1.5, height: geoProxy.size.width / 1.5)
-                .overlay(
-                    VStack {
-                        Text("\(self.total.detailedDisplayDuration())")
-                            .font(kPrimaryTitleFont)
-                            .bold()
-                            .padding([.leading, .trailing, .top])
-                            .multilineTextAlignment(.center)
-                        Divider()
-                            .frame(width: 50)
-                            .padding([.leading, .trailing])
-                        Text("\(Int64(self.totalSessions)) sessions")
-                            .font(kPrimaryHeadlineFont)
-                            .padding([.leading, .trailing])
+        VStack(spacing: 5) {
+            GeometryReader { geometry in
+                LazyVGrid(columns: gridLayout, alignment: .center, spacing: 10) {
+                    if self.progress.count > 0 {
+                        ForEach(0..<(self.progress.count + 2), id: \.self) { index in
+                            if index == 0 {
+                                RoundedRectangle(cornerRadius: 15)
+                                    .stroke(Color.gray, lineWidth: 2)
+                                    .overlay(
+                                        HStack {
+                                            Spacer()
+                                            VStack(spacing: 3) {
+                                                Text(total.detailedDisplayDuration())
+                                                    .font(.title)
+                                                    .bold()
+                                                Divider()
+                                                    .frame(width: 50)
+                                                HStack(spacing: 2) {
+                                                    Text("\(Int(totalSessions))")
+                                                        .bold()
+                                                    Text("sessions").font(.caption)
+                                                }
+                                            }
+                                            Spacer()
+                                        }
+                                        .padding(5)
+                                    )
+                                    .frame(width: 210, height: 80, alignment: .center) // Using 2nd cell space as well as spacing between first 2 cells
+
+                            }
+                            if index == 1 { Color.clear}
+                            if index > 1 {
+                                RoundedRectangle(cornerRadius: 15)
+                                    .fill(progress[index - 2].1.piechartColor())
+                                    .overlay(
+                                        VStack {
+                                            Text(progress[index - 2].1.rawValue)
+                                                .font(.caption2)
+                                            Divider()
+                                                .frame(width: 20)
+                                            Text(progress[index - 2].0.detailedDisplayDuration())
+                                                .font(.footnote)
+                                                .bold()
+                                            Text("\(Int(progress[index - 2].2)) sessions")
+                                                .font(.caption)
+                                        }
+                                        .font(.caption2)
+                                        .padding(5)
+                                        .lineLimit(1)
+                                        
+                                    )
+                                    .frame(width: 100, height: 80, alignment: .center)
+                                    .foregroundColor(.white)
+                            }
+                            
+                        }
                     }
-                    .rotationEffect(.degrees(90))
-                )
+                }
+                
             }
-            .rotationEffect(.degrees(-90))
         }
-        .background(Color.green)
+        .padding()
     }
     
 }
@@ -85,5 +120,5 @@ struct WidgetSegment: Shape {
         segmentPath.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: radius, startAngle: .degrees(startAngle), endAngle: .degrees(endAngle), clockwise: false)
         return segmentPath
     }
-
+    
 }

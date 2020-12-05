@@ -10,7 +10,7 @@ import WidgetKit
 import SwiftUI
 import CoreData
 
-let placeholderSummary = WidgetSummaryContent(totalWorkoutTime: 100, progress: [(70, BodyParts.arms, 10), (30, BodyParts.chest, 10)], segments: [WidgetSegmentData(percentage: 70, startAngle: 0, endAngle: 252), WidgetSegmentData(percentage: 30, startAngle: 252, endAngle: 360)])
+let placeholderSummary = WidgetSummaryContent(totalWorkoutTime: 16500, progress: [(2000, BodyParts.arms, 10), (1000, BodyParts.chest, 10), (2500, BodyParts.shoulders, 10), (5000, BodyParts.back, 10), (1500, BodyParts.legs, 10), (2000, BodyParts.core, 10), (5000, BodyParts.cardio, 10), (1000, BodyParts.others, 10), (2500, BodyParts.fullBody, 10), (3000, BodyParts.abs, 10)], segments: [WidgetSegmentData(percentage: 70, startAngle: 0, endAngle: 252), WidgetSegmentData(percentage: 30, startAngle: 252, endAngle: 360)])
 
 struct Provider: TimelineProvider {
     
