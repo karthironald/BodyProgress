@@ -25,7 +25,7 @@ struct SummaryView: View {
     var body: some View {
         ZStack {
             if progress.count == 0 {
-                EmptyStateInfoView(title: "No summary was available. Start your workout.")
+                EmptyStateInfoView(title: "No workout summary is available. Start your workout.")
             } else {
                 List {
                     PieChart(progress: self.progress, segments: self.segments)

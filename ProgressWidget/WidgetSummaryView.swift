@@ -46,73 +46,82 @@ struct WidgetPieChart: View {
     
     var body: some View {
         let gridLayout = Array.init(repeating: GridItem(.fixed(cellWidth), spacing: vSpacing, alignment: .leading), count: 3)
- 
-        return VStack(spacing: hSpacing) {
-            GeometryReader { geometry in
-                LazyVGrid(columns: gridLayout, alignment: .center, spacing: vSpacing) {
-                    if self.progress.count > 0 {
-                        ForEach(0..<(self.progress.count + 2), id: \.self) { index in
-                            if index == 0 {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .stroke(Color.gray, lineWidth: 2)
-                                    .overlay(
-                                        HStack {
-                                            Spacer()
-                                            VStack(spacing: 3) {
-                                                Text(total.detailedDisplayDuration())
-                                                    .font(.title)
-                                                    .bold()
-                                                Divider()
-                                                    .frame(width: 50)
-                                                HStack(spacing: 2) {
-                                                    Text("\(Int(totalSessions))")
-                                                        .bold()
-                                                    Text("sessions").font(.caption)
+        return ZStack {
+            if progress.count == 0 {
+                Text("No workout summary is available. Start your workout.")
+                    .lineLimit(3)
+                    .multilineTextAlignment(.center)
+                    .padding()
+                    .foregroundColor(Color.gray)
+            } else {
+                VStack(spacing: hSpacing) {
+                    GeometryReader { geometry in
+                        LazyVGrid(columns: gridLayout, alignment: .center, spacing: vSpacing) {
+                            if self.progress.count > 0 {
+                                ForEach(0..<(self.progress.count + 2), id: \.self) { index in
+                                    if index == 0 {
+                                        RoundedRectangle(cornerRadius: 15)
+                                            .stroke(Color.gray, lineWidth: 2)
+                                            .overlay(
+                                                HStack {
+                                                    Spacer()
+                                                    VStack(spacing: 3) {
+                                                        Text(total.detailedDisplayDuration())
+                                                            .font(.title)
+                                                            .bold()
+                                                        Divider()
+                                                            .frame(width: 50)
+                                                        HStack(spacing: 2) {
+                                                            Text("\(Int(totalSessions))")
+                                                                .bold()
+                                                            Text("sessions").font(.caption)
+                                                        }
+                                                    }
+                                                    Spacer()
                                                 }
-                                            }
-                                            Spacer()
-                                        }
-                                        .padding(5)
-                                    )
-                                    .frame(width: ((cellWidth * 2) + vSpacing), height: cellHeight, alignment: .center) // Using 2nd cell space as well as spacing between first 2 cells
+                                                .padding(5)
+                                            )
+                                            .frame(width: ((cellWidth * 2) + vSpacing), height: cellHeight, alignment: .center) // Using 2nd cell space as well as spacing between first 2 cells
 
-                            }
-                            if index == 1 { Color.clear }
-                            if index > 1 {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .fill(progress[index - 2].1.piechartColor())
-                                    .overlay(
-                                        VStack(spacing: 2) {
-                                            Text(progress[index - 2].1.rawValue)
+                                    }
+                                    if index == 1 { Color.clear }
+                                    if index > 1 {
+                                        RoundedRectangle(cornerRadius: 15)
+                                            .fill(progress[index - 2].1.piechartColor())
+                                            .overlay(
+                                                VStack(spacing: 2) {
+                                                    Text(progress[index - 2].1.rawValue)
+                                                        .font(.caption2)
+                                                        .padding(0)
+                                                    Divider()
+                                                        .frame(width: 20)
+                                                        .padding(0)
+                                                    Text(progress[index - 2].0.detailedDisplayDuration())
+                                                        .font(.footnote)
+                                                        .bold()
+                                                    Text("\(Int(progress[index - 2].2)) sessions")
+                                                        .font(.caption)
+                                                }
                                                 .font(.caption2)
-                                                .padding(0)
-                                            Divider()
-                                                .frame(width: 20)
-                                                .padding(0)
-                                            Text(progress[index - 2].0.detailedDisplayDuration())
-                                                .font(.footnote)
-                                                .bold()
-                                            Text("\(Int(progress[index - 2].2)) sessions")
-                                                .font(.caption)
-                                        }
-                                        .font(.caption2)
-                                        .padding(5)
-                                        .lineLimit(1)
-                                        
-                                    )
-                                    .frame(width: cellWidth, height: cellHeight, alignment: .center)
-                                    .foregroundColor(.white)
+                                                .padding(5)
+                                                .lineLimit(1)
+                                                
+                                            )
+                                            .frame(width: cellWidth, height: cellHeight, alignment: .center)
+                                            .foregroundColor(.white)
+                                    }
+                                    
+                                }
                             }
-                            
                         }
+                        .onAppear(perform: {
+                            self.rect = geometry.frame(in: .global)
+                        })
                     }
                 }
-                .onAppear(perform: {
-                    self.rect = geometry.frame(in: .global)
-                })
+                .padding(10)
             }
         }
-        .padding(10)
     }
     
 }
