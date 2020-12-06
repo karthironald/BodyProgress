@@ -11,7 +11,7 @@ import CoreData
 import WidgetKit
 
 struct WidgetSummaryContent: TimelineEntry {
-    var totalWorkoutTime: Int16 = 0
+    var totalWorkoutTime: Int64 = 0
     var progress: [(Double, BodyParts, Double)] = []
     var total : Double {
         let durations = progress.map { $0.0 }
@@ -33,12 +33,23 @@ struct WidgetPieChart: View {
     var totalSessions: Double { content.totalSessions }
     var segments: [WidgetSegmentData] { content.segments }
     
-    var gridLayout = Array.init(repeating: GridItem(.fixed(100), spacing: 10, alignment: .leading), count: 3)
+    @State var rect: CGRect = CGRect.zero
+    
+    var vSpacing: CGFloat = 7
+    var hSpacing: CGFloat { vSpacing / 2 }
+    private var cellWidth: CGFloat {
+        abs((rect.width - 2 * vSpacing) / 3)
+    }
+    private var cellHeight: CGFloat {
+        abs((rect.height - 5 * (vSpacing / 2)) / 4)
+    }
     
     var body: some View {
-        VStack(spacing: 5) {
+        let gridLayout = Array.init(repeating: GridItem(.fixed(cellWidth), spacing: vSpacing, alignment: .leading), count: 3)
+ 
+        return VStack(spacing: hSpacing) {
             GeometryReader { geometry in
-                LazyVGrid(columns: gridLayout, alignment: .center, spacing: 10) {
+                LazyVGrid(columns: gridLayout, alignment: .center, spacing: vSpacing) {
                     if self.progress.count > 0 {
                         ForEach(0..<(self.progress.count + 2), id: \.self) { index in
                             if index == 0 {
@@ -63,19 +74,21 @@ struct WidgetPieChart: View {
                                         }
                                         .padding(5)
                                     )
-                                    .frame(width: 210, height: 80, alignment: .center) // Using 2nd cell space as well as spacing between first 2 cells
+                                    .frame(width: ((cellWidth * 2) + vSpacing), height: cellHeight, alignment: .center) // Using 2nd cell space as well as spacing between first 2 cells
 
                             }
-                            if index == 1 { Color.clear}
+                            if index == 1 { Color.clear }
                             if index > 1 {
                                 RoundedRectangle(cornerRadius: 15)
                                     .fill(progress[index - 2].1.piechartColor())
                                     .overlay(
-                                        VStack {
+                                        VStack(spacing: 2) {
                                             Text(progress[index - 2].1.rawValue)
                                                 .font(.caption2)
+                                                .padding(0)
                                             Divider()
                                                 .frame(width: 20)
+                                                .padding(0)
                                             Text(progress[index - 2].0.detailedDisplayDuration())
                                                 .font(.footnote)
                                                 .bold()
@@ -87,17 +100,19 @@ struct WidgetPieChart: View {
                                         .lineLimit(1)
                                         
                                     )
-                                    .frame(width: 100, height: 80, alignment: .center)
+                                    .frame(width: cellWidth, height: cellHeight, alignment: .center)
                                     .foregroundColor(.white)
                             }
                             
                         }
                     }
                 }
-                
+                .onAppear(perform: {
+                    self.rect = geometry.frame(in: .global)
+                })
             }
         }
-        .padding()
+        .padding(10)
     }
     
 }
