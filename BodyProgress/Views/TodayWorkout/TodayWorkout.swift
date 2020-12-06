@@ -9,6 +9,7 @@
 import SwiftUI
 import CoreData
 import Combine
+import WidgetKit
 
 struct TodayWorkout: View {
     
@@ -113,6 +114,7 @@ struct TodayWorkout: View {
         if managedObjectContext.hasChanges {
             do {
                 try managedObjectContext.save()
+                WidgetCenter.shared.reloadTimelines(ofKind: WidgetKind.summary.rawValue) // Ask WidgetKit to reload the timeline of the summary widget
             } catch {
                 #warning("We are showing workout saved alert before saving it. There could be posibility to face error when saving the workout. Need to handle it")
                 print(error)

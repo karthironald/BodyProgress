@@ -70,7 +70,7 @@ struct Provider: TimelineProvider {
 
 @main
 struct ProgressWidget: Widget {
-    let kind: String = "ProgressWidget"
+    let kind: String = WidgetKind.summary.rawValue
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in

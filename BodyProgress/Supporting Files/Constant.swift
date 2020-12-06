@@ -83,3 +83,7 @@ enum AppGroup: String {
     }
   }
 }
+
+enum WidgetKind: String {
+    case summary = "com.mallow-tech.summary-widget"
+}
