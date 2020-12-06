@@ -32,6 +32,8 @@ struct TodayWorkout: View {
     var workout: Workout
     @State var alignment = Alignment.bottomLeading
     
+    @State private var defaultBrightness: CGFloat = 0.0
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -52,7 +54,12 @@ struct TodayWorkout: View {
                 }
                 .animation(.spring())
             }
-            
+            .onAppear(perform: {
+                self.configureDeviceToStartWorkout()
+            })
+            .onDisappear(perform: {
+                self.configureDeviceToStopWorkout()
+            })
             .navigationBarTitle(Text("\(selectedWorkout.wName)"), displayMode: .inline)
             .navigationBarItems(
                 leading: TimerView(startDate: $startDate, duration: $duration, shouldPauseTimer: $shouldPauseTimer, timer: $timer, selectedWorkout: selectedWorkout, workout: workout).environment(\.managedObjectContext, managedObjectContext),
@@ -119,6 +126,23 @@ struct TodayWorkout: View {
                 #warning("We are showing workout saved alert before saving it. There could be posibility to face error when saving the workout. Need to handle it")
                 print(error)
             }
+        }
+    }
+    
+    /**Do stuffs when user starts a workout*/
+    private func configureDeviceToStartWorkout() {
+        self.defaultBrightness = UIScreen.main.brightness
+        UIApplication.shared.isIdleTimerDisabled = true // We don't want app to go to sleep mode when the workout is on progress and user is not interacting with the device
+        if self.defaultBrightness > kDeviceWorkoutBrightness {
+            UIScreen.main.brightness = kDeviceWorkoutBrightness // Reduce device brightness if it is higher than expected
+        }
+    }
+    
+    /**Do stuffs when user stops a workout*/
+    private func configureDeviceToStopWorkout() {
+        UIApplication.shared.isIdleTimerDisabled = false // Allow app to go to sleep.
+        if UIScreen.main.brightness == kDeviceWorkoutBrightness { // Set brightness to default value only when it equals to `kDeviceWorkoutBrightness`. Else user might have changed the brightness after we set `kDeviceWorkoutBrightness`.
+            UIScreen.main.brightness = defaultBrightness
         }
     }
     

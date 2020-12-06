@@ -14,6 +14,7 @@ let kDefaultValue = "-"
 let kCommonListIndex = 9999
 let kOneHour: Int16 = 3600
 let kOneMinute: Int16 = 60
+let kDeviceWorkoutBrightness: CGFloat = 0.5
 
 let kPrimaryTitleFont = Font.system(.title, design: .rounded)
 let kPrimaryLargeTitleFont = Font.system(.largeTitle, design: .rounded)
