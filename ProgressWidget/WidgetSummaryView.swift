@@ -25,27 +25,24 @@ struct WidgetSummaryContent: TimelineEntry {
     var date = Date()
 }
 
-struct WidgetPieChart: View {
+struct SummaryWidget: View {
     
     let content: WidgetSummaryContent
-    var progress: [(Double, BodyParts, Double)] { content.progress }
-    var total : Double { content.total }
-    var totalSessions: Double { content.totalSessions }
-    var segments: [WidgetSegmentData] { content.segments }
+    private var progress: [(Double, BodyParts, Double)] { content.progress }
+    private var total : Double { content.total }
+    private var totalSessions: Double { content.totalSessions }
+    private var segments: [WidgetSegmentData] { content.segments }
     
-    @State var rect: CGRect = CGRect.zero
+    @State private var rect: CGRect = CGRect.zero
     
     var vSpacing: CGFloat = 7
-    var hSpacing: CGFloat { vSpacing / 2 }
-    private var cellWidth: CGFloat {
-        abs((rect.width - 2 * vSpacing) / 3)
-    }
-    private var cellHeight: CGFloat {
-        abs((rect.height - 5 * (vSpacing / 2)) / 4)
-    }
+    private var hSpacing: CGFloat { vSpacing / 2 }
+    private var cellWidth: CGFloat { abs((rect.width - 2 * vSpacing) / 3) }
+    private var cellHeight: CGFloat { abs((rect.height - 5 * (vSpacing / 2)) / 4) }
     
     var body: some View {
         let gridLayout = Array.init(repeating: GridItem(.fixed(cellWidth), spacing: vSpacing, alignment: .leading), count: 3)
+        
         return ZStack {
             if progress.count == 0 {
                 Text("No workout summary is available. Start your workout.")

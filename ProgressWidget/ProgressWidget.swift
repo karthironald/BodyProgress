@@ -74,7 +74,7 @@ struct ProgressWidget: Widget {
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            WidgetPieChart(content: entry)
+            SummaryWidget(content: entry)
         }
         .configurationDisplayName("Workout Summary")
         .description("Get your total and each body part workout summary at a glance")
@@ -84,7 +84,7 @@ struct ProgressWidget: Widget {
 
 struct ProgressWidget_Previews: PreviewProvider {
     static var previews: some View {
-        WidgetPieChart(content: placeholderSummary)
+        SummaryWidget(content: placeholderSummary)
             .previewContext(WidgetPreviewContext(family: .systemLarge))
     }
 }
