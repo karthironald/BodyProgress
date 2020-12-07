@@ -10,10 +10,10 @@ import SwiftUI
 import CoreData
 import WidgetKit
 
-struct WidgetSummaryContent: TimelineEntry {
+struct SummaryWidgetContent: TimelineEntry {
     var totalWorkoutTime: Int64 = 0
     var progress: [(Double, BodyParts, Double)] = []
-    var total : Double {
+    var total: Double {
         let durations = progress.map { $0.0 }
         return durations.reduce(0.0, +)
     }
@@ -27,7 +27,7 @@ struct WidgetSummaryContent: TimelineEntry {
 
 struct SummaryWidget: View {
     
-    let content: WidgetSummaryContent
+    let content: SummaryWidgetContent
     private var progress: [(Double, BodyParts, Double)] { content.progress }
     private var total : Double { content.total }
     private var totalSessions: Double { content.totalSessions }

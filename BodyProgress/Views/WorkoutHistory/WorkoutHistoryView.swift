@@ -8,6 +8,7 @@
 
 import SwiftUI
 import CoreData
+import WidgetKit
 
 struct WorkoutHistoryView: View {
     
@@ -67,6 +68,7 @@ struct WorkoutHistoryView: View {
         if managedObjectContext.hasChanges {
             do {
                 try managedObjectContext.save()
+                WidgetCenter.shared.reloadTimelines(ofKind: WidgetKind.summary.rawValue) // Ask WidgetKit to reload the timeline of the summary widget
             } catch {
                 print(error)
             }

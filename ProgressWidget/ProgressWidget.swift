@@ -10,15 +10,15 @@ import WidgetKit
 import SwiftUI
 import CoreData
 
-let placeholderSummary = WidgetSummaryContent(totalWorkoutTime: 263075, progress: [(63800, BodyParts.arms, 18), (32345, BodyParts.chest, 8), (27342, BodyParts.shoulders, 7), (6468, BodyParts.back, 2), (16524, BodyParts.legs, 5), (35530, BodyParts.core, 32), (44675, BodyParts.cardio, 24), (24833, BodyParts.others, 17), (2500, BodyParts.fullBody, 10), (11558, BodyParts.abs, 5)], segments: [WidgetSegmentData(percentage: 70, startAngle: 0, endAngle: 252), WidgetSegmentData(percentage: 30, startAngle: 252, endAngle: 360)])
+let placeholderSummary = SummaryWidgetContent(totalWorkoutTime: 263075, progress: [(63800, BodyParts.arms, 18), (32345, BodyParts.chest, 8), (27342, BodyParts.shoulders, 7), (6468, BodyParts.back, 2), (16524, BodyParts.legs, 5), (35530, BodyParts.core, 32), (44675, BodyParts.cardio, 24), (24833, BodyParts.others, 17), (2500, BodyParts.fullBody, 10), (11558, BodyParts.abs, 5)], segments: [WidgetSegmentData(percentage: 70, startAngle: 0, endAngle: 252), WidgetSegmentData(percentage: 30, startAngle: 252, endAngle: 360)])
 
 struct Provider: TimelineProvider {
     
-    func placeholder(in context: Context) -> WidgetSummaryContent {
+    func placeholder(in context: Context) -> SummaryWidgetContent {
         placeholderSummary
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (WidgetSummaryContent) -> ()) {
+    func getSnapshot(in context: Context, completion: @escaping (SummaryWidgetContent) -> ()) {
         let entry = placeholderSummary
         completion(entry)
     }
@@ -45,7 +45,7 @@ struct Provider: TimelineProvider {
                     lastEndAngle += angle
                 }
                 
-                let summary = WidgetSummaryContent(progress: progress, segments: segments)
+                let summary = SummaryWidgetContent(progress: progress, segments: segments)
 
                 let timeline = Timeline(entries: [summary], policy: .atEnd)
                 completion(timeline)
