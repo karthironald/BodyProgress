@@ -24,13 +24,13 @@ struct SettingsView: View {
                             
                     }
                 }
-                Section(header: Text("Workout Reminder")) {
+                Section {
                     ZStack {
                         RoundedRectangle(cornerRadius: 0)
                             .fill(Color.clear)
                         if forceRender {
                             Toggle(isOn: $appSettings.enabledReminder) {
-                                Text("Reminder")
+                                Text("Workout Reminder")
                             }
                         }
                     }
@@ -39,36 +39,42 @@ struct SettingsView: View {
                         .accentColor(appSettings.themeColorView())
                     }
                 }
-                Section(header: Text("Theme Color")) {
-                    HStack() {
-                        ForEach(0..<AppThemeColours.allCases.count, id: \.self) { index in
-                            Button(action: {
-                                self.appSettings.themeColorIndex = index
-                                self.forceRender = false
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                    self.forceRender = true
-                                }
-                            }) {
-                                Circle()
-                                    .fill(Color(AppThemeColours.allCases[index].uiColor()))
-                                    .overlay(
-                                        Group {
-                                            if index == self.appSettings.themeColorIndex {
-                                                Image(systemName: "checkmark.circle.fill")
-                                                .imageScale(.medium)
-                                                .foregroundColor(.white)
-                                            }
-                                        }
-                                    )
-                            }
-                            .buttonStyle(BorderlessButtonStyle())
-                        }
-                    }
-                }
-                Section(header: Text("Haptic")) {
+                
+                // Don't need this theme changing option
+                
+//                Section(header: Text("Theme Color")) {
+//                    HStack() {
+//                        ForEach(0..<AppThemeColours.allCases.count, id: \.self) { index in
+//                            Button(action: {
+//                                self.appSettings.themeColorIndex = index
+//                                self.forceRender = false
+//                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+//                                    self.forceRender = true
+//                                }
+//                            }) {
+//                                Circle()
+//                                    .fill(Color(AppThemeColours.allCases[index].uiColor()))
+//                                    .overlay(
+//                                        Group {
+//                                            if index == self.appSettings.themeColorIndex {
+//                                                Image(systemName: "checkmark.circle.fill")
+//                                                .imageScale(.medium)
+//                                                .foregroundColor(.white)
+//                                            }
+//                                        }
+//                                    )
+//                            }
+//                            .buttonStyle(BorderlessButtonStyle())
+//                        }
+//                    }
+//                }
+                
+                
+                
+                Section {
                     if forceRender {
                         Toggle(isOn: $appSettings.enabledHaptic) {
-                            Text("Enable haptic feedback")
+                            Text("Haptic feedback")
                         }
                     }
                 }
@@ -76,6 +82,14 @@ struct SettingsView: View {
             .navigationBarTitle("Settings")
         }
     }
+    
+    #warning("Need to use this share option soon")
+    func actionSheet() {
+        guard let data = URL(string: "https://www.apple.com") else { return }
+        let activityViewController = UIActivityViewController(activityItems: [data], applicationActivities: nil)
+        UIApplication.shared.windows.first?.rootViewController?.present(activityViewController, animated: true, completion: nil)
+    }
+    
 }
 
 struct SettingsView_Previews: PreviewProvider {

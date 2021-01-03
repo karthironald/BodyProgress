@@ -16,9 +16,9 @@ enum WorkoutHistoryStatusSort: String, CaseIterable {
     func title() -> String {
         switch self {
         case .Completed:
-            return "Completed 😈"
+            return "Finished"
         case .Pending:
-            return "Gave up 🤕"
+            return "Unfinished"
         case .Both:
             return "All"
         }
