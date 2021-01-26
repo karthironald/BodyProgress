@@ -151,8 +151,8 @@ class AppSettings: ObservableObject {
         let selectionRawValue = UserDefaults.standard.value(forKey: "historySelectedCompletionStatus") as? String ?? WorkoutHistoryStatusSort.Both.rawValue
         self.historySelectedCompletionStatus = WorkoutHistoryStatusSort(rawValue: selectionRawValue) ?? WorkoutHistoryStatusSort.Both
         
-        let timePeriodSelectionRawValue = UserDefaults.standard.value(forKey: "historySelectedTimePeriod") as? Int ?? TimePeriod.all.rawValue
-        self.historySelectedTimePeriod = TimePeriod(rawValue: timePeriodSelectionRawValue) ?? TimePeriod.all
+        let timePeriodSelectionRawValue = UserDefaults.standard.value(forKey: "historySelectedTimePeriod") as? Int ?? TimePeriod.last30Days.rawValue
+        self.historySelectedTimePeriod = TimePeriod(rawValue: timePeriodSelectionRawValue) ?? TimePeriod.last30Days
         
         self.selectedTab = UserDefaults.standard.value(forKey: "selectedTab") as? Int ?? 0
         self.workoutTimerInterval = UserDefaults.standard.value(forKey: "workoutTimerInterval") as? TimeInterval ?? 30

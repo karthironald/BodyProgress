@@ -85,9 +85,17 @@ struct WokroutHistoryTabView: View {
                 ,trailing:
                     HStack(spacing: 10) {
                         Menu(content: {
-                            ForEach(0..<TimePeriod.allCases.count, id: \.self) { index in
-                                Button(TimePeriod.allCases[index].title()) {
-                                    self.appSettings.historySelectedTimePeriod = TimePeriod.allCases[index]
+                            Section {
+                                ForEach(0..<TimePeriod.allCases.count - 1, id: \.self) { index in
+                                    Button(TimePeriod.allCases[index].title()) {
+                                        self.appSettings.historySelectedTimePeriod = TimePeriod.allCases[index]
+                                    }
+                                }
+                            }
+                            
+                            Section {
+                                Button(TimePeriod.all.title()) {
+                                    self.appSettings.historySelectedTimePeriod = TimePeriod.all
                                 }
                             }
                         }, label: {
