@@ -89,7 +89,7 @@ extension WorkoutHistory {
 
 extension WorkoutHistory {
     
-    static func fetchSummary(context: NSManagedObjectContext, completion: @escaping ([(sum: Double, bodyPart: BodyParts, count: Double)]) -> ()) {
+    static func fetchSummary(startedAgo: Int, context: NSManagedObjectContext, completion: @escaping ([(sum: Double, bodyPart: BodyParts, count: Double)]) -> ()) {
         
         let keypathDuration = NSExpression(forKeyPath: \WorkoutHistory.duration)
         let expression = NSExpression(forFunction: "sum:", arguments: [keypathDuration])
@@ -112,6 +112,11 @@ extension WorkoutHistory {
         req.propertiesToFetch = [sumDesc, countDesc, "bodyPart"]
         req.resultType = .dictionaryResultType
         
+        let dates = startDate(from: startedAgo)
+        if let now = dates.now, let startDate = dates.startDate {
+            req.predicate = NSPredicate(format: "(createdAt >= %@) AND (createdAt <= %@)", startDate as CVarArg, now as CVarArg)
+        }
+        
         context.perform {
             do {
                 let results = try req.execute()
@@ -128,7 +133,16 @@ extension WorkoutHistory {
         }
     }
     
-    static func fetchBodyPartSummary(context: NSManagedObjectContext, of bodyPart: BodyParts, completion: @escaping ([(sum: Double, min: Double, max: Double, average: Double, count: Double, workout: String)]) -> ()) {
+    static func startDate(from daysAgo: Int) -> (now: Date?, startDate: Date?) {
+        let now = Date()
+        var startDate: Date?
+        if daysAgo > 0 {
+            startDate = Calendar.current.date(byAdding: .day, value: -daysAgo, to: now)
+        }
+        return (now, startDate)
+    }
+    
+    static func fetchBodyPartSummary(startedAgo: Int, context: NSManagedObjectContext, of bodyPart: BodyParts, completion: @escaping ([(sum: Double, min: Double, max: Double, average: Double, count: Double, workout: String)]) -> ()) {
         
         let keypathWorkout = NSExpression(forKeyPath: \WorkoutHistory.duration)
         let sumExpression = NSExpression(forFunction: "sum:", arguments: [keypathWorkout])
@@ -173,7 +187,14 @@ extension WorkoutHistory {
         req.propertiesToGroupBy = ["name"]
         req.propertiesToFetch = [sumDesc, minDesc, maxDesc, avgDesc, countDesc,  "name"]
         req.resultType = .dictionaryResultType
-        req.predicate = NSPredicate(format: "bodyPart == %@", bodyPart.rawValue)
+        
+        var predicates: [NSPredicate] = []
+        predicates.append(NSPredicate(format: "bodyPart == %@", bodyPart.rawValue))
+        let dates = startDate(from: startedAgo)
+        if let now = dates.now, let startDate = dates.startDate {
+            predicates.append(NSPredicate(format: "(createdAt >= %@) AND (createdAt <= %@)", startDate as CVarArg, now as CVarArg))
+        }
+        req.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
         
         context.perform {
             do {

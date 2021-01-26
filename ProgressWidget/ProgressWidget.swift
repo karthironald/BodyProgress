@@ -29,7 +29,7 @@ struct Provider: TimelineProvider {
             var progress: [(Double, BodyParts, Double)] = []
             var segments: [WidgetSegmentData] = []
             
-            WorkoutHistory.fetchSummary(context: container.viewContext) { (data) in
+            WorkoutHistory.fetchSummary(startedAgo: 0, context: container.viewContext) { (data) in
                 progress = data
                 var lastEndAngle = 0.0
                 var total : Double {

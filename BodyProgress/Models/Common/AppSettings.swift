@@ -121,6 +121,14 @@ class AppSettings: ObservableObject {
             UserDefaults.standard.set(rawValues, forKey: "historySelectedCompletionStatus")
         }
     }
+    
+    @Published var historySelectedTimePeriod: TimePeriod {
+        didSet {
+            let rawValues = historySelectedTimePeriod.rawValue
+            UserDefaults.standard.set(rawValues, forKey: "historySelectedTimePeriod")
+        }
+    }
+    
     var isDBLocationMigrated: Bool {
         didSet {
             UserDefaults.standard.set(isDBLocationMigrated, forKey: "isDBLocationMigrated")
@@ -142,6 +150,10 @@ class AppSettings: ObservableObject {
         
         let selectionRawValue = UserDefaults.standard.value(forKey: "historySelectedCompletionStatus") as? String ?? WorkoutHistoryStatusSort.Both.rawValue
         self.historySelectedCompletionStatus = WorkoutHistoryStatusSort(rawValue: selectionRawValue) ?? WorkoutHistoryStatusSort.Both
+        
+        let timePeriodSelectionRawValue = UserDefaults.standard.value(forKey: "historySelectedTimePeriod") as? Int ?? TimePeriod.all.rawValue
+        self.historySelectedTimePeriod = TimePeriod(rawValue: timePeriodSelectionRawValue) ?? TimePeriod.all
+        
         self.selectedTab = UserDefaults.standard.value(forKey: "selectedTab") as? Int ?? 0
         self.workoutTimerInterval = UserDefaults.standard.value(forKey: "workoutTimerInterval") as? TimeInterval ?? 30
         self.addedDefaultWorkouts = UserDefaults.standard.value(forKey: "addedDefaultWorkouts") as? Bool ?? false

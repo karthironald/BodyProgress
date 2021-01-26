@@ -9,6 +9,24 @@
 import SwiftUI
 import CoreData
 
+enum TimePeriod: Int, CaseIterable {
+    case last7Days = 7
+    case last30Days = 30
+    case last60Days = 60
+    case last90Days = 90
+    case all = 0
+    
+    func title() -> String {
+        switch self {
+        case .last7Days: return "Last 7D"
+        case .last30Days: return "Last 30D"
+        case .last60Days: return "Last 60D"
+        case .last90Days: return "Last 90D"
+        case .all: return "All"
+        }
+    }
+}
+
 struct SummaryView: View {
     
     @EnvironmentObject var appSettings: AppSettings
@@ -55,8 +73,24 @@ struct SummaryView: View {
                 .listStyle(InsetGroupedListStyle())
             }
         }
+        .navigationBarItems(trailing:
+                                Menu(content: {
+                                    ForEach(0..<TimePeriod.allCases.count, id: \.self) { index in
+                                        Button(TimePeriod.allCases[index].title()) {
+                                            self.appSettings.historySelectedTimePeriod = TimePeriod.allCases[index]
+                                            WorkoutHistory.fetchSummary(startedAgo: appSettings.historySelectedTimePeriod.rawValue, context: self.managedObjectContext) { (data) in
+                                                self.progress = data
+                                                self.chartData()
+                                            }
+                                        }
+                                    }
+                                }, label: {
+                                    Text(appSettings.historySelectedTimePeriod.title())
+                                        .frame(width: 100, height: 30, alignment: .trailing)
+                                })
+        )
         .onAppear {
-            WorkoutHistory.fetchSummary(context: self.managedObjectContext) { (data) in
+            WorkoutHistory.fetchSummary(startedAgo: appSettings.historySelectedTimePeriod.rawValue, context: self.managedObjectContext) { (data) in
                 self.progress = data
                 self.chartData()
             }

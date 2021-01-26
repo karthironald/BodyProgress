@@ -34,7 +34,7 @@ struct BodyPartSummary: View {
         }
         .navigationBarTitle(Text("\(bodyPart.rawValue)"))
         .onAppear {
-            WorkoutHistory.fetchBodyPartSummary(context: self.managedObjectContext, of: self.bodyPart) { (data) in
+            WorkoutHistory.fetchBodyPartSummary(startedAgo: appSettings.historySelectedTimePeriod.rawValue, context: self.managedObjectContext, of: self.bodyPart) { (data) in
                 self.data = data
             }
         }

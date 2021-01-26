@@ -83,15 +83,29 @@ struct WokroutHistoryTabView: View {
                         .frame(width: 30, height: 30)
                 })
                 ,trailing:
-                Button(action: {
-                    withAnimation(.linear) {
-                        self.shouldPresentBodyParts.toggle()
+                    HStack(spacing: 10) {
+                        Menu(content: {
+                            ForEach(0..<TimePeriod.allCases.count, id: \.self) { index in
+                                Button(TimePeriod.allCases[index].title()) {
+                                    self.appSettings.historySelectedTimePeriod = TimePeriod.allCases[index]
+                                }
+                            }
+                        }, label: {
+                            Text(self.appSettings.historySelectedTimePeriod.title())
+                                .frame(width: 80, height: 30, alignment: .trailing)
+                        })
+                        Button(action: {
+                            withAnimation(.linear) {
+                                self.shouldPresentBodyParts.toggle()
+                            }
+                        }) {
+                            Text(shouldPresentBodyParts ? "Done" : "Filter")
+                                .font(kPrimaryBodyFont)
+                                .bold()
+                                .frame(width: 50, height: 30, alignment: .trailing)
+                        }
                     }
-                }) {
-                    Text(shouldPresentBodyParts ? "Done" : "Filter")
-                        .font(kPrimaryBodyFont)
-                        .bold()
-                }
+                    .frame(width: 140, height: 30, alignment: .trailing)
             )
         }
     }
@@ -103,6 +117,12 @@ struct WokroutHistoryTabView: View {
         if appSettings.historySelectedCompletionStatus != .Both {
             predicates.append(NSPredicate(format: "status == %@", appSettings.historySelectedCompletionStatus == .Completed ? NSNumber(booleanLiteral: true) : NSNumber(booleanLiteral: false)))
         }
+        
+        let dates = Helper.startDate(from: self.appSettings.historySelectedTimePeriod.rawValue)
+        if let now = dates.now, let startDate = dates.startDate {
+            predicates.append(NSPredicate(format: "(createdAt >= %@) AND (createdAt <= %@)", startDate as CVarArg, now as CVarArg))
+        }
+        
         return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
     }
     
