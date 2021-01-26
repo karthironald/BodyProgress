@@ -34,35 +34,6 @@ struct ExerciseSetsList: View {
                 EmptyStateInfoView(title: NSLocalizedString("kInfoMsgNoExercisesSetsAddedTitle", comment: "Info message"), message: NSLocalizedString("kInfoMsgNoExercisesSetsAddedMessage", comment: "Info message"))
             }
             List {
-                if shouldShowBulkUpdateView {
-                    Section {
-                        VStack(alignment: .leading) {
-                            Text("Rep: \(Int(reputation))")
-                            Slider(value: $reputation, in: -20...20, step: 1)
-                            Text("Weight: \(Int(weight)) kgs")
-                            Slider(value: $weight, in: -20...20, step: 1)
-                            HStack(spacing: 10) {
-                                Spacer()
-                                Button(action: {
-                                    withAnimation {
-                                        self.shouldShowBulkUpdateView.toggle()
-                                    }
-                                }) {
-                                    Text("Cancel")
-                                }
-                                .buttonStyle(BorderlessButtonStyle())
-                                Button(action: {
-                                    proceedBulkUpdate()
-                                }) {
-                                    CustomBarButton(title: NSLocalizedString("kButtonTitleSave", comment: "Button title"))
-                                }
-                                .buttonStyle(BorderlessButtonStyle())
-                            }
-                        }
-                        .padding()
-                    }
-                }
-                
                 ForEach(selectedExercise.wExerciseSets) { exerciseSet in
                     ExerciseSetRow(selectedExercise: selectedExercise, exerciseSet: exerciseSet).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
                 }
@@ -80,7 +51,7 @@ struct ExerciseSetsList: View {
                                         Button(action: {
                                             self.reputation = 0
                                             self.weight = 0
-                                            withAnimation {
+                                            withAnimation(.spring()) {
                                                 self.shouldShowBulkUpdateView.toggle()
                                             }
                                         }) {
@@ -99,6 +70,40 @@ struct ExerciseSetsList: View {
                                         AddExerciseSet(shouldPresentAddNewExerciseSet: self.$shouldPresentAddNewExerciseSet, selectedExercise: self.selectedExercise).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
                                     }
             )
+            
+            VStack(alignment: .leading, spacing: 10) {
+                VStack(alignment: .leading, spacing: 0) {
+                    Text("Rep: \(Int(reputation))")
+                    Slider(value: $reputation, in: -20...20, step: 1)
+                }
+                .padding([.top, .bottom])
+                VStack(alignment: .leading, spacing: 0) {
+                    Text("Weight: \(Int(weight)) kgs")
+                    Slider(value: $weight, in: -20...20, step: 1)
+                }
+                HStack(spacing: 10) {
+                    Spacer()
+                    Button(action: {
+                        withAnimation {
+                            self.shouldShowBulkUpdateView.toggle()
+                        }
+                    }) {
+                        Text("Cancel")
+                    }
+                    .buttonStyle(BorderlessButtonStyle())
+                    Button(action: {
+                        proceedBulkUpdate()
+                    }) {
+                        CustomBarButton(title: NSLocalizedString("kButtonTitleSave", comment: "Button title"))
+                    }
+                    .buttonStyle(BorderlessButtonStyle())
+                }
+            }
+            .padding()
+            .background(Color.white)
+            .cornerRadius(25)
+            .padding()
+            .offset(y: shouldShowBulkUpdateView ? UIScreen.main.bounds.height * 0.23 : UIScreen.main.bounds.height)
         }
         .onAppear {
             kAppDelegate.removeSeparatorLineAppearance()
@@ -131,7 +136,7 @@ struct ExerciseSetsList: View {
             } catch {
                 // Do nothing
             }
-            withAnimation { shouldShowBulkUpdateView = false }
+            withAnimation(.spring()) { shouldShowBulkUpdateView = false }
         }
     }
     
