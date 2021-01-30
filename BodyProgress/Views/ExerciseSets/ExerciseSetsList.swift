@@ -100,10 +100,10 @@ struct ExerciseSetsList: View {
                 }
             }
             .padding()
-            .background(Color.white)
+            .background(Color.secondary.opacity(0.2))
             .cornerRadius(25)
             .padding()
-            .offset(y: shouldShowBulkUpdateView ? UIScreen.main.bounds.height * 0.23 : UIScreen.main.bounds.height)
+            .offset(y: shouldShowBulkUpdateView ? UIScreen.main.bounds.height * 0.20 : UIScreen.main.bounds.height)
         }
         .onAppear {
             kAppDelegate.removeSeparatorLineAppearance()
