@@ -128,6 +128,12 @@ class AppSettings: ObservableObject {
             UserDefaults.standard.set(rawValues, forKey: "historySelectedTimePeriod")
         }
     }
+
+    @Published var shouldAutoStartRestTimer: Bool {
+        didSet {
+            UserDefaults.standard.set(shouldAutoStartRestTimer, forKey: "shouldAutoStartRestTimer")
+        }
+    }
     
     var isDBLocationMigrated: Bool {
         didSet {
@@ -153,6 +159,8 @@ class AppSettings: ObservableObject {
         
         let timePeriodSelectionRawValue = UserDefaults.standard.value(forKey: "historySelectedTimePeriod") as? Int ?? TimePeriod.last30Days.rawValue
         self.historySelectedTimePeriod = TimePeriod(rawValue: timePeriodSelectionRawValue) ?? TimePeriod.last30Days
+        
+        self.shouldAutoStartRestTimer =  UserDefaults.standard.value(forKey: "shouldAutoStartRestTimer") as? Bool ?? false
         
         self.selectedTab = UserDefaults.standard.value(forKey: "selectedTab") as? Int ?? 0
         self.workoutTimerInterval = UserDefaults.standard.value(forKey: "workoutTimerInterval") as? TimeInterval ?? 30

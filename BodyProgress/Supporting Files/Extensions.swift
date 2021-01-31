@@ -101,3 +101,9 @@ extension Double {
         return sample.joined(separator: " ").trimmingCharacters(in: .whitespacesAndNewlines)
     }
 }
+
+extension Notification.Name {
+    
+    static let didSaveTodayWorkoutSet = Notification.Name("didSaveTodayWorkoutSet")
+    
+}

@@ -75,6 +75,9 @@ struct TodayExerciseSet: View {
         if managedObjectContext.hasChanges {
             do {
                 try managedObjectContext.save()
+                if appSettings.shouldAutoStartRestTimer { // Check whether auto rest timer is enabled.
+                    NotificationCenter.default.post(name: .didSaveTodayWorkoutSet, object: nil)
+                }
             } catch {
                 print(error.localizedDescription)
             }

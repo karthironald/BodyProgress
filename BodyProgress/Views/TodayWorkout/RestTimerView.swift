@@ -30,47 +30,64 @@ struct RestTimerView: View {
     
     var body: some View {
         ZStack {
+            Color.clear
+                .frame(width: 0, height: 0)
+                .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { (_) in
+                    self.stopTimer()
+                    self.backgroundAt = Date()
+                }
+                .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { (_) in
+                    if self.status == .playing {
+                        let backgroundInterval = TimeInterval(Int(Date().timeIntervalSince(self.backgroundAt) + 1))
+                        
+                        if (self.completedTime + backgroundInterval) >= (self.appSettings.workoutTimerInterval - 1) {
+                            self.resetDetails()
+                        } else {
+                            self.completedTime += backgroundInterval
+                            self.startTimer()
+                        }
+                    }
+                }
+            
             if shouldShowMenus {
                 Color.white
                     .opacity(0.7)
                     .edgesIgnoringSafeArea(.all)
             }
-
+            
             // Main timer view button
-            Button(action: {
-                Helper.hapticFeedback()
-                if self.status == .playing {
-                    self.status = .paused
-                } else if self.status == .paused || self.status == .notStarted {
-                    self.status = .playing
+            ZStack {
+                if status == .playing || status == .paused {
+                    Circle()
+                        .trim(from: 0, to: progress)
+                        .stroke(appSettings.themeColorView(), style: StrokeStyle(lineWidth: 7, lineCap: .round))
+                        .animation((status == .playing || status == .paused) ? Animation.linear(duration: 1) : nil)
+                        .rotationEffect(.degrees(-90))
+                        .frame(width: shouldShowMenus ? 220 : 70, height: shouldShowMenus ? 220 : 70)
                 }
-                if self.status == .playing {
-                    self.startTimer()
-                    NotificationHelper.addLocalNoification(type: .interval(TimeInterval(self.appSettings.workoutTimerInterval - self.completedTime)))
-                } else if self.status == .paused {
-                    self.stopTimer()
-                    NotificationHelper.resetTimerNotification()
-                }
-            }) {
+                
                 Text("\((Int(appSettings.workoutTimerInterval - completedTime) == 0) ? Int(appSettings.workoutTimerInterval) : Int(appSettings.workoutTimerInterval - completedTime))s")
-                    .font(shouldShowMenus ? kPrimaryLargeTitleFont : kPrimaryBodyFont)
+                    .font(kPrimaryLargeTitleFont)
                     .bold()
                     .foregroundColor(.white)
                     .frame(width: shouldShowMenus ? 200 : 50, height: shouldShowMenus ? 200 : 50)
                     .background(appSettings.themeColorView())
                     .clipShape(Circle())
+                
+                Button(action: {
+                    mainTimerViewButtonAction()
+                }) {
+                    Color.clear
+                }
+                .frame(width: shouldShowMenus ? 200 : 50, height: shouldShowMenus ? 200 : 50)
+                .padding(10)
+                .shadow(radius: shouldShowMenus ? 5 : 0)
             }
-            .padding(10)
-            .overlay(
-                Circle()
-                    .trim(from: 0, to: progress)
-                    .stroke(appSettings.themeColorView(), style: StrokeStyle(lineWidth: (status == .playing || status == .paused) ? 7 : 0, lineCap: .round))
-                    .animation((status == .playing || status == .paused) ? Animation.linear(duration: 1) : nil)
-                    .rotationEffect(.degrees(-90))
-            )
-            .shadow(radius: shouldShowMenus ? 5 : 0)
             .offset(y: shouldShowMenus ? -(offset) : 0)
             .animation(.spring())
+            .onReceive(NotificationCenter.default.publisher(for: Notification.Name.didSaveTodayWorkoutSet)) { (_) in
+                mainTimerViewButtonAction(isFromNotification: true)
+            }
             
             // Minus button
             Button(action: {
@@ -130,22 +147,6 @@ struct RestTimerView: View {
                 .shadow(radius: 5)
                 .offset(y: shouldShowMenus ? (offset + 20) : 0)
                 .zIndex((status == .playing || status == .paused) ? 0 : 10)
-                .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { (_) in
-                    self.stopTimer()
-                    self.backgroundAt = Date()
-                }
-                .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { (_) in
-                    if self.status == .playing {
-                        let backgroundInterval = TimeInterval(Int(Date().timeIntervalSince(self.backgroundAt) + 1))
-                        
-                        if (self.completedTime + backgroundInterval) >= (self.appSettings.workoutTimerInterval - 1) {
-                            self.resetDetails()
-                        } else {
-                            self.completedTime += backgroundInterval
-                            self.startTimer()
-                        }
-                    }
-                }
             }
         }
         .padding(.leading, shouldShowMenus ? 0 : 10)
@@ -160,6 +161,32 @@ struct RestTimerView: View {
             }
             print("⚠️ \(self.completedTime)")
         })
+    }
+    
+    fileprivate func mainTimerViewButtonAction(isFromNotification: Bool = false) {
+        Helper.hapticFeedback()
+        
+        var delay: TimeInterval = 0
+        if isFromNotification {
+            self.shouldShowMenus.toggle()
+            self.alignment = shouldShowMenus ? .center : .bottomLeading
+            delay = 1 //  We need to wait for an second before auto starting rest timer
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+            if self.status == .playing {
+                self.status = .paused
+            } else if self.status == .paused || self.status == .notStarted {
+                self.status = .playing
+            }
+            if self.status == .playing {
+                self.startTimer()
+                NotificationHelper.addLocalNoification(type: .interval(TimeInterval(self.appSettings.workoutTimerInterval - self.completedTime)))
+            } else if self.status == .paused {
+                self.stopTimer()
+                NotificationHelper.resetTimerNotification()
+            }
+        }
     }
     
     func resetDetails() {

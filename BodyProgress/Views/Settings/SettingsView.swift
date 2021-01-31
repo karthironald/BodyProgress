@@ -11,7 +11,7 @@ import SwiftUI
 struct SettingsView: View {
     
     @EnvironmentObject var appSettings: AppSettings
-    @State private var forceRender = true
+    @State private var forceRender = true // We need this for allowing user to change the app theme color. Currently not using it.
     
     var body: some View {
         NavigationView {
@@ -29,14 +29,29 @@ struct SettingsView: View {
                         RoundedRectangle(cornerRadius: 0)
                             .fill(Color.clear)
                         if forceRender {
-                            Toggle(isOn: $appSettings.enabledReminder) {
+                            Toggle(isOn: $appSettings.enabledReminder.animation()) {
                                 Text("Workout Reminder")
                             }
                         }
                     }
                     if appSettings.enabledReminder {
                         DatePicker("Remind me daily at", selection: $appSettings.notificationTime, displayedComponents: .hourAndMinute)
+                        .foregroundColor(.secondary)
                         .accentColor(appSettings.themeColorView())
+                    }
+                }
+                
+                Section(footer: Text("Rest timer will start automatically as soon as you mark a set as completed")) {
+                    Toggle(isOn: $appSettings.shouldAutoStartRestTimer.animation()) {
+                        Text("Auto Rest Timer")
+                    }
+                    if appSettings.shouldAutoStartRestTimer {
+                        Stepper(value: $appSettings.workoutTimerInterval) {
+                            Text("Rest duration")
+                                .foregroundColor(.secondary)
+                            Text("\(Int(appSettings.workoutTimerInterval)) Secs")
+                                .modifier(CustomInfoTextStyle(appSettings: appSettings))
+                        }
                     }
                 }
                 
@@ -74,7 +89,7 @@ struct SettingsView: View {
                 Section {
                     if forceRender {
                         Toggle(isOn: $appSettings.enabledHaptic) {
-                            Text("Haptic feedback")
+                            Text("Haptic Feedback")
                         }
                     }
                 }
