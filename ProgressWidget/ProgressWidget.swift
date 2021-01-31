@@ -10,26 +10,37 @@ import WidgetKit
 import SwiftUI
 import CoreData
 
-let placeholderSummary = SummaryWidgetContent(totalWorkoutTime: 263075, progress: [(63800, BodyParts.arms, 18), (32345, BodyParts.chest, 8), (27342, BodyParts.shoulders, 7), (6468, BodyParts.back, 2), (16524, BodyParts.legs, 5), (35530, BodyParts.core, 32), (44675, BodyParts.cardio, 24), (24833, BodyParts.others, 17), (2500, BodyParts.fullBody, 10), (11558, BodyParts.abs, 5)], segments: [WidgetSegmentData(percentage: 70, startAngle: 0, endAngle: 252), WidgetSegmentData(percentage: 30, startAngle: 252, endAngle: 360)])
+let placeholderSummary = SummaryWidgetContent(totalWorkoutTime: 263075, progress: [(63800, BodyParts.arms, 18), (32345, BodyParts.chest, 8), (27342, BodyParts.shoulders, 7), (6468, BodyParts.back, 2), (16524, BodyParts.legs, 5), (35530, BodyParts.core, 32), (44675, BodyParts.cardio, 24), (24833, BodyParts.others, 17), (2500, BodyParts.fullBody, 10), (11558, BodyParts.abs, 5)], selectedTimePeriod: .last30Days, segments: [WidgetSegmentData(percentage: 70, startAngle: 0, endAngle: 252), WidgetSegmentData(percentage: 30, startAngle: 252, endAngle: 360)])
 
-struct Provider: TimelineProvider {
+struct Provider: IntentTimelineProvider {
+
+    func timePeriod(for config: SelectTimePeriodIntent) -> TimePeriod {
+        switch config.selectedTimePeriod {
+        case .last7Days: return TimePeriod.last7Days
+        case .last30Days: return TimePeriod.last30Days
+        case .last60Days: return TimePeriod.last60Days
+        case .last90Days: return TimePeriod.last90Days
+        case .all: return TimePeriod.all
+        case .unknown: return TimePeriod.last30Days
+        }
+    }
     
     func placeholder(in context: Context) -> SummaryWidgetContent {
         placeholderSummary
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (SummaryWidgetContent) -> ()) {
+    func getSnapshot(for configuration: SelectTimePeriodIntent, in context: Context, completion: @escaping (SummaryWidgetContent) -> ()) {
         let entry = placeholderSummary
         completion(entry)
     }
 
-    func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
+    func getTimeline(for configuration: SelectTimePeriodIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         
         func data() {
             var progress: [(Double, BodyParts, Double)] = []
             var segments: [WidgetSegmentData] = []
-            
-            WorkoutHistory.fetchSummary(startedAgo: 0, context: container.viewContext) { (data) in
+
+            WorkoutHistory.fetchSummary(startedAgo: configuration.selectedTimePeriod.rawValue, context: container.viewContext) { (data) in
                 progress = data
                 var lastEndAngle = 0.0
                 var total : Double {
@@ -45,7 +56,7 @@ struct Provider: TimelineProvider {
                     lastEndAngle += angle
                 }
                 
-                let summary = SummaryWidgetContent(progress: progress, segments: segments)
+                let summary = SummaryWidgetContent(progress: progress, selectedTimePeriod: timePeriod(for: configuration), segments: segments)
 
                 let timeline = Timeline(entries: [summary], policy: .atEnd)
                 completion(timeline)
@@ -73,7 +84,7 @@ struct ProgressWidget: Widget {
     let kind: String = WidgetKind.summary.rawValue
 
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: Provider()) { entry in
+        IntentConfiguration(kind: kind, intent: SelectTimePeriodIntent.self, provider: Provider()) { entry in
             SummaryWidget(content: entry)
         }
         .configurationDisplayName("Workout Summary")

@@ -136,7 +136,7 @@ extension WorkoutHistory {
     static func startDate(from daysAgo: Int) -> (now: Date?, startDate: Date?) {
         let now = Date()
         var startDate: Date?
-        if daysAgo > 0 {
+        if daysAgo > 0 && daysAgo != kTimePeriodAllOptionValue {
             startDate = Calendar.current.date(byAdding: .day, value: -daysAgo, to: now)
         }
         return (now, startDate)

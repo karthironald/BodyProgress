@@ -10,6 +10,24 @@ import SwiftUI
 import CoreData
 import WidgetKit
 
+enum TimePeriod: Int, CaseIterable {
+    case last7Days = 7
+    case last30Days = 30
+    case last60Days = 60
+    case last90Days = 90
+    case all = 999
+    
+    func title() -> String {
+        switch self {
+        case .last7Days: return "Last 7D"
+        case .last30Days: return "Last 30D"
+        case .last60Days: return "Last 60D"
+        case .last90Days: return "Last 90D"
+        case .all: return "All"
+        }
+    }
+}
+
 struct SummaryWidgetContent: TimelineEntry {
     var totalWorkoutTime: Int64 = 0
     var progress: [(Double, BodyParts, Double)] = []
@@ -21,7 +39,9 @@ struct SummaryWidgetContent: TimelineEntry {
         let durations = progress.map { $0.2 }
         return durations.reduce(0.0, +)
     }
+    var selectedTimePeriod: TimePeriod
     var segments: [WidgetSegmentData] = []
+    
     var date = Date()
 }
 
@@ -32,6 +52,7 @@ struct SummaryWidget: View {
     private var total : Double { content.total }
     private var totalSessions: Double { content.totalSessions }
     private var segments: [WidgetSegmentData] { content.segments }
+    private var selectedTimePeriod: TimePeriod { content.selectedTimePeriod }
     
     @State private var rect: CGRect = CGRect.zero
     
@@ -72,6 +93,7 @@ struct SummaryWidget: View {
                                                             Text("\(Int(totalSessions))")
                                                                 .bold()
                                                             Text("sessions").font(.caption)
+                                                            Text(" (\(selectedTimePeriod.title()))").font(.caption)
                                                         }
                                                     }
                                                     Spacer()

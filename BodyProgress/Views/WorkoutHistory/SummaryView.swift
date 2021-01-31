@@ -14,7 +14,7 @@ enum TimePeriod: Int, CaseIterable {
     case last30Days = 30
     case last60Days = 60
     case last90Days = 90
-    case all = 0
+    case all = 999 // We can't choose 0 a common index in widget, so used 999.
     
     func title() -> String {
         switch self {

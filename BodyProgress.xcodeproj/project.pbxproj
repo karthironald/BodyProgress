@@ -42,6 +42,8 @@
 		77585E242470F57900F4FF69 /* WokroutHistoryTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77585E232470F57900F4FF69 /* WokroutHistoryTabView.swift */; };
 		775E26C224BB1307006CF859 /* BodyPartSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775E26C124BB1307006CF859 /* BodyPartSummary.swift */; };
 		776494A324DFCB0700DE4424 /* RestTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776494A224DFCB0600DE4424 /* RestTimerView.swift */; };
+		7764A6D725C544330072A239 /* SelectTimePeriodIntent.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 7764A6D625C544330072A239 /* SelectTimePeriodIntent.intentdefinition */; };
+		7764A6DC25C654CD0072A239 /* SelectTimePeriodIntent.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 7764A6D625C544330072A239 /* SelectTimePeriodIntent.intentdefinition */; };
 		7766E54024575361008627D9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7766E53F24575361008627D9 /* Extensions.swift */; };
 		7766E54224575BDF008627D9 /* AddWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7766E54124575BDF008627D9 /* AddWorkout.swift */; };
 		776AE34A2465DB140050DD9A /* TodayExerciseSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776AE3492465DB140050DD9A /* TodayExerciseSet.swift */; };
@@ -171,6 +173,7 @@
 		77585E232470F57900F4FF69 /* WokroutHistoryTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WokroutHistoryTabView.swift; sourceTree = "<group>"; };
 		775E26C124BB1307006CF859 /* BodyPartSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyPartSummary.swift; sourceTree = "<group>"; };
 		776494A224DFCB0600DE4424 /* RestTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestTimerView.swift; sourceTree = "<group>"; };
+		7764A6D625C544330072A239 /* SelectTimePeriodIntent.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = SelectTimePeriodIntent.intentdefinition; sourceTree = "<group>"; };
 		7766E53F24575361008627D9 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		7766E54124575BDF008627D9 /* AddWorkout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWorkout.swift; sourceTree = "<group>"; };
 		776AE3492465DB140050DD9A /* TodayExerciseSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayExerciseSet.swift; sourceTree = "<group>"; };
@@ -334,6 +337,7 @@
 				7791762B255FEB32005F5F07 /* Assets.xcassets */,
 				7791762D255FEB32005F5F07 /* Info.plist */,
 				77B6AEF525603B1000C30622 /* WidgetSummaryView.swift */,
+				7764A6D625C544330072A239 /* SelectTimePeriodIntent.intentdefinition */,
 			);
 			path = ProgressWidget;
 			sourceTree = "<group>";
@@ -731,6 +735,7 @@
 				77B6AF3525603C8E00C30622 /* WorkoutHistory+CoreDataClass.swift in Sources */,
 				77B6AF4625603CBD00C30622 /* ReferenceLinks+CoreDataProperties.swift in Sources */,
 				77B6AF3025603C8E00C30622 /* User+CoreDataClass.swift in Sources */,
+				7764A6D725C544330072A239 /* SelectTimePeriodIntent.intentdefinition in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -784,6 +789,7 @@
 				7766E54024575361008627D9 /* Extensions.swift in Sources */,
 				7724460A24CC280000B1E0C0 /* ReferenceLinksRow.swift in Sources */,
 				779614F8245EE31C00E0216C /* EmptyStateInfoView.swift in Sources */,
+				7764A6DC25C654CD0072A239 /* SelectTimePeriodIntent.intentdefinition in Sources */,
 				7750E05424DDBCBD00B46BC8 /* TodayWorkoutConfirmationView.swift in Sources */,
 				77B6B52B24521A90004B9F89 /* SceneDelegate.swift in Sources */,
 				77181013245EBFF3005D6E9F /* Exercise+CoreDataClass.swift in Sources */,
