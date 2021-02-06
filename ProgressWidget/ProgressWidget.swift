@@ -36,7 +36,7 @@ struct Provider: IntentTimelineProvider {
 
     func getTimeline(for configuration: SelectTimePeriodIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         
-        func data() {
+        func fetchData() {
             var progress: [(Double, BodyParts, Double)] = []
             var segments: [WidgetSegmentData] = []
 
@@ -72,7 +72,7 @@ struct Provider: IntentTimelineProvider {
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             } else if error == nil {
-                data()
+                fetchData()
             }
         })
 

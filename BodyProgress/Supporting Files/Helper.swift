@@ -107,13 +107,26 @@ class Helper: NSObject {
         }
     }
     
-    class func startDate(from daysAgo: Int) -> (now: Date?, startDate: Date?) {
+    class func startDate(from daysAgo: Int) -> (startDate: Date?, endDate: Date?) {
         let now = Date()
+        
         var startDate: Date?
+        
+        // Get end of the end date
+        var endDate = Calendar.current.date(byAdding: .day, value: -1, to: now)
+        endDate = Calendar.current.startOfDay(for: endDate!)
+        
+        var components = DateComponents()
+        components.day = 1
+        components.second = -1
+        endDate = Calendar.current.date(byAdding: components, to: endDate!)
+        
         if daysAgo > 0 && daysAgo != kTimePeriodAllOptionValue {
             startDate = Calendar.current.date(byAdding: .day, value: -daysAgo, to: now)
+            startDate = Calendar.current.startOfDay(for: startDate!) // Get start of the start date.
         }
-        return (now, startDate)
+        
+        return (startDate, endDate)
     }
     
 }

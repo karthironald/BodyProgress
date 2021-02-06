@@ -127,8 +127,8 @@ struct WokroutHistoryTabView: View {
         }
         
         let dates = Helper.startDate(from: self.appSettings.historySelectedTimePeriod.rawValue)
-        if let now = dates.now, let startDate = dates.startDate {
-            predicates.append(NSPredicate(format: "(createdAt >= %@) AND (createdAt <= %@)", startDate as CVarArg, now as CVarArg))
+        if let startDate = dates.startDate, let endDate = dates.endDate {
+            predicates.append(NSPredicate(format: "(createdAt >= %@) AND (createdAt <= %@)", startDate as CVarArg, endDate as CVarArg))
         }
         
         return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)

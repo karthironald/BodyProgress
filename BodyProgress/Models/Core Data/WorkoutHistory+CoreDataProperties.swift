@@ -113,8 +113,8 @@ extension WorkoutHistory {
         req.resultType = .dictionaryResultType
         
         let dates = startDate(from: startedAgo)
-        if let now = dates.now, let startDate = dates.startDate {
-            req.predicate = NSPredicate(format: "(createdAt >= %@) AND (createdAt <= %@)", startDate as CVarArg, now as CVarArg)
+        if let startDate = dates.startDate, let endDate = dates.endDate {
+            req.predicate = NSPredicate(format: "(createdAt >= %@) AND (createdAt <= %@)", startDate as CVarArg, endDate as CVarArg)
         }
         
         context.perform {
@@ -133,13 +133,26 @@ extension WorkoutHistory {
         }
     }
     
-    static func startDate(from daysAgo: Int) -> (now: Date?, startDate: Date?) {
+    static func startDate(from daysAgo: Int) -> (startDate: Date?, endDate: Date?) {
         let now = Date()
+        
         var startDate: Date?
+        
+        // Get end of the end date
+        var endDate = Calendar.current.date(byAdding: .day, value: -1, to: now)
+        endDate = Calendar.current.startOfDay(for: endDate!)
+        
+        var components = DateComponents()
+        components.day = 1
+        components.second = -1
+        endDate = Calendar.current.date(byAdding: components, to: endDate!)
+        
         if daysAgo > 0 && daysAgo != kTimePeriodAllOptionValue {
             startDate = Calendar.current.date(byAdding: .day, value: -daysAgo, to: now)
+            startDate = Calendar.current.startOfDay(for: startDate!) // Get start of the start date.
         }
-        return (now, startDate)
+        
+        return (startDate, endDate)
     }
     
     static func fetchBodyPartSummary(startedAgo: Int, context: NSManagedObjectContext, of bodyPart: BodyParts, completion: @escaping ([(sum: Double, min: Double, max: Double, average: Double, count: Double, workout: String)]) -> ()) {
@@ -190,9 +203,10 @@ extension WorkoutHistory {
         
         var predicates: [NSPredicate] = []
         predicates.append(NSPredicate(format: "bodyPart == %@", bodyPart.rawValue))
+        
         let dates = startDate(from: startedAgo)
-        if let now = dates.now, let startDate = dates.startDate {
-            predicates.append(NSPredicate(format: "(createdAt >= %@) AND (createdAt <= %@)", startDate as CVarArg, now as CVarArg))
+        if let startDate = dates.startDate, let endDate = dates.endDate {
+            predicates.append(NSPredicate(format: "(createdAt >= %@) AND (createdAt <= %@)", startDate as CVarArg, endDate as CVarArg))
         }
         req.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
         

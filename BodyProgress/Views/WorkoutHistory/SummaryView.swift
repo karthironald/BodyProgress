@@ -40,13 +40,30 @@ struct SummaryView: View {
     }
     @State var segments: [SegmentData] = []
     
+    var timePeriodString: String {
+        let dates = Helper.startDate(from: appSettings.historySelectedTimePeriod.rawValue)
+        
+        if let startDate = dates.startDate, let endDate = dates.endDate {
+            let formatter = DateFormatter()
+            formatter.dateStyle = .medium
+            return "\(formatter.string(from: startDate)) - \(formatter.string(from: endDate))"
+        }
+        return "All Time"
+    }
+    
     var body: some View {
         ZStack {
             if progress.count == 0 {
                 EmptyStateInfoView(title: "No workout summary is available. Start your workout.")
             } else {
                 List {
-                    PieChart(progress: self.progress, segments: self.segments)
+                    VStack {
+                        PieChart(progress: self.progress, segments: self.segments)
+                        Text(timePeriodString)
+                            .font(kPrimaryFootnoteFont)
+                            .foregroundColor(.secondary)
+                            .frame(alignment: .center)
+                    }
                     ForEach(0..<self.progress.count, id: \.self) { segIndex in
                         NavigationLink(destination: BodyPartSummary(bodyPart: self.progress[segIndex].1).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)) {
                             HStack {
