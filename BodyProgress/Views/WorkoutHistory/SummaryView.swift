@@ -46,7 +46,7 @@ struct SummaryView: View {
         if let startDate = dates.startDate, let endDate = dates.endDate {
             let formatter = DateFormatter()
             formatter.dateStyle = .medium
-            return "\(formatter.string(from: startDate)) - \(formatter.string(from: endDate))"
+            return "\(formatter.string(from: startDate)) to \(formatter.string(from: endDate))"
         }
         return "All Time"
     }
@@ -57,7 +57,7 @@ struct SummaryView: View {
                 EmptyStateInfoView(title: "No workout summary is available. Start your workout.")
             } else {
                 List {
-                    VStack {
+                    VStack(spacing: 0) {
                         PieChart(progress: self.progress, segments: self.segments)
                         Text(timePeriodString)
                             .font(kPrimaryFootnoteFont)
