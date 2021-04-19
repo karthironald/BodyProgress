@@ -1,8 +1,10 @@
 # BodyProgress using SwiftUI #
 
-## What is this app for? ##
 
-* Simple workout and progress tracking app for fitness freaks
+Simple workout and progress tracking app for fitness freaks with Widget support.
+
+## TechStack
+`SwiftUI`, `WidgetKit`, `Swift`, `CoreData`, `Local Notification`, `Haptic`
 
 ## Features: ##
 
@@ -17,12 +19,14 @@
 * Updating existing exercises
 * Marking exercise as favourite and unfavourite
 * Deleting an exercise
+* Add reference to exercises
 
 ### Set: ###
 * Creating unlimited new sets in an exercise with predefined weights and reputations 
 * Updating existing sets
 * Marking set as favourite and unfavourite
 * Deleting a set
+* Bulk update weights and reps
 
 ### Today: ###
 * Starting today workout 
@@ -33,10 +37,8 @@
 * Can check your workout histories 
 * Filters to narrow down your results
 
-## Roadmap: ##
-* Diets
-* Local Notifications
-* Body Measurements
-* Exercise reference images and videos attachments
-* Workout Charts 
+### Settings: ###
+* Local Notification
+* Haptic Feedbacks
+
 
