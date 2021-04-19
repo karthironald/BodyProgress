@@ -8,14 +8,14 @@
 
 import SwiftUI
 
-let kAppDelegate = UIApplication.shared.delegate as! AppDelegate
-
 let kShadowRadius: CGFloat = 3.0
 let kCornerRadius: CGFloat = 15.0
 let kDefaultValue = "-"
 let kCommonListIndex = 9999
 let kOneHour: Int16 = 3600
 let kOneMinute: Int16 = 60
+let kDeviceWorkoutBrightness: CGFloat = 0.5
+let kTimePeriodAllOptionValue = 999
 
 let kPrimaryTitleFont = Font.system(.title, design: .rounded)
 let kPrimaryLargeTitleFont = Font.system(.largeTitle, design: .rounded)
@@ -26,12 +26,11 @@ let kPrimaryFootnoteFont = Font.system(.footnote, design: .rounded)
 let kPrimaryCalloutFont = Font.system(.callout, design: .rounded)
 let kPrimaryCaptionFont = Font.system(.caption, design: .rounded)
 
-let kPrimaryColour = Color.green.opacity(kPrimaryColourOpacity)
-let kPrimaryUIColour = UIColor.systemGreen.withAlphaComponent(CGFloat(kPrimaryColourOpacity))
-let kPrimaryColourOpacity = 1.0
-let kPrimaryListCellOpacity = 0.3
+let kPrimaryListCellOpacity = 0.2
 let kPrimaryBackgroundColour = Color.secondary.opacity(kPrimaryListCellOpacity)
 let kFavStarColour = Color.yellow
+
+let kCommonUserName = "Fitness Freak"
 
 enum BodyParts: String, CaseIterable {
     case arms = "Arms"
@@ -58,4 +57,35 @@ enum BodyParts: String, CaseIterable {
         case .fullBody: return Color.secondary.opacity(kPrimaryListCellOpacity)
         }
     }
+    
+    func piechartColor() -> Color {
+        switch self {
+        case .arms: return Color(.systemGreen)
+        case .back: return Color(.systemBlue)
+        case .chest: return Color(.systemRed)
+        case .legs: return Color(.systemYellow)
+        case .shoulders: return Color(.systemOrange)
+        case .abs: return Color(.systemPurple)
+        case .fullBody: return Color(.systemIndigo)
+        case .others: return Color(.systemGray)
+        case .core: return Color(.systemTeal)
+        case .cardio: return Color(.systemPink)
+        }
+    }
+}
+
+enum AppGroup: String {
+  case group = "group.com.mallow-tech.BodyProgress"
+
+  public var containerURL: URL {
+    switch self {
+    case .group:
+      return FileManager.default.containerURL(
+      forSecurityApplicationGroupIdentifier: self.rawValue)!
+    }
+  }
+}
+
+enum WidgetKind: String {
+    case summary = "com.mallow-tech.summary-widget"
 }

@@ -11,14 +11,14 @@ import SwiftUI
 struct CustomBarButton: View {
     
     var title: String
-    var background: Color = .green
+    @EnvironmentObject var appSettings: AppSettings
     
     var body: some View {
         Text(title)
             .bold()
             .foregroundColor(.white)
             .padding(10)
-            .background(background)
+            .background(appSettings.themeColorView())
             .frame(height: 30)
             .cornerRadius(15)
     }

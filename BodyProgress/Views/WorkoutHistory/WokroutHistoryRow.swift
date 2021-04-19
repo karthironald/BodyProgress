@@ -10,44 +10,39 @@ import SwiftUI
 
 struct WokroutHistoryRow: View {
     
+    @Environment(\.managedObjectContext) var managedObjectContext
+    @EnvironmentObject var appSettings: AppSettings
+    
     @ObservedObject var workoutHistory: WorkoutHistory
     
     var body: some View {
-        ZStack {
-            kPrimaryBackgroundColour
+        NavigationLink(destination: WorkoutHistroyDetails(selectedWorkout: workoutHistory).environmentObject(self.appSettings).environment(\.managedObjectContext, self.managedObjectContext)) {
             HStack(alignment: .center) {
-                Image(systemName: "clock.fill")
-                    .imageScale(.large)
-                    .font(kPrimaryTitleFont)
-                    .foregroundColor(Color.gray)
-                    .padding([.leading], 15)
-                    .opacity(0.5)
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 4) {
                     Text(workoutHistory.wName)
                         .font(kPrimaryHeadlineFont)
                         .fontWeight(.bold)
-                    Text("\(workoutHistory.wCreatedAt, formatter: DateFormatter().appDormatter)")
-                        .font(kPrimarySubheadlineFont)
-                        .opacity(0.5)
-                    Text("\(workoutHistory.wBodyPart.rawValue)")
-                        .font(kPrimarySubheadlineFont)
-                        .opacity(0.5)
+                    HStack {
+                        Text("\(workoutHistory.wBodyPart.rawValue)")
+                            .font(kPrimarySubheadlineFont)
+                            .foregroundColor(.secondary)
+                        Circle()
+                            .fill(Color.secondary)
+                            .frame(width: 5, height: 5)
+                        Text("\(workoutHistory.wCreatedAt, formatter: DateFormatter().appDormatter)")
+                            .font(kPrimarySubheadlineFont)
+                            .foregroundColor(.secondary)
+                    }
                 }
-                .padding(5)
+                .padding([.top, .bottom], 5)
                 Spacer()
                 Image(systemName: workoutHistory.isAllSetCompleted() ? "checkmark.seal.fill" : "xmark.seal.fill")
                     .imageScale(.large)
-                    .foregroundColor(workoutHistory.isAllSetCompleted() ? kPrimaryColour : .orange)
+                    .foregroundColor(workoutHistory.isAllSetCompleted() ? Color(AppThemeColours.green.uiColor()) : Color(AppThemeColours.orange.uiColor()))
                     .font(kPrimaryBodyFont)
                     .padding(.trailing, 10)
-                Image(systemName: "arrowtriangle.right.fill")
-                    .foregroundColor(.secondary)
-                    .opacity(0.2)
-                    .padding([.top, .bottom, .trailing])
             }
         }
-        .frame(height: 90)
-        .cornerRadius(kCornerRadius)
     }
     
 }

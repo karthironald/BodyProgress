@@ -11,48 +11,49 @@ import CoreData
 
 struct ExerciseSetRow: View {
     
+    @Environment(\.managedObjectContext) var managedObjectContext
+    @EnvironmentObject var appSettings: AppSettings
+    
+    @ObservedObject var selectedExercise: Exercise
     @ObservedObject var exerciseSet: ExerciseSet
     
+    @State private var shouldPresentEditExerciseSet: Bool = false
+    
     var body: some View {
-        ZStack {
-            kPrimaryBackgroundColour
-            VStack {
-                HStack(alignment: .center) {
-                    Image(systemName: "bolt.circle.fill")
-                        .imageScale(.large)
-                        .foregroundColor(Color.gray)
-                        .font(kPrimaryTitleFont)
-                        .padding([.leading], 15)
-                        .opacity(0.5)
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Text(exerciseSet.wName)
-                                .font(kPrimaryHeadlineFont)
-                                .fontWeight(.bold)
-                            if exerciseSet.wIsFavourite {
-                                Image(systemName: "star.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 15, height: 15)
-                                    .foregroundColor(kFavStarColour)
-                            }
-                        }
-                        if (!exerciseSet.wNotes.isEmpty) && (exerciseSet.wNotes != kDefaultValue) {
-                            Text(exerciseSet.wNotes)
-                                .font(kPrimarySubheadlineFont)
-                                .multilineTextAlignment(.leading)
-                        }
-                        Text("\(exerciseSet.wWeight, specifier: "%.2f") kgs X \(exerciseSet.wReputation) rps")
-                            .font(kPrimarySubheadlineFont)
-                            .opacity(0.5)
-                    }
-                    .padding(5)
-                    Spacer()
-                }
+        VStack(alignment: .leading) {
+            HStack {
+                Text(exerciseSet.wName)
+                    .font(kPrimaryBodyFont)
+                    .fontWeight(.bold)
+                    .padding([.top, .bottom], 10)
+                Spacer()
+                Text("\(exerciseSet.wWeight, specifier: "%.2f") kgs")
+                    .modifier(CustomInfoTextStyle(appSettings: appSettings))
+                
+                Text("\(exerciseSet.wReputation) rps")
+                    .modifier(CustomInfoTextStyle(appSettings: appSettings))
+            }
+            .sheet(isPresented: $shouldPresentEditExerciseSet, content: {
+                AddExerciseSet(
+                    shouldPresentAddNewExerciseSet: self.$shouldPresentEditExerciseSet,
+                    selectedExercise: self.selectedExercise,
+                    name: exerciseSet.wName,
+                    notes: exerciseSet.wNotes,
+                    weight: exerciseSet.wWeight,
+                    reputation: Double(exerciseSet.wReputation),
+                    selectedExerciseSet: exerciseSet
+                ).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
+            })
+        }
+        .padding([.top, .bottom], 5)
+        .contextMenu {
+            Button(action: {
+                self.shouldPresentEditExerciseSet.toggle()
+            }) {
+                Image(systemName: "square.and.pencil")
+                Text("kButtonTitleEdit")
             }
         }
-        .frame(height: 80)
-        .cornerRadius(kCornerRadius)
     }
 }
 
@@ -60,9 +61,32 @@ struct ExerciseSetRow_Previews: PreviewProvider {
     static let moc = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
     
     static var previews: some View {
+        let pExercise = Exercise(context: moc)
+        pExercise.id = UUID()
+        pExercise.name = "Preview"
+        
         let pExerciseSet = ExerciseSet(context: moc)
         pExerciseSet.name = "Sample"
         pExerciseSet.notes = "Sample"
-        return ExerciseSetRow(exerciseSet: pExerciseSet)
+        
+        pExercise.exerciseSets = [pExerciseSet]
+        
+        return ExerciseSetRow(selectedExercise: pExercise, exerciseSet: pExerciseSet)
+    }
+}
+
+struct CustomInfoTextStyle: ViewModifier {
+    var appSettings: AppSettings
+    var opacity: Double = 0.2
+    var foregroundColor: Color = .secondary
+    
+    func body(content: Content) -> some View {
+        content
+            .font(kPrimaryCaptionFont)
+            .foregroundColor(foregroundColor)
+            .padding([.leading, .trailing], 10)
+            .padding([.top, .bottom], 5)
+            .background(appSettings.themeColorView().opacity(opacity))
+            .clipShape(RoundedRectangle(cornerRadius: 25.0))
     }
 }

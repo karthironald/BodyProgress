@@ -11,6 +11,7 @@ import CoreData
 
 struct AddWorkout: View {
     
+    @EnvironmentObject var appSettings: AppSettings
     @Binding var shouldPresentAddNewWorkout: Bool
     @Environment(\.managedObjectContext) var managedObjectContext
     
@@ -19,13 +20,16 @@ struct AddWorkout: View {
     @State var bodyPartIndex = 0
     var workoutToEdit: Workout?
     
+    @State private var errorMessage = ""
+    @State private var shouldShowValidationAlert = false
+    
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Name")) { TextField("Enter here", text: $name) }
-                Section(header: Text("Notes")) { TextField("Enter here (optional)", text: $notes) }
-                Section(header: Text("Choose body part")) {
-                    Picker("Body part", selection: $bodyPartIndex) {
+                Section(header: Text("kHeaderName")) { TextField("kPlaceholderEnterHere", text: $name) }
+                Section(header: Text("kHeaderNotes")) { TextField("kPlaceholderEnterHereOptional", text: $notes) }
+                Section(header: Text("kHeaderChooseBodyPart")) {
+                    Picker("kPlaceholderBodyPart", selection: $bodyPartIndex) {
                         ForEach(0..<BodyParts.allCases.count, id: \.self) { index in
                             Text(BodyParts.allCases[index].rawValue)
                         }
@@ -35,9 +39,12 @@ struct AddWorkout: View {
             .onAppear(perform: {
                 kAppDelegate.addSeparatorLineAppearance()
             })
-                .navigationBarTitle(Text("New Workout"), displayMode: .inline)
+                .alert(isPresented: $shouldShowValidationAlert, content: { () -> Alert in
+                    Alert(title: Text("kAlertTitleError"), message: Text(errorMessage), dismissButton: .default(Text("kButtonTitleOkay")))
+                })
+                .navigationBarTitle(Text(workoutToEdit == nil ? "kScreenTitleNewWorkout" : "kScreenTitleEditWorkout"), displayMode: .inline)
                 .navigationBarItems(
-                    trailing: Button(action: { self.saveWorkout() }) { CustomBarButton(title: "Save")
+                    trailing: Button(action: { self.validateData() }) { CustomBarButton(title: NSLocalizedString("kButtonTitleSave", comment: "Button title")).environmentObject(appSettings)
                 })
         }
         
@@ -46,6 +53,18 @@ struct AddWorkout: View {
     /**Dismisses the view*/
     func dismissView() {
         self.shouldPresentAddNewWorkout = false
+    }
+    
+    func validateData() {
+        name = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        notes = notes.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        if name.isEmpty {
+            errorMessage = NSLocalizedString("kAlertMsgWorkoutNameRequired", comment: "Alert message")
+            shouldShowValidationAlert.toggle()
+        } else {
+            saveWorkout()
+        }
     }
     
     /**Saves the new workout*/
@@ -62,6 +81,7 @@ struct AddWorkout: View {
             newWorkout.id = UUID()
             newWorkout.createdAt = Date()
             newWorkout.updatedAt = Date()
+            newWorkout.isFavourite = false
         }
         if managedObjectContext.hasChanges {
             do {

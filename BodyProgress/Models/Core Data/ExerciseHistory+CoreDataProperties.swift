@@ -11,7 +11,7 @@ import Foundation
 import CoreData
 
 
-extension ExerciseHistory {
+extension ExerciseHistory: Identifiable {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<ExerciseHistory> {
         return NSFetchRequest<ExerciseHistory>(entityName: "ExerciseHistory")
@@ -30,6 +30,7 @@ extension ExerciseHistory {
     @NSManaged public var notes: String?
     @NSManaged public var updatedAt: Date?
     @NSManaged public var exerciseSets: NSSet?
+    @NSManaged public var references: NSSet?
     @NSManaged public var workout: WorkoutHistory?
 
     var wId: UUID { id ?? UUID() }
@@ -51,6 +52,12 @@ extension ExerciseHistory {
             $0.createdAt ?? Date() < $1.createdAt ?? Date()
         }
     }
+    var wReferences: [ReferenceLinks] {
+        let set = references as? Set<ReferenceLinks> ?? []
+        return set.sorted {
+            $0.createdAt ?? Date() < $1.createdAt ?? Date()
+        }
+    }
     
 }
 
@@ -68,5 +75,22 @@ extension ExerciseHistory {
 
     @objc(removeExerciseSets:)
     @NSManaged public func removeFromExerciseSets(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for references
+extension ExerciseHistory {
+
+    @objc(addReferencesObject:)
+    @NSManaged public func addToReferences(_ value: ReferenceLinks)
+
+    @objc(removeReferencesObject:)
+    @NSManaged public func removeFromReferences(_ value: ReferenceLinks)
+
+    @objc(addReferences:)
+    @NSManaged public func addToReferences(_ values: NSSet)
+
+    @objc(removeReferences:)
+    @NSManaged public func removeFromReferences(_ values: NSSet)
 
 }

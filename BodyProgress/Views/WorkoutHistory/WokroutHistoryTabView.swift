@@ -16,9 +16,9 @@ enum WorkoutHistoryStatusSort: String, CaseIterable {
     func title() -> String {
         switch self {
         case .Completed:
-            return "Completed 😈"
+            return "Finished"
         case .Pending:
-            return "Gave up 🤕"
+            return "Unfinished"
         case .Both:
             return "All"
         }
@@ -27,9 +27,8 @@ enum WorkoutHistoryStatusSort: String, CaseIterable {
 
 struct WokroutHistoryTabView: View {
     
-    @State var bodyPartsSort = [BodyParts.arms, BodyParts.chest, BodyParts.shoulders] 
-    @State var statusSort = WorkoutHistoryStatusSort.Both
-    @State var shouldPresentBodyParts = false
+    @State private var shouldPresentBodyParts = false
+    @EnvironmentObject var appSettings: AppSettings
     
     var body: some View {
         NavigationView {
@@ -42,16 +41,19 @@ struct WokroutHistoryTabView: View {
                                     .font(kPrimaryFootnoteFont)
                                     .opacity(1)
                                     .padding()
-                                    .background(self.bodyPartsSort.contains(part) ? kPrimaryColour : kPrimaryBackgroundColour)
+                                    .background(self.appSettings.historySelectedBodyParts.contains(part) ? self.appSettings.themeColorView() : kPrimaryBackgroundColour)
+                                    .foregroundColor(.white)
                                     .frame(height: 30)
                                     .cornerRadius(10)
                                     .onTapGesture {
-                                        if self.bodyPartsSort.contains(part) {
-                                            if let index = self.bodyPartsSort.firstIndex(of: part) {
-                                                self.bodyPartsSort.remove(at: index)
+                                        if self.appSettings.historySelectedBodyParts.contains(part) {
+                                            if let index = self.appSettings.historySelectedBodyParts.firstIndex(of: part) {
+                                                self.appSettings.historySelectedBodyParts.remove(at: index)
+                                                self.appSettings.historySelectedBodyParts = self.appSettings.historySelectedBodyParts
                                             }
                                         } else {
-                                            self.bodyPartsSort.append(part)
+                                            self.appSettings.historySelectedBodyParts.append(part)
+                                            self.appSettings.historySelectedBodyParts = self.appSettings.historySelectedBodyParts
                                         }
                                 }
                             }
@@ -60,7 +62,7 @@ struct WokroutHistoryTabView: View {
                     .padding([.leading, .trailing], 15)
                     Divider()
                         .padding([.leading, .trailing], 15)
-                    Picker(selection: $statusSort, label: Text("Status")) {
+                    Picker(selection: $appSettings.historySelectedCompletionStatus, label: Text("Status")) {
                         ForEach(WorkoutHistoryStatusSort.allCases, id: \.self) { status in
                             Text(status.title())
                         }
@@ -73,16 +75,45 @@ struct WokroutHistoryTabView: View {
                 
                 WorkoutHistoryView(predicate: self.predicate(), sortDescriptor: NSSortDescriptor(keyPath: \WorkoutHistory.createdAt, ascending: false))
             }
-            .navigationBarItems(trailing:
-                Button(action: {
-                    withAnimation(.linear) {
-                        self.shouldPresentBodyParts.toggle()
+            .navigationBarItems(leading:
+                NavigationLink(destination: SummaryView(), label: {
+                    Image(systemName: "chart.pie.fill")
+                        .imageScale(.large)
+                        .foregroundColor(appSettings.themeColorView())
+                        .frame(width: 30, height: 30)
+                })
+                ,trailing:
+                    HStack(spacing: 10) {
+                        Menu(content: {
+                            Section {
+                                ForEach(0..<TimePeriod.allCases.count - 1, id: \.self) { index in
+                                    Button(TimePeriod.allCases[index].title()) {
+                                        self.appSettings.historySelectedTimePeriod = TimePeriod.allCases[index]
+                                    }
+                                }
+                            }
+                            
+                            Section {
+                                Button(TimePeriod.all.title()) {
+                                    self.appSettings.historySelectedTimePeriod = TimePeriod.all
+                                }
+                            }
+                        }, label: {
+                            Text(self.appSettings.historySelectedTimePeriod.title())
+                                .frame(width: 80, height: 30, alignment: .trailing)
+                        })
+                        Button(action: {
+                            withAnimation(.linear) {
+                                self.shouldPresentBodyParts.toggle()
+                            }
+                        }) {
+                            Text(shouldPresentBodyParts ? "Done" : "Filter")
+                                .font(kPrimaryBodyFont)
+                                .bold()
+                                .frame(width: 50, height: 30, alignment: .trailing)
+                        }
                     }
-                }) {
-                    Text(shouldPresentBodyParts ? "Done" : "Filter")
-                        .font(kPrimaryBodyFont)
-                        .bold()
-                }
+                    .frame(width: 140, height: 30, alignment: .trailing)
             )
         }
     }
@@ -90,10 +121,16 @@ struct WokroutHistoryTabView: View {
     /**Creates predicate based on filter values*/
     func predicate() -> NSPredicate? {
         var predicates: [NSPredicate] = []
-        predicates.append(NSPredicate(format: "bodyPart IN %@", bodyPartsSort.map { $0.rawValue }))
-        if statusSort != .Both {
-            predicates.append(NSPredicate(format: "status == %@", statusSort == .Completed ? NSNumber(booleanLiteral: true) : NSNumber(booleanLiteral: false)))
+        predicates.append(NSPredicate(format: "bodyPart IN %@", appSettings.historySelectedBodyParts.map { $0.rawValue }))
+        if appSettings.historySelectedCompletionStatus != .Both {
+            predicates.append(NSPredicate(format: "status == %@", appSettings.historySelectedCompletionStatus == .Completed ? NSNumber(booleanLiteral: true) : NSNumber(booleanLiteral: false)))
         }
+        
+        let dates = Helper.startDate(from: self.appSettings.historySelectedTimePeriod.rawValue)
+        if let startDate = dates.startDate, let endDate = dates.endDate {
+            predicates.append(NSPredicate(format: "(createdAt >= %@) AND (createdAt <= %@)", startDate as CVarArg, endDate as CVarArg))
+        }
+        
         return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
     }
     

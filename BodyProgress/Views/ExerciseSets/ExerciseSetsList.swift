@@ -8,99 +8,135 @@
 
 import SwiftUI
 
+enum BulkUpdateType: String, CaseIterable {
+    case weight = "weight"
+    case reps = "reps"
+}
+
 struct ExerciseSetsList: View {
     
-    @ObservedObject var selectedExercise: Exercise
-    @State var shouldPresentAddNewExerciseSet = false
+    @EnvironmentObject var appSettings: AppSettings
     @Environment(\.managedObjectContext) var managedObjectContext
-    @State var shouldPresentEditExerciseSet: Bool = false
-    @State var editExerciseSetIndex: Int = kCommonListIndex
+    
+    @ObservedObject var selectedExercise: Exercise
+    
+    @State private var shouldPresentAddNewExerciseSet = false
+    @State private var shouldShowDeleteConfirmation = false
+    @State private var deleteIndex = kCommonListIndex
+    
+    @State private var shouldShowBulkUpdateView = false
+    @State private var weight: Double = 0
+    @State private var reputation: Double = 0
     
     var body: some View {
         ZStack {
             if selectedExercise.wExerciseSets.count == 0 {
-                EmptyStateInfoView(message: "No sets added")
+                EmptyStateInfoView(title: NSLocalizedString("kInfoMsgNoExercisesSetsAddedTitle", comment: "Info message"), message: NSLocalizedString("kInfoMsgNoExercisesSetsAddedMessage", comment: "Info message"))
             }
-            VStack {
-                List{
-                    ForEach(0..<selectedExercise.wExerciseSets.count, id: \.self) { exerciseSetIndex in
-                        ZStack {
-                            ExerciseSetRow(exerciseSet: self.selectedExercise.wExerciseSets[exerciseSetIndex])
-                                .contextMenu {
-                                    Button(action: {
-                                        self.editExerciseSetIndex = exerciseSetIndex
-                                        self.shouldPresentEditExerciseSet.toggle()
-                                    }) {
-                                        Image(systemName: "square.and.pencil")
-                                        Text("Edit")
-                                    }
-                                    Button(action: {
-                                        withAnimation {
-                                            self.toggleFav(exerciseSet: self.selectedExercise.wExerciseSets[exerciseSetIndex])
-                                        }
-                                    }) {
-                                        Image(systemName: self.selectedExercise.wExerciseSets[exerciseSetIndex].wIsFavourite  ? "star.fill" : "star")
-                                        Text(self.selectedExercise.wExerciseSets[exerciseSetIndex].wIsFavourite  ? "Unfavourite" : "Favourite")
-                                    }
-                                    Button(action: {
-                                        withAnimation {
-                                            self.deleteExerciseSet(set: self.selectedExercise.wExerciseSets[exerciseSetIndex])
-                                        }
-                                    }) {
-                                        Image(systemName: "trash")
-                                        Text("Delete")
-                                    }
-                            }
-                        }
-                    }
-                    .onDelete { (indexSet) in
-                        if let index = indexSet.first, index < self.selectedExercise.wExerciseSets.count {
-                            withAnimation {
-                                self.deleteExerciseSet(set: self.selectedExercise.wExerciseSets[index])
-                            }
-                        }
+            List {
+                ForEach(selectedExercise.wExerciseSets) { exerciseSet in
+                    ExerciseSetRow(selectedExercise: selectedExercise, exerciseSet: exerciseSet).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
+                }
+                .onDelete { (indexSet) in
+                    if let index = indexSet.first, index < self.selectedExercise.wExerciseSets.count {
+                        self.deleteIndex = index
+                        self.shouldShowDeleteConfirmation.toggle()
                     }
                 }
-                .padding([.top, .bottom], 10)
-                .sheet(isPresented: $shouldPresentEditExerciseSet, content: {
-                    AddExerciseSet(
-                        shouldPresentAddNewExerciseSet: self.$shouldPresentEditExerciseSet,
-                        selectedExercise: self.selectedExercise,
-                        name: self.selectedExercise.wExerciseSets[self.editExerciseSetIndex].wName,
-                        notes: self.selectedExercise.wExerciseSets[self.editExerciseSetIndex].wNotes,
-                        weight: self.selectedExercise.wExerciseSets[self.editExerciseSetIndex].wWeight,
-                        reputation: Double(self.selectedExercise.wExerciseSets[self.editExerciseSetIndex].wReputation),
-                        selectedExerciseSet: self.selectedExercise.wExerciseSets[self.editExerciseSetIndex]
-                    ).environment(\.managedObjectContext, self.managedObjectContext)
-                })
-                    .navigationBarTitle(Text("Set"))
-                    .navigationBarItems(trailing:
-                        Button(action: {
-                            self.shouldPresentAddNewExerciseSet.toggle()
-                        }) {
-                            Image(systemName: "plus.circle.fill")
-                                .font(kPrimaryTitleFont)
-                                .foregroundColor(kPrimaryColour)
-                        }.sheet(isPresented: $shouldPresentAddNewExerciseSet) {
-                            AddExerciseSet(shouldPresentAddNewExerciseSet: self.$shouldPresentAddNewExerciseSet, selectedExercise: self.selectedExercise).environment(\.managedObjectContext, self.managedObjectContext)
-                        }
-                )
             }
+            .listStyle(InsetGroupedListStyle())
+            .navigationBarTitle(selectedExercise.wName)
+            .navigationBarItems(trailing:
+                                    HStack(spacing: 10) {
+                                        Button(action: {
+                                            self.reputation = 0
+                                            self.weight = 0
+                                            withAnimation(.spring()) {
+                                                self.shouldShowBulkUpdateView.toggle()
+                                            }
+                                        }) {
+                                            Text(shouldShowBulkUpdateView ? "Cancel" : "Bulk Update")
+                                        }
+                                        Button(action: {
+                                            self.shouldPresentAddNewExerciseSet.toggle()
+                                        }) {
+                                            Image(systemName: "plus.circle.fill")
+                                                .font(kPrimaryTitleFont)
+                                                .foregroundColor(appSettings.themeColorView())
+                                        }
+                                    }
+                                    .frame(width: 150, height: 30, alignment: .trailing)
+                                    .sheet(isPresented: $shouldPresentAddNewExerciseSet) {
+                                        AddExerciseSet(shouldPresentAddNewExerciseSet: self.$shouldPresentAddNewExerciseSet, selectedExercise: self.selectedExercise).environment(\.managedObjectContext, self.managedObjectContext).environmentObject(self.appSettings)
+                                    }
+            )
+            
+            VStack(alignment: .leading, spacing: 10) {
+                VStack(alignment: .leading, spacing: 0) {
+                    Text("Rep: \(Int(reputation))")
+                    Slider(value: $reputation, in: -20...20, step: 1)
+                }
+                .padding([.top, .bottom])
+                VStack(alignment: .leading, spacing: 0) {
+                    Text("Weight: \(Int(weight)) kgs")
+                    Slider(value: $weight, in: -20...20, step: 1)
+                }
+                HStack(spacing: 10) {
+                    Spacer()
+                    Button(action: {
+                        withAnimation {
+                            self.shouldShowBulkUpdateView.toggle()
+                        }
+                    }) {
+                        Text("Cancel")
+                    }
+                    .buttonStyle(BorderlessButtonStyle())
+                    Button(action: {
+                        proceedBulkUpdate()
+                    }) {
+                        CustomBarButton(title: NSLocalizedString("kButtonTitleSave", comment: "Button title"))
+                    }
+                    .buttonStyle(BorderlessButtonStyle())
+                }
+            }
+            .padding()
+            .background(Color.secondary.opacity(0.2))
+            .cornerRadius(25)
+            .padding()
+            .offset(y: shouldShowBulkUpdateView ? UIScreen.main.bounds.height * 0.20 : UIScreen.main.bounds.height)
         }
         .onAppear {
             kAppDelegate.removeSeparatorLineAppearance()
         }
+        .alert(isPresented: $shouldShowDeleteConfirmation, content: { () -> Alert in
+            Alert(title: Text("kAlertTitleConfirm"), message: Text("kAlertMsgDeleteExerciseSet"), primaryButton: .cancel(), secondaryButton: .destructive(Text("kButtonTitleDelete"), action: {
+                withAnimation {
+                    if self.deleteIndex != kCommonListIndex {
+                        self.deleteExerciseSet(set: self.selectedExercise.wExerciseSets[self.deleteIndex])
+                    }
+                }
+            }))
+        })
     }
     
-    /**Toggle the favourite status of the set*/
-    func toggleFav(exerciseSet: ExerciseSet) {
-        exerciseSet.isFavourite.toggle()
+    func proceedBulkUpdate() {
+        if weight != 0 {
+            selectedExercise.exerciseSets?.forEach({ (exSet) in
+                (exSet as? ExerciseSet)?.weight += weight
+            })
+        }
+        if reputation != 0 {
+            selectedExercise.exerciseSets?.forEach({ (exSet) in
+                (exSet as? ExerciseSet)?.reputation += Int16(reputation)
+            })
+        }
         if managedObjectContext.hasChanges {
             do {
                 try managedObjectContext.save()
             } catch {
-                print(error)
+                // Do nothing
             }
+            withAnimation(.spring()) { shouldShowBulkUpdateView = false }
         }
     }
     
@@ -120,6 +156,6 @@ struct ExerciseSetsList: View {
 
 struct ExerciseSetsList_Previews: PreviewProvider {
     static var previews: some View {
-        Text("Yet to configured")
+        Text("kPreviewYtb")
     }
 }

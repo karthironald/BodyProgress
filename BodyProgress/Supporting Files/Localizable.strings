@@ -1,0 +1,69 @@
+/* 
+  Localizable.strings
+  BodyProgress
+
+  Created by Karthick Selvaraj on 01/07/20.
+  Copyright © 2020 Mallow Technologies Private Limited. All rights reserved.
+*/
+
+// Screen titles
+"kScreenTitleNewWorkout" = "New Workout";
+"kScreenTitleEditWorkout" = "Edit Workout";
+"kScreenTitleNewExercise" = "New Exercise";
+"kScreenTitleEditExercise" = "Edit Exercise";
+"kScreenTitleNewSet" = "New Set";
+"kScreenTitleEditSet" = "Edit Set";
+"kScreenTitleWorkouts" = "Workouts";
+"kScreenTitleExercises" = "Exercises";
+"kScreenTitleExerciseSets" = "Sets";
+
+// Alert titles
+"kAlertTitleError" = "Error";
+"kAlertTitleConfirm" = "Confirm";
+
+// Alert messages
+"kAlertMsgWorkoutNameRequired" = "Workout name is required";
+"kAlertMsgExerciseNameRequired" = "Exercise name is required";
+"kAlertMsgExerciseSetNameRequired" = "Set name is required";
+"kAlertMsgRefLinkRequired" = "Enter valid reference link";
+"kAlertMsgDeleteWorkout" = "Are you sure to delete the workout?\n\nNote: All exercises and sets will be deleted with the workout";
+"kAlertMsgDeleteExercise" = "Are you sure to delete the exercise?\n\nNote: All sets will be deleted with the exercise";
+"kAlertMsgDeleteExerciseSet" = "Are you sure to delete the exercise set?";
+"kAlertMsgDeleteWorkoutHistory" = "Are you sure to delete the workout history?";
+"kAlertMsgDeleteReferenceLink" = "Are you sure to delete the reference link?";
+"kAlertMsgDeleteExerciseReference" = "Are you sure to delete the reference?";
+
+// Buttons
+"kButtonTitleOkay" = "Okay";
+"kButtonTitleSave" = "Save";
+"kButtonTitleStart" = "Start";
+"kButtonTitleCancel" = "Cancel";
+"kButtonTitleEdit" = "Edit";
+"kButtonTitleDelete" = "Delete";
+"kButtonTitleUnfavourite" = "Unfavourite";
+"kButtonTitleFavourite" = "Favourite";
+"kButtonTitleDone" = "Done";
+"kButtonTitleReferences" = "References";
+
+// Header titles
+"kHeaderName" = "Name";
+"kHeaderNotes" = "Notes";
+"kHeaderChooseBodyPart" = "Choose body part";
+
+// Placeholders
+"kPlaceholderEnterHere" = "Enter here";
+"kPlaceholderEnterHereOptional" = "Enter here (optional)";
+"kPlaceholderBodyPart" = "Body Part";
+
+// Info messages
+"kInfoMsgNoWorkoutsAddedTitle" = "No workouts added";
+"kInfoMsgNoWorkoutsAddedMessage" = "Use the '+' button at the top right corner to add a new workout.";
+"kInfoMsgNoExercisesAddedTitle" = "No exercises added";
+"kInfoMsgNoExercisesAddedMessage" = "Use the '+' button at the top right corner to add a new exercise.";
+"kInfoMsgNoExercisesSetsAddedTitle" = "No exercise sets added";
+"kInfoMsgNoExercisesSetsAddedMessage" = "Use the '+' button at the top right corner to add new the exercise set.";
+"kInfoMsgNoReferenceLinksAdded" = "No reference links added";
+
+// Preview messages
+"kPreviewYtb" = "The preview yet to be configured";
+

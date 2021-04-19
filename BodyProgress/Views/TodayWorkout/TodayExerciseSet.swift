@@ -11,8 +11,10 @@ import CoreData
 
 struct TodayExerciseSet: View {
     
+    @Environment(\.managedObjectContext) var managedObjectContext
+    @EnvironmentObject var appSettings: AppSettings
     @ObservedObject var exerciseSet: ExerciseSetHistory
-    @State var status: Bool = false
+    @State private var status: Bool = false
     var isViewOnly = false
     
     var body: some View {
@@ -20,6 +22,7 @@ struct TodayExerciseSet: View {
             HStack() {
                 Text(self.exerciseSet.wName)
                     .font(kPrimaryBodyFont)
+                    .foregroundColor(.secondary)
                     .frame(width: geo.size.width / 4, alignment: .leading)
                 Spacer()
                 HStack() {
@@ -27,7 +30,7 @@ struct TodayExerciseSet: View {
                         .font(kPrimaryBodyFont)
                     Text("kgs")
                         .font(kPrimaryBodyFont)
-                        .opacity(0.5)
+                        .foregroundColor(.secondary)
                 }
                 .frame(width: geo.size.width / 4, alignment: .trailing)
                 Spacer()
@@ -36,7 +39,7 @@ struct TodayExerciseSet: View {
                         .font(kPrimaryBodyFont)
                     Text("rps")
                         .font(kPrimaryBodyFont)
-                        .opacity(0.5)
+                        .foregroundColor(.secondary)
                 }
                 .frame(width: geo.size.width / 4, alignment: .trailing)
                 Spacer()
@@ -50,6 +53,7 @@ struct TodayExerciseSet: View {
                                 self.exerciseSet.status.toggle()
                                 self.status = self.exerciseSet.status
                             }
+                            self.save()
                     }
                 }
             }
@@ -63,10 +67,22 @@ struct TodayExerciseSet: View {
             .aspectRatio(contentMode: .fill)
             .imageScale(.large)
             .frame(width: 25, height: 20)
-            .foregroundColor(status ? .green : .secondary)
+            .foregroundColor(status ? appSettings.themeColorView() : .secondary)
             .padding(.leading)
     }
     
+    func save() {
+        if managedObjectContext.hasChanges {
+            do {
+                try managedObjectContext.save()
+                if appSettings.shouldAutoStartRestTimer { // Check whether auto rest timer is enabled.
+                    NotificationCenter.default.post(name: .didSaveTodayWorkoutSet, object: nil)
+                }
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
 }
 
 struct TodayExerciseSet_Previews: PreviewProvider {

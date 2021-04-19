@@ -11,7 +11,7 @@ import Foundation
 import CoreData
 
 
-extension Workout {
+extension Workout: Identifiable {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Workout> {
         return NSFetchRequest<Workout>(entityName: "Workout")
@@ -42,10 +42,24 @@ extension Workout {
     var wExercises: [Exercise] {
         let set = exercises as? Set<Exercise> ?? []
         return set.sorted {
-            $0.createdAt ?? Date() < $1.createdAt ?? Date()
+            $0.displayOrder < $1.displayOrder
         }
     }
     
+    func lastTrainedAtString() -> String {
+        if let lastTrainedAt = lastTrainedAt {
+            let previousDate = lastTrainedAt
+            let now = Date()
+
+            let formatter = DateComponentsFormatter()
+            formatter.unitsStyle = .full
+            formatter.allowedUnits = [.day, .hour, .minute, .second]
+            formatter.maximumUnitCount = 1
+
+            return "\(formatter.string(from: previousDate, to: now) ?? "") ago" 
+        }
+        return ""
+    }
 }
 
 // MARK: Generated accessors for exercises

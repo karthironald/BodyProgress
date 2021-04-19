@@ -8,14 +8,31 @@
 
 import UIKit
 import CoreData
+import UserNotifications
+import Firebase
+
+let kAppDelegate = UIApplication.shared.delegate as! AppDelegate
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    
+    var appSettings = AppSettings()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        configureAppearances()
+        
+        configureFirebase()
+        
+        UNUserNotificationCenter.current().delegate = self
+        
+        _ = persistentContainer
+        
+        // Check whether DB is migrated or not.
+        if !appSettings.isDBLocationMigrated {
+            migrateCoreData()
+        }
+        
+        Helper.createDefaultWorkouts()
+
         return true
     }
     
@@ -43,6 +60,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          error conditions that could cause the creation of the store to fail.
          */
         let container = NSPersistentContainer(name: "BodyProgress")
+        
+        if appSettings.isDBLocationMigrated {
+            let newStoreURL = AppGroup.group.containerURL.appendingPathComponent("BodyProgress.sqlite")
+            let description = NSPersistentStoreDescription(url: newStoreURL)
+            container.persistentStoreDescriptions = [description]
+        }
+        
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 // Replace this implementation with code to handle the error appropriately.
@@ -81,6 +105,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
+    /**Migrate the core data from app to shared app group*/
+    func migrateCoreData() {
+        let oldStoreURL = NSPersistentContainer.defaultDirectoryURL().appendingPathComponent("BodyProgress.sqlite")
+        let newStoreURL = AppGroup.group.containerURL.appendingPathComponent("BodyProgress.sqlite")
+        
+        let coordinator = persistentContainer.persistentStoreCoordinator
+        if let oldStore = coordinator.persistentStore(for: oldStoreURL) {
+            do {
+                try coordinator.migratePersistentStore(oldStore, to: newStoreURL, options: nil, withType: NSSQLiteStoreType)
+                appSettings.isDBLocationMigrated.toggle()
+            } catch {
+                print(error)
+            }
+        }
+    }
     
     // MARK: - Custom methods
     
@@ -94,10 +133,53 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITableViewCell.appearance().selectionStyle = .default
     }
     
-    func configureAppearances() {
-        UINavigationBar.appearance().tintColor = kPrimaryUIColour
-        UITableView.appearance().tintColor = kPrimaryUIColour
+    func configureAppearances(color: UIColor) {
+        UINavigationBar.appearance().tintColor = color
+        UITableView.appearance().tintColor = color
+        UISwitch.appearance().onTintColor = color
+    }
+
+    func changeAppIcon(for themeIndex: Int?) {
+        if let themeIndex = themeIndex, UIApplication.shared.supportsAlternateIcons {
+            let iconName = AppThemeColours.allCases[themeIndex].appIconName()
+            let currentIconName = UIApplication.shared.alternateIconName
+            if let currentIconName = currentIconName, currentIconName == iconName {
+                // Already selected secondary icon is selected again which is already set
+                return
+            } else {
+                if themeIndex == AppThemeColours.allCases.firstIndex(of: .green) {
+                    if currentIconName == nil { return }
+                    UIApplication.shared.setAlternateIconName(nil, completionHandler: nil) // Primary icon
+                } else {
+                    UIApplication.shared.setAlternateIconName(iconName, completionHandler: nil) // Alternate icon
+                }
+            }
+        }
+    }
+    
+    
+    /**Configure the firebase connection*/
+    func configureFirebase() {
+        var filePath: String? = ""
+        #if DEBUG
+        filePath = Bundle.main.path(forResource: "GoogleService-Info-Dev", ofType: "plist")
+        #else
+        filePath = Bundle.main.path(forResource: "GoogleService-Info-Prod", ofType: "plist")
+        #endif
+        if let filePath = filePath, let options = FirebaseOptions(contentsOfFile: filePath) {
+            FirebaseApp.configure(options: options)
+        }
     }
     
 }
 
+
+// MARK: - UNUserNotificationCenterDelegate methods
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.sound, .badge, .alert])
+    }
+    
+}

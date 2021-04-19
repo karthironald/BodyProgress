@@ -12,7 +12,7 @@ struct Diets: View {
     var body: some View {
         NavigationView {
             ZStack {
-                EmptyStateInfoView(image: Image(systemName: "waveform.path.ecg"), message: "Yet to be implemented!")
+                EmptyStateInfoView(image: Image(systemName: "waveform.path.ecg"), title: "Yet to be implemented!")
                 .navigationBarTitle(Text("Diets"))
             }
         }
