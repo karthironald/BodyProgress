@@ -9,7 +9,6 @@
 import UIKit
 import CoreData
 import UserNotifications
-import Firebase
 
 let kAppDelegate = UIApplication.shared.delegate as! AppDelegate
 
@@ -19,8 +18,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var appSettings = AppSettings()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
-        configureFirebase()
         
         UNUserNotificationCenter.current().delegate = self
         
@@ -154,20 +151,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     UIApplication.shared.setAlternateIconName(iconName, completionHandler: nil) // Alternate icon
                 }
             }
-        }
-    }
-    
-    
-    /**Configure the firebase connection*/
-    func configureFirebase() {
-        var filePath: String? = ""
-        #if DEBUG
-        filePath = Bundle.main.path(forResource: "GoogleService-Info-Dev", ofType: "plist")
-        #else
-        filePath = Bundle.main.path(forResource: "GoogleService-Info-Prod", ofType: "plist")
-        #endif
-        if let filePath = filePath, let options = FirebaseOptions(contentsOfFile: filePath) {
-            FirebaseApp.configure(options: options)
         }
     }
     
