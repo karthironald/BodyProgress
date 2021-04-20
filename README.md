@@ -27,28 +27,31 @@ Simple workout and progress tracking app for fitness freaks with Widget support.
 ### Exercise: ###
 * Creating unlimited new exercises in a workout 
 * Updating existing exercises
-* Marking exercise as favourite and unfavourite
 * Deleting an exercise
 * Add reference to exercises
 
 ### Set: ###
 * Creating unlimited new sets in an exercise with predefined weights and reputations 
 * Updating existing sets
-* Marking set as favourite and unfavourite
 * Deleting a set
-* Bulk update weights and reps
+* Bulk update (weights and reps)
 
 ### Today: ###
 * Starting today workout 
 * Marking exercise sets as completed as you complete the set
 * Workout duration tracker
+* Workout rest timer
 
 ### History: ###
 * Can check your workout histories 
 * Filters to narrow down your results
+* Pie-chart summary with split-ups
 
 ### Settings: ###
 * Local Notification
 * Haptic Feedbacks
+
+
+Feedbacks and contributions are welcome!
 
 
